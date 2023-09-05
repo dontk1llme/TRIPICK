@@ -15,3 +15,8 @@ export const loginUserState = create(set => ({
     setName: data => set(state => ({ name: data })),
     setProfileUrl: data => set(state => ({ profileUrl: data })),
 }));
+
+export const cartState = create(set => ({
+    cartLocation: [],
+    setCartLocation: data => set(state => ({ cartLocation: data })),
+}));

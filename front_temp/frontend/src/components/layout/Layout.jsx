@@ -24,7 +24,7 @@ const S = {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        align-items: center;
+        align-items: start;
     `,
     Container: styled.div`
         width: 100%;
