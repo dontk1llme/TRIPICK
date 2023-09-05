@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import * as styles from 'style';
 import * as utils from 'utils';
 import * as pages from 'pages';
+import * as components from 'components';
 
 const App = () => {
     return (
@@ -12,7 +13,9 @@ const App = () => {
             <styles.GlobalStyles />
             <Router>
                 <Routes>
-                    <Route path={utils.URL.HOME.MAIN} element={<pages.Main />} />
+                    <Route path={utils.URL.HOME.MAIN} element={<components.Layout />}>
+                        <Route path={utils.URL.HOME.LANDING} element={<pages.Landing />}></Route>
+                    </Route>
                 </Routes>
             </Router>
         </ThemeProvider>
