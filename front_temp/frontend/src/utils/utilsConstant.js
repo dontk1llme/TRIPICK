@@ -6,6 +6,9 @@ export const URL = {
         MAIN: '/',
         LANDING: '/landing',
     },
+    CART: {
+        LIST: '/cart',
+    },
 };
 
 export const MAX_WIDTH = '1920px';

@@ -15,6 +15,7 @@ const App = () => {
                 <Routes>
                     <Route path={utils.URL.HOME.MAIN} element={<components.Layout />}>
                         <Route path={utils.URL.HOME.LANDING} element={<pages.Landing />}></Route>
+                        <Route path={utils.URL.CART.LIST} element={<pages.Cart />}></Route>
                     </Route>
                 </Routes>
             </Router>

@@ -33,10 +33,22 @@ const shadow = {
     paperTotalPage: `10px 10px 7px rgba(0, 0, 0, 0.25)`,
 };
 
+const fontSize = {
+    title1: '100px',
+    title2: '60px',
+    title3: '40px',
+    subTitle1: '28px',
+    subTitle2: '20px',
+    content1: '18px',
+    content2: '15px',
+    sub: '13px',
+};
+
 const Theme = {
     common,
     color,
     shadow,
+    fontSize,
 };
 
 export default Theme;
