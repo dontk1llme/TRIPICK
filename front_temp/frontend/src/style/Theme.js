@@ -14,22 +14,23 @@ const common = {
 };
 
 const color = {
-    main: '#FFD462',
-    sub: '#FFEBB6',
-    typo1: '#141414',
-    typo2: '#3D3D3D',
-    typo3: '#A5A5A5',
-    typo4: '#DFDFDF',
-    typo5: '#FFFFFF',
-    background1: '#FFFAEB',
-    background2: '#F7F7F7',
-    warning: '#E93636',
+    background: '#FFFFF9',
+    main1: '#8390FA',
+    main2: '#5452B7',
+    main3: '#3D3B8E',
+    highlight: '#F4E409',
+    warning: '#C14953',
+    dark1: '#5B5549',
+    dark2: '#5B5549',
+    black: '#171512',
+    gray: '#CDCED9',
 };
 
 const shadow = {
-    grid: `0px 4px 40px rgba(0, 0, 0, 0.1);`,
-    card: `8px 4px 60px rgba(0, 0, 0, 0.08);`,
-    button: `8px 4px 40px rgba(0, 0, 0, 0.3);`,
+    card: `-1px -1px 5px rgba(0.42352941632270813,0.42352941632270813,0.6352941393852234,0.25);`,
+    paperLeftPage: `inset -10px 0px 4px rgba(0, 0, 0.25)`,
+    paperRightPage: `inset 10px 0px 30px rgba(0, 0, 0.25)`,
+    paperTotalPage: `10px 10px 7px rgba(0, 0, 0, 0.25)`,
 };
 
 const Theme = {
