@@ -6,7 +6,14 @@ const TopTab = () => {
 };
 
 const S = {
-    Wrap: styled.div``,
+    Wrap: styled.div`
+        width: 100vw;
+        padding: 0 60px;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    `,
 };
 
 export default TopTab;
