@@ -16,6 +16,7 @@ const App = () => {
                     <Route path={utils.URL.HOME.MAIN} element={<components.Layout />}>
                         <Route path={utils.URL.HOME.LANDING} element={<pages.Landing />}></Route>
                         <Route path={utils.URL.CART.LIST} element={<pages.Cart />}></Route>
+                        <Route path={utils.URL.MYPAGE.DIARY} element={<pages.Diary />}></Route>
                     </Route>
                 </Routes>
             </Router>

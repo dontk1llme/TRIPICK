@@ -9,6 +9,9 @@ export const URL = {
     CART: {
         LIST: '/cart',
     },
+    MYPAGE: {
+        DIARY: '/mypage/diary',
+    },
 };
 
 export const MAX_WIDTH = '1920px';
