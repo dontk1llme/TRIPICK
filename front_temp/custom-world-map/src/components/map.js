@@ -158,7 +158,8 @@ class Map extends React.Component {
             <h3>{title}</h3>
           ) : (
             <div>
-              <h4>Set your map's title:</h4>
+              <h4>지도 이름 짓기 대회</h4>
+              <p> 사실 대회는 아닙니다~ ^^ 님 지도만 이름 지어 보세요</p>
               <form onSubmit={this.handleFormSubmit}>
                 <input type="text" onChange={this.handleChange} />
               </form>

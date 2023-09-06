@@ -10,7 +10,8 @@ const CalendarComponent = () => { // 함수 컴포넌트로 변경
     <div style={{ margin: '30px' }}>
     
       <div className='app'>
-      <h1 className='text-center'>React Calendar with Range</h1>
+      <h1 className='text-center'>내가 만든 달력~~~~</h1>
+      <h2>현수언니 위해 구웠찌. . . .</h2>
       <div className='styles.calendarContainer'>
         <ReactCalendar
           onChange={setDate}
@@ -33,8 +34,6 @@ const CalendarComponent = () => { // 함수 컴포넌트로 변경
         </p>
       )}
     </div>
-
-
       
     </div>
   );
