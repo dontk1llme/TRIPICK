@@ -1,0 +1,41 @@
+{
+  "name": "my-world-map",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/core": "^10.0.14",
+    "@emotion/styled": "^10.0.14",
+    "country-list": "^2.1.1",
+    "emotion": "^10.0.14",
+    "moment": "^2.29.4",
+    "react": "^16.8.6",
+    "react-calendar": "^4.6.0",
+    "react-color": "^2.17.3",
+    "react-dom": "^16.8.6",
+    "react-jvectormap": "0.0.12",
+    "react-router-dom": "^6.15.0",
+    "react-scripts": "^5.0.1",
+    "world_countries_lists": "^2.8.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
