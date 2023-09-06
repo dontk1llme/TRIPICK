@@ -11,6 +11,8 @@
 * 기존 https://www.npmjs.com/package/country-list
 * 바꿀 애 https://www.npmjs.com/package/world_countries_lists
 ㄴ 왜 임포트를... 못하는 거야... Uncaught Error: Cannot find module 'world_countries_lists'
+- https://www.npmjs.com/package/react-jvectormap 한국어. . . 안 되는 듯
+- https://github.com/kadoshms/react-jvectormap 어캐하는데
 
 
 ## Customizable world map
