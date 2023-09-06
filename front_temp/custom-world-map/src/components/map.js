@@ -118,6 +118,12 @@ class Map extends React.Component {
             height: "520px"
           }}
           onRegionClick={this.handleClick} // gets the country code
+          // 한국어로 어캐 해요
+          // onRegionLabelShow={(event, label, code) => {
+          //   // 국가 코드에 따라 한국어 국가 이름 표시
+          //   label.html(countriesNamesArray[code]);
+          // }}
+          
           containerClassName="map"
           regionStyle={{
             initial: {
