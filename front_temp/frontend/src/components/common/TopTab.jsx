@@ -1,8 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import * as utils from 'utils';
+
 const TopTab = () => {
-    return <S.Wrap>상단탭</S.Wrap>;
+    const navigate = useNavigate();
+
+    return (
+        <S.Wrap>
+            <S.Logo onClick={() => navigate(utils.URL.HOME.MAIN)}>상단탭</S.Logo>
+        </S.Wrap>
+    );
 };
 
 const S = {
@@ -13,6 +22,11 @@ const S = {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    `,
+    Logo: styled.div`
+        width: auto;
+        height: auto;
+        cursor: pointer;
     `,
 };
 
