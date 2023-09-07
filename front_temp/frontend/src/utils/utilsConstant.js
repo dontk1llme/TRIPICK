@@ -13,6 +13,9 @@ export const URL = {
         PASSPORT: '/mypage',
         DIARY: '/mypage/diary',
     },
+    RECOMMEND: {
+        CALENDAR: '/recommend',
+    }
 };
 
 export const MAX_WIDTH = '1920px';
