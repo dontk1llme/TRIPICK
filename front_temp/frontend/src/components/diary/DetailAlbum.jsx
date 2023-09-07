@@ -12,6 +12,7 @@ const DetailAlbum = () => {
         imageUrl: [],
     });
     const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedImage, setSelectedImage] = useState('');
 
     useEffect(() => {
         console.log(selectedAlbum);
@@ -28,6 +29,18 @@ const DetailAlbum = () => {
         const fileArray = Array.from(files);
         setSelectedFile(fileArray);
     };
+
+    const handleSelectedImage = imageId => {
+        if (selectedImage === imageId) {
+            setSelectedImage('');
+        } else {
+            setSelectedImage(imageId);
+        }
+    };
+
+    useEffect(() => {
+        console.log(selectedImage);
+    }, [selectedImage]);
 
     useEffect(() => {
         console.log(selectedFile);
@@ -50,8 +63,8 @@ const DetailAlbum = () => {
                         <S.ImagesContainer>
                             {selectedAlbumDetail.imageUrl.map((image, index) => {
                                 return (
-                                    <S.ImageContainer key={index}>
-                                        <img src={image} alt="이미지" />
+                                    <S.ImageContainer key={index} onClick={() => handleSelectedImage(image.imageId)}>
+                                        <img src={image.url} alt="이미지" />
                                     </S.ImageContainer>
                                 );
                             })}
@@ -61,6 +74,14 @@ const DetailAlbum = () => {
             ) : (
                 'Loading...'
             )}
+            {selectedImage !== '' ? (
+                <S.ImageDetailContainer>
+                    <S.ImageDetail>
+                        <img src={selectedAlbumDetail.imageUrl[selectedImage].url} alt="상세 이미지" />
+                        {/* {selectedAlbumDetail.imageUrl[selectedImage].url} */}
+                    </S.ImageDetail>
+                </S.ImageDetailContainer>
+            ) : null}
         </S.Wrap>
     );
 };
@@ -70,6 +91,7 @@ const S = {
         display: flex;
         width: 840px;
         height: 336px;
+        position: relative;
         margin: 0 12px 12px 0;
         background-color: white;
         border-radius: 32px;
@@ -143,6 +165,21 @@ const S = {
             width: 100%;
             height: 100%;
         }
+    `,
+    ImageDetailContainer: styled.div`
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(91, 85, 73, 0.5);
+        z-index: 2;
+    `,
+    ImageDetail: styled.div`
+        display: flex;
     `,
 };
 
