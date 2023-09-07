@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import * as hooks from 'hooks';
 import { IoAdd, IoClose, IoChevronForward, IoChevronBack } from 'react-icons/io5';
+import WorldMap from './WorldMap';
 
 const DetailAlbum = () => {
     const { selectedAlbum, albumList } = hooks.albumState();
@@ -66,7 +67,11 @@ const DetailAlbum = () => {
 
     return (
         <S.Wrap>
-            {selectedAlbum === '0' ? null : selectedAlbumDetail ? (
+            {selectedAlbum === '0' ? 
+            // 이 부분에 지도
+            <WorldMap></WorldMap>
+            
+            : selectedAlbumDetail ? (
                 <S.Container>
                     <S.AlbumTitle>
                         {selectedAlbumDetail.albumName} ({selectedAlbumDetail.imageUrl.length})
