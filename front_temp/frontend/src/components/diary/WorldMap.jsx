@@ -57,6 +57,7 @@ const WorldMap = () => {
                     overflow: 'hidden',
                 }}
                 containerClassName="map"
+                onRegionClick={handleClick}
                 regionStyle={{
                     initial: {
                         fill: `${({ theme }) => theme.color.main1}`,
@@ -65,7 +66,21 @@ const WorldMap = () => {
                         'stroke-width': 0,
                         'stroke-opacity': 0,
                     },
+                    selected: {
+                        fill: '#2938bc',
+                    },
                 }}
+                regionsSelectable={true}
+                series={{
+                    regions: [
+                        {
+                            values: data,
+                            // scale: ['#146804', color],
+                            normalizeFunction: 'polynomial',
+                        },
+                    ],
+                }}
+
             />
             {/* <S.VectorMapContainer>
                 <VectorMap
