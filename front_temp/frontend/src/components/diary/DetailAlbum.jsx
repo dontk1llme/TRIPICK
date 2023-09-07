@@ -64,6 +64,26 @@ const DetailAlbum = () => {
         }
     };
 
+    useEffect(() => {
+        const handleKeydown = event => {
+            if (selectedImage && selectedAlbumDetail) {
+                if (event.key === 'ArrowRight') {
+                    handleNextImage();
+                } else if (event.key === 'ArrowLeft') {
+                    handlePreviousImage();
+                } else if (event.key === 'Escape') {
+                    setSelectedImage('');
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeydown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeydown);
+        };
+    }, [selectedImage, selectedAlbumDetail]);
+
     return (
         <S.Wrap>
             {selectedAlbum === '0' ? null : selectedAlbumDetail ? (

@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as components from 'components';
+import * as hooks from 'hooks';
 
 const Diary = () => {
+    const { selectedAlbum } = hooks.albumState();
+
     return (
         <S.Wrap>
             <S.AlbumContainer>
-                <components.DetailAlbum />
+                {selectedAlbum === '0' ? <components.WorldMap /> : <components.DetailAlbum />}
+                {/* <components.DetailAlbum /> */}
                 <components.AlbumList />
             </S.AlbumContainer>
         </S.Wrap>

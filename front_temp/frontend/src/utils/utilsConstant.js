@@ -10,6 +10,7 @@ export const URL = {
         LIST: '/cart',
     },
     MYPAGE: {
+        PASSPORT: '/mypage',
         DIARY: '/mypage/diary',
     },
 };
