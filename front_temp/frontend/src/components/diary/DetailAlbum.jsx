@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
-import { IoAdd } from 'react-icons/io5';
+import { IoAdd, IoClose, IoChevronForward, IoChevronBack } from 'react-icons/io5';
 
 const DetailAlbum = () => {
     const { selectedAlbum, albumList } = hooks.albumState();
@@ -46,6 +46,24 @@ const DetailAlbum = () => {
         console.log(selectedFile);
     }, [selectedFile]);
 
+    const handleNextImage = () => {
+        const index = selectedAlbumDetail.imageUrl.findIndex(image => image.imageId === selectedImage);
+        if (index + 1 < selectedAlbumDetail.imageUrl.length) {
+            setSelectedImage(selectedAlbumDetail.imageUrl[index + 1].imageId);
+        } else {
+            setSelectedImage(selectedAlbumDetail.imageUrl[0].imageId);
+        }
+    };
+
+    const handlePreviousImage = () => {
+        const index = selectedAlbumDetail.imageUrl.findIndex(image => image.imageId === selectedImage);
+        if (index > 0) {
+            setSelectedImage(selectedAlbumDetail.imageUrl[index - 1].imageId);
+        } else {
+            setSelectedImage(selectedAlbumDetail.imageUrl[selectedAlbumDetail.imageUrl.length - 1].imageId);
+        }
+    };
+
     return (
         <S.Wrap>
             {selectedAlbum === '0' ? null : selectedAlbumDetail ? (
@@ -74,12 +92,25 @@ const DetailAlbum = () => {
             ) : (
                 'Loading...'
             )}
-            {selectedImage !== '' ? (
+            {selectedImage && selectedAlbumDetail !== '' ? (
                 <S.ImageDetailContainer>
                     <S.ImageDetail>
-                        <img src={selectedAlbumDetail.imageUrl[selectedImage].url} alt="상세 이미지" />
-                        {/* {selectedAlbumDetail.imageUrl[selectedImage].url} */}
+                        {selectedAlbumDetail.imageUrl.find(image => image.imageId === selectedImage) ? (
+                            <img
+                                src={selectedAlbumDetail.imageUrl.find(image => image.imageId === selectedImage).url}
+                                alt="상세 이미지"
+                            />
+                        ) : null}
                     </S.ImageDetail>
+                    <S.CloseButton onClick={() => setSelectedImage('')}>
+                        <IoClose />
+                    </S.CloseButton>
+                    <S.NextImageButton onClick={() => handleNextImage()}>
+                        <IoChevronForward />
+                    </S.NextImageButton>
+                    <S.PreviousImageButton onClick={() => handlePreviousImage()}>
+                        <IoChevronBack />
+                    </S.PreviousImageButton>
                 </S.ImageDetailContainer>
             ) : null}
         </S.Wrap>
@@ -176,10 +207,69 @@ const S = {
         width: 100vw;
         height: 100vh;
         background: rgba(91, 85, 73, 0.5);
+        overflow: hidden;
         z-index: 2;
     `,
     ImageDetail: styled.div`
         display: flex;
+        height: auto;
+        width: auto;
+        & img {
+            max-height: 100vh;
+            height: auto;
+            width: auto;
+        }
+    `,
+    CloseButton: styled.div`
+        position: absolute;
+        top: 44px;
+        right: 56px;
+        cursor: pointer;
+        & svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+        }
+
+        &:hover {
+            & svg {
+                color: ${({ theme }) => theme.color.main1};
+            }
+        }
+    `,
+    NextImageButton: styled.div`
+        position: absolute;
+        top: 45vh;
+        right: 96px;
+        width: 48px;
+        height: 48px;
+        & svg {
+            width: 100%;
+            height: 100%;
+            color: white;
+        }
+        &:hover {
+            & svg {
+                color: ${({ theme }) => theme.color.main1};
+            }
+        }
+    `,
+    PreviousImageButton: styled.div`
+        position: absolute;
+        top: 45vh;
+        left: 96px;
+        width: 48px;
+        height: 48px;
+        & svg {
+            width: 100%;
+            height: 100%;
+            color: white;
+        }
+        &:hover {
+            & svg {
+                color: ${({ theme }) => theme.color.main1};
+            }
+        }
     `,
 };
 

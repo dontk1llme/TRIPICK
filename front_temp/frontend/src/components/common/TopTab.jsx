@@ -9,7 +9,9 @@ const TopTab = () => {
 
     return (
         <S.Wrap>
-            <S.Logo onClick={() => navigate(utils.URL.HOME.MAIN)}>상단탭</S.Logo>
+            <S.Logo onClick={() => navigate(utils.URL.HOME.MAIN)}>
+                <img src={require('asset/images/logo.png').default} alt="logo" />
+            </S.Logo>
         </S.Wrap>
     );
 };
@@ -27,6 +29,10 @@ const S = {
         width: auto;
         height: auto;
         cursor: pointer;
+        & > img {
+            width: auto;
+            max-height: 32px;
+        }
     `,
 };
 
