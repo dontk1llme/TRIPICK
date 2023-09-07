@@ -3,18 +3,23 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@emotion/core": "^11.0.0",
+        "@emotion/styled": "^11.11.0",
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^13.0.0",
         "@testing-library/user-event": "^13.2.1",
         "axios": "^1.4.0",
+        "country-list": "^2.3.0",
         "moment": "^2.29.4",
         "react": "^18.2.0",
         "react-calendar": "^4.6.0",
         "react-dom": "^18.2.0",
         "react-icons": "^4.10.1",
+        "react-jvectormap": "^0.0.16",
         "react-scripts": "5.0.1",
         "styled-components": "^6.0.4",
         "web-vitals": "^2.1.0",
+        "world_countries_lists": "^2.8.2",
         "zustand": "^4.4.1"
     },
     "scripts": {
