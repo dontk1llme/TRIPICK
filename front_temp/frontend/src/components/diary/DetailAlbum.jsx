@@ -70,7 +70,6 @@ const DetailAlbum = () => {
             {selectedAlbum === '0' ? 
             // 이 부분에 지도
             <WorldMap></WorldMap>
-            
             : selectedAlbumDetail ? (
                 <S.Container>
                     <S.AlbumTitle>
