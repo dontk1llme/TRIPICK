@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
-import { IoAdd, IoFolder } from 'react-icons/io5';
+import { IoAdd, IoFolder, IoCheckmarkCircleOutline } from 'react-icons/io5';
 
 const AlbumList = () => {
     const { selectedAlbum, setSelectedAlbum, albumList } = hooks.albumState();
@@ -53,10 +53,15 @@ const AlbumList = () => {
                                 selected={album.albumId === selectedAlbum ? 'selected' : null}>
                                 <S.PreviewImg id="image">
                                     {album.imageUrl.length > 0 ? (
-                                        <img src={album.imageUrl[0]} alt="album preview" />
+                                        <img src={album.imageUrl[0].url} alt="album preview" />
                                     ) : (
                                         <IoFolder />
                                     )}
+                                    {album.albumId === selectedAlbum ? (
+                                        <S.CheckSelectedAlbum>
+                                            <IoCheckmarkCircleOutline />
+                                        </S.CheckSelectedAlbum>
+                                    ) : null}
                                 </S.PreviewImg>
                                 <S.AlbumName>{album.albumName}</S.AlbumName>
                             </S.AlbumPreview>
@@ -138,7 +143,6 @@ const S = {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        /* align-items: center; */
         width: 184px;
         height: 213px;
         margin: 8px 16px 24px;
@@ -148,6 +152,12 @@ const S = {
         color: ${({ selected, theme }) => (selected ? `${theme.color.main1}` : `${({ theme }) => theme.color.black}`)};
         & #image {
             border: ${({ selected, theme }) => (selected ? `2px solid ${theme.color.main1}` : 'none')};
+        }
+
+        &:hover {
+            & #image {
+                border: 2px solid ${({ theme }) => theme.color.main1};
+            }
         }
     `,
     AlbumName: styled.div`
@@ -161,6 +171,7 @@ const S = {
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
         overflow: hidden;
         margin-bottom: 8px;
         width: 184px;
@@ -178,6 +189,16 @@ const S = {
             width: 48px;
             height: 48px;
             color: white;
+        }
+    `,
+    CheckSelectedAlbum: styled.div`
+        position: absolute;
+        width: auto;
+        height: auto;
+        border-radius: 100%;
+        background-color: ${({ theme }) => theme.color.main1};
+        & svg {
+            color: ${({ theme }) => theme.color.highlight};
         }
     `,
 };
