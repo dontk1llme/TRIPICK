@@ -25,9 +25,11 @@ const WorldMap = () => {
         if (countriesCodesArray.includes(countryCode)) {
             // 이미 선택된 국가를 클릭한 경우, 해당 국가 코드를 제거
             newCountryCodesArray = countriesCodesArray.filter(code => code !== countryCode);
+            console.log('삭제')
         } else {
             // 새로운 국가를 선택한 경우, 해당 국가 코드를 추가
             newCountryCodesArray = [...countriesCodesArray, countryCode];
+            console.log('추가')
         }
     
         setCountriesCodesArray(newCountryCodesArray);
@@ -49,8 +51,9 @@ const WorldMap = () => {
     const makeMapDataStructure = codesArray => {
         let obj = {};
         codesArray.forEach(countryCode => (obj[countryCode] = 5));
-        setData({ ...data, ...obj });
+        setData(obj);
     };
+
 
     return (
         <S.Wrap style={{ width: 840, height: 336 }}>
