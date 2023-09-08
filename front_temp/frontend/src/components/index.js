@@ -7,3 +7,4 @@ export { default as LocationPreview } from './preview/LocationPreview';
 export { default as AlbumList } from './diary/AlbumList';
 export { default as DetailAlbum } from './diary/DetailAlbum';
 export { default as WorldMap } from './diary/WorldMap';
+export { default as CountryList } from './diary/CountryList';
