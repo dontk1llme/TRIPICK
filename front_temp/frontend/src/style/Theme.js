@@ -28,9 +28,10 @@ const color = {
 
 const shadow = {
     card: `2px 2px 5px -1px rgba(108, 108, 162, 0.25), -1px -1px 5px -1px rgba(108, 108, 162, 0.25);`,
-    paperLeftPage: `inset -10px 0px 4px rgba(0, 0, 0.25)`,
-    paperRightPage: `inset 10px 0px 30px rgba(0, 0, 0.25)`,
-    paperTotalPage: `10px 10px 7px rgba(0, 0, 0, 0.25)`,
+    paperLeftPage: `-15px 0px 10px 0px rgba(0, 0, 0, 0.25) inset`,
+    paperRightPage: `10px 0px 30px 0px rgba(0, 0, 0, 0.25) inset`,
+    paperTotalPage: `10px 11px 15px 0px rgba(0, 0, 0, 0.25)`,
+    paperCoverLeftPage: `3px 10px 15px 0px rgba(0, 0, 0, 0.25)`,
 };
 
 const fontSize = {

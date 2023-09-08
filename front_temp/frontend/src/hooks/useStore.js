@@ -2,9 +2,9 @@ import { create } from 'zustand';
 
 export const loginUserState = create(set => ({
     id: '',
-    name: '',
-    email: '',
-    profileUrl: '',
+    name: '김싸피',
+    email: 'traveler@gmail.com',
+    profileUrl: require('asset/images/profile.png').default,
     setLoginUser: data =>
         set(state => ({
             id: data.id,
