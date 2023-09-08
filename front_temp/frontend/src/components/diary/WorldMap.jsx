@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { VectorMap } from 'react-jvectormap';
 const krdata = require('world_countries_lists/data/countries/ko/countries.json');
@@ -9,22 +9,30 @@ const WorldMap = () => {
     const [data, setData] = useState({});
     const [title, setTitle] = useState('');
     const [titleSet, setTitleSet] = useState(false);
-    // const [color, setColor] = useState('#48aeef');
-
-    // const handleColorChange = color => {
-    //     setColor(color.hex);
-    // };
+    const [color, setColor] = useState('#48aeef');
 
     const handleChange = e => {
         setTitle(e.target.value);
     };
 
+    useEffect(() => {
+        makeMapDataStructure(countriesCodesArray);
+    }, [countriesCodesArray]);
+
     const handleClick = (e, countryCode) => {
-        if (!countriesCodesArray.includes(countryCode)) {
-            const newArray = [...countriesCodesArray, countryCode];
-            setCountriesCodesArray(newArray);
-            getCountriesNamesList(newArray);
+        let newCountryCodesArray;
+    
+        if (countriesCodesArray.includes(countryCode)) {
+            // 이미 선택된 국가를 클릭한 경우, 해당 국가 코드를 제거
+            newCountryCodesArray = countriesCodesArray.filter(code => code !== countryCode);
+        } else {
+            // 새로운 국가를 선택한 경우, 해당 국가 코드를 추가
+            newCountryCodesArray = [...countriesCodesArray, countryCode];
         }
+    
+        setCountriesCodesArray(newCountryCodesArray);
+        getCountriesNamesList(newCountryCodesArray);
+        makeMapDataStructure(newCountryCodesArray);
     };
 
     const getCountryNameByCode = countryCode => {
@@ -36,13 +44,12 @@ const WorldMap = () => {
     const getCountriesNamesList = codesArray => {
         const list = codesArray.map(code => getCountryNameByCode(code));
         setCountriesNamesArray(list);
-        makeMapDataStructure(codesArray);
     };
 
     const makeMapDataStructure = codesArray => {
         let obj = {};
         codesArray.forEach(countryCode => (obj[countryCode] = 5));
-        setData(obj);
+        setData({ ...data, ...obj });
     };
 
     return (
@@ -60,14 +67,14 @@ const WorldMap = () => {
                 onRegionClick={handleClick}
                 regionStyle={{
                     initial: {
-                        fill: `${({ theme }) => theme.color.main1}`,
+                        fill: '#8390FA', //main1
                         'fill-opacity': 0.9,
                         stroke: 'none',
                         'stroke-width': 0,
                         'stroke-opacity': 0,
                     },
                     selected: {
-                        fill: '#2938bc',
+                        fill: '#5452B7',
                     },
                 }}
                 regionsSelectable={true}
@@ -75,71 +82,12 @@ const WorldMap = () => {
                     regions: [
                         {
                             values: data,
-                            // scale: ['#146804', color],
+                            scale: ["#5452B7", color],
                             normalizeFunction: 'polynomial',
                         },
                     ],
                 }}
-
             />
-            {/* <S.VectorMapContainer>
-                <VectorMap
-                    map={'world_mill'}
-                    backgroundColor="transparent"
-                    zoomOnScroll={false}
-                    containerStyle={{
-                        width: '100%',
-                        height: '100%',
-                    }}
-                    onRegionClick={handleClick}
-                    containerClassName="map"
-                    regionStyle={{
-                        initial: {
-                            fill: '#e4e4e4',
-                            'fill-opacity': 0.9,
-                            stroke: 'none',
-                            'stroke-width': 0,
-                            'stroke-opacity': 0,
-                            // 'width': '100%',
-                            // 'height': '100%',
-                        },
-                        hover: {
-                            'fill-opacity': 0.8,
-                            cursor: 'pointer',
-                        },
-                        selected: {
-                            fill: '#2938bc',
-                        },
-                        selectedHover: {},
-                    }}
-                    regionsSelectable={true}
-                    series={{
-                        regions: [
-                            {
-                                values: data,
-                                // scale: ['#146804', color],
-                                normalizeFunction: 'polynomial',
-                            },
-                        ],
-                    }}
-                />
-            </S.VectorMapContainer>
-            {titleSet ? (
-                <h3>{title}</h3>
-            ) : (
-                <div>
-                    <h4>지도 이름 짓기 대회</h4>
-                    <p>사실 대회는 아닙니다~ ^^ 님 지도만 이름 지어 보세요</p>
-                    <form onSubmit={() => setTitleSet(true)}>
-                        <input type="text" onChange={handleChange} />
-                    </form>
-                </div>
-            )}
-            <div>
-                {countriesNamesArray.map((country, i) => (
-                    <div key={i}>{country}</div>
-                ))}
-            </div> */}
         </S.Wrap>
     );
 };
@@ -161,11 +109,6 @@ const S = {
             height: 100%;
         }
     `,
-    // VectorMapContainer: styled.div`
-    //     width: 100%;
-    //     height: 100%;
-    //     overflow: hidden;
-    // `,
 };
 
 export default WorldMap;
