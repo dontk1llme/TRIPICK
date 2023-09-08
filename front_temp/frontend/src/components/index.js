@@ -9,3 +9,4 @@ export { default as DetailAlbum } from './diary/DetailAlbum';
 export { default as WorldMap } from './diary/WorldMap';
 
 export { default as MyProfile } from './mypage/MyProfile';
+export { default as CountryList } from './diary/CountryList';

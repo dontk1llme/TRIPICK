@@ -168,3 +168,13 @@
   background: #8390FA;
   color: white;
  }
+
+ /* 첫 시작 시 이상한 border css를 고치려고 해 보았지만... */
+ .react-calendar__tile--custom-tile {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  background: #8390FA;
+  color: white;
+ }
