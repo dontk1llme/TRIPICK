@@ -25,6 +25,8 @@ const S = {
         flex-direction: column;
         justify-content: flex-start;
         align-items: start;
+        overflow-x: hidden;
+        overflow-y: auto;
     `,
     Container: styled.div`
         width: 100%;
