@@ -13,6 +13,9 @@ const Diary = () => {
                 {/* <components.DetailAlbum /> */}
                 <components.AlbumList />
             </S.AlbumContainer>
+            
+            <components.CountryList /> 
+            
         </S.Wrap>
     );
 };
