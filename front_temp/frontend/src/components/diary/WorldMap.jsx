@@ -9,18 +9,19 @@ const WorldMap = () => {
     const [countriesNamesArray, setCountriesNamesArray] = useState([]);
     const [hoveredRegionName, setHoveredRegionName] = useState('');
     const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
-    const [data, setData] = useState({}); // data 상태 추가
+    const [data, setData] = useState({});
 
     useEffect(() => {
         makeMapDataStructure(countriesCodesArray);
     }, [countriesCodesArray]);
 
+    // 국가 무한 생성 억제
     useEffect(() => { return () => { document.querySelectorAll('.jvectormap-tip').forEach((element) => { element.remove(); }); }; });
 
     const handleClick = (e, countryCode) => {
         setCountriesCodesArray(prevCodesArray => {
             let newCountryCodesArray;
-    
+
             if (prevCodesArray.includes(countryCode)) {
                 // 이미 선택된 국가를 클릭한 경우, 해당 국가 코드를 제거
                 newCountryCodesArray = prevCodesArray.filter(code => code !== countryCode);
@@ -28,7 +29,7 @@ const WorldMap = () => {
                 // 새로운 국가를 선택한 경우, 해당 국가 코드를 추가
                 newCountryCodesArray = [...prevCodesArray, countryCode];
             }
-    
+
             getCountriesNamesList(newCountryCodesArray);
             return newCountryCodesArray;
         });
@@ -100,12 +101,36 @@ const WorldMap = () => {
                     selectedHover: {}
                 }}
                 regionsSelectable={true}
+
+                //********************* */
+                regionLabelStyle={{
+                    initial: {
+                        'font-family': 'Verdana',
+                        'font-size': '12',
+                        'font-weight': 'bold',
+                        cursor: 'default',
+                        fill: 'black'
+                    },
+                    hover: {
+                        cursor: 'pointer'
+                    },
+                    selectedHover: {}
+                }}
+
+                // regionLabelShow 옵션을 추가하여 레이블을 활성화
+                regionLabelShow={true}
+                regionLabelText={(event, code) => getCountryNameByCode(code)}
+                //활성화했는데 왜 안 대요
+                //*********************
+
+
                 series={{
                     regions: [
                         {
                             values: data,
                             scale: ["#5452B7"],
                             normalizeFunction: 'polynomial',
+                            attribute: 'fill'
                         },
                     ],
                 }}
