@@ -24,6 +24,7 @@ const color = {
     dark2: '#5B5549',
     black: '#171512',
     gray: '#CDCED9',
+    white: '#ffffff',
 };
 
 const shadow = {
