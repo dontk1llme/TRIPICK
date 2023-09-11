@@ -25,10 +25,10 @@ const MyPage = () => {
                     className={currentPage < 1 ? 'flipped' : null}
                     page="1"
                     currentPage={currentPage}>
-                    <S.BackPage>
+                    <S.BackPage className={currentPage !== 0}>
                         <S.FrontCover>
                             <S.CoverIconContainer>
-                                <FaPassport />
+                                <img src={require('asset/images/fcon3.png').default} alt="logo" />
                             </S.CoverIconContainer>
                             <S.PassportTitle>PASSPORT</S.PassportTitle>
                             <S.TeamTitle>Tripick</S.TeamTitle>
@@ -37,7 +37,7 @@ const MyPage = () => {
                             </S.CoverPassportIconContainer>
                         </S.FrontCover>
                     </S.BackPage>
-                    <S.FrontPage>
+                    <S.FrontPage className={currentPage !== 1}>
                         <S.PassportLeft>
                             <components.MyProfile />
                         </S.PassportLeft>
@@ -48,11 +48,15 @@ const MyPage = () => {
                     className={currentPage < 2 ? 'flipped' : null}
                     page="2"
                     currentPage={currentPage}>
-                    <S.BackPage>
-                        <S.PassportRight></S.PassportRight>
+                    <S.BackPage className={currentPage !== 1}>
+                        <S.PassportRight>
+                            <components.MyStamps page="1" />
+                        </S.PassportRight>
                     </S.BackPage>
-                    <S.FrontPage>
-                        <S.PassportLeft></S.PassportLeft>
+                    <S.FrontPage className={currentPage !== 2}>
+                        <S.PassportLeft>
+                            <components.MyStamps page="2" />
+                        </S.PassportLeft>
                     </S.FrontPage>
                 </S.PageContainer>
                 <S.PageContainer
@@ -60,10 +64,12 @@ const MyPage = () => {
                     className={currentPage < 3 ? 'flipped' : null}
                     page="3"
                     currentPage={currentPage}>
-                    <S.BackPage>
-                        <S.PassportRight></S.PassportRight>
+                    <S.BackPage className={currentPage !== 2}>
+                        <S.PassportRight>
+                            <components.MyStamps page="3" />
+                        </S.PassportRight>
                     </S.BackPage>
-                    <S.FrontPage>
+                    <S.FrontPage className={currentPage !== 3}>
                         <S.Test onClick={e => e.stopPropagation()}>
                             <S.Test2></S.Test2>
                         </S.Test>
@@ -105,10 +111,10 @@ const S = {
         transform-origin: right;
         border-radius: 32px 0 0 32px;
         z-index: ${props =>
-            Number(props.currentPage) === Number(props.page)
-                ? 100
-                : Number(props.page) === 1 && Number(props.currentPage) === 1
+            Number(props.page) === 1 && Number(props.currentPage) === 1
                 ? 99
+                : Number(props.currentPage) === Number(props.page)
+                ? 100
                 : Number(props.page) === 3 && Number(props.currentPage) === 3 - 1
                 ? 99
                 : Number(props.currentPage) === Number(props.page) - 1
@@ -131,6 +137,10 @@ const S = {
                     ? props.theme.shadow.paperCoverLeftPage
                     : null};
             z-index: -100;
+        }
+
+        & .true {
+            pointer-events: none;
         }
     `,
     FrontPage: styled.div`
@@ -164,12 +174,13 @@ const S = {
     FrontCover: styled.div`
         display: flex;
         flex-direction: column;
-        padding: 104px 48px;
+        padding: 120px 48px;
         width: 100%;
         height: 100%;
-        background-color: ${({ theme }) => theme.color.main2};
+        background-color: ${({ theme }) => theme.color.main3};
         border-radius: 5px 32px 32px 5px;
         box-shadow: ${({ theme }) => theme.shadow.paperRightPage};
+        font-family: 'constantia';
     `,
     CoverIconContainer: styled.div`
         display: flex;
@@ -177,9 +188,9 @@ const S = {
         width: 100%;
         height: auto;
         margin-bottom: 12px;
-        & svg {
-            width: 60px;
-            height: 80px;
+        & > img {
+            width: 68px;
+            height: 72px;
             color: white;
         }
     `,
@@ -191,6 +202,7 @@ const S = {
         font-size: ${({ theme }) => theme.fontSize.title3};
         color: white;
         margin: 12px 0 8px;
+        font-family: inherit;
     `,
     TeamTitle: styled.div`
         display: flex;
@@ -200,6 +212,7 @@ const S = {
         margin: 8px 0;
         font-size: ${({ theme }) => theme.fontSize.subTitle1};
         color: white;
+        font-family: inherit;
     `,
     CoverPassportIconContainer: styled.div`
         display: flex;

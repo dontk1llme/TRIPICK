@@ -9,4 +9,7 @@ export { default as DetailAlbum } from './diary/DetailAlbum';
 export { default as WorldMap } from './diary/WorldMap';
 
 export { default as MyProfile } from './mypage/MyProfile';
+export { default as MyStamps } from './mypage/MyStamps';
+export { default as EmptyStamp } from './mypage/EmptyStamp';
+export { default as CollectedStamp } from './mypage/CollectedStamp';
 export { default as CountryList } from './diary/CountryList';
