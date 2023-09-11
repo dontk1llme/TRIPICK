@@ -9,6 +9,10 @@ const CountryList = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchResultInKrData, setIsSearchResultInKrData] = useState(false); // 초기값을 false로 설정
 
+    // 필터링된 국가 이름 배열
+    const filteredCountryNames = countriesNamesArray
+    .filter(countryName => countryName.toLowerCase().includes(searchQuery.toLowerCase()));
+
     useEffect(() => {
         // 국가 코드 배열이 변경될 때마다 국가 이름 배열 업데이트
         getCountriesNamesList();
@@ -64,6 +68,8 @@ const CountryList = () => {
             setIsSearchResultInKrData(false); // 검색 결과가 없을 때 설정
             console.log('krdata에 없음');
         }
+
+
     };
 
     return (
@@ -79,25 +85,25 @@ const CountryList = () => {
             {/* 간격 주기 */}
             <div style={{ margin: '10px 0' }}></div>
 
+
+
             {/* 검색 결과를 필터링하여 국가 이름 목록을 렌더링 */}
-            {countriesNamesArray
-                .filter(countryName => countryName.toLowerCase().includes(searchQuery.toLowerCase()))
-                .map((filteredCountryName, index) => (
-                    <div key={index} style={{ marginBottom: '10px' }}>{filteredCountryName}</div>
-                ))}
+            {filteredCountryNames.map((filteredCountryName, index) => (
+                <div key={index} style={{ marginBottom: '10px' }}>{filteredCountryName}</div>
+            ))}
 
-            {/* 검색 결과가 없는 경우 메시지 출력 */}
-            {searchQuery && !isSearchResultInKrData && (
-                <div>검색 결과가 없습니다. 국가명을 확인해 주세요.</div>
+            {/* 검색 결과가 없는 경우 메시지 출력 또는 검색 결과가 있는데도 검색 결과가 없는 경우 추가 버튼 출력 */}
+            {searchQuery && filteredCountryNames.length === 0 && (
+                !isSearchResultInKrData ? (
+                    <div>검색 결과가 없습니다. 국가명을 확인해 주세요.</div>
+                ) : (
+                    <div>
+                        {searchQuery} 국가를 추가하시겠습니까?
+                        <button onClick={handleAddCountry}>추가</button>
+                    </div>
+                )
             )}
 
-            {/* 검색 결과가 krdata에 없는 경우 추가 버튼 출력 */}
-            {searchQuery && isSearchResultInKrData && (
-                <div>
-                    {searchQuery} 국가를 추가하시겠습니까?
-                    <button onClick={handleAddCountry}>추가</button>
-                </div>
-            )}
         </S.Wrap>
     );
 };

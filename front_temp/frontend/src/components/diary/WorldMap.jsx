@@ -7,11 +7,15 @@ const krdata = require('world_countries_lists/data/countries/ko/countries.json')
 const WorldMap = () => {
     const { countriesCodesArray, setCountriesCodesArray } = useCountriesData();
     const [countriesNamesArray, setCountriesNamesArray] = useState([]);
-    const [data, setData] = useState({});
+    const [hoveredRegionName, setHoveredRegionName] = useState('');
+    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+    const [data, setData] = useState({}); // data 상태 추가
 
     useEffect(() => {
         makeMapDataStructure(countriesCodesArray);
     }, [countriesCodesArray]);
+
+    useEffect(() => { return () => { document.querySelectorAll('.jvectormap-tip').forEach((element) => { element.remove(); }); }; });
 
     const handleClick = (e, countryCode) => {
         setCountriesCodesArray(prevCodesArray => {
@@ -28,9 +32,22 @@ const WorldMap = () => {
             getCountriesNamesList(newCountryCodesArray);
             return newCountryCodesArray;
         });
-        console.log(countriesCodesArray)
     };
-    
+
+    const handleRegionOver = (event, code) => {
+        const countryName = getCountryNameByCode(code);
+
+        // 마우스 위치 계산
+        const x = event.pageX;
+        const y = event.pageY - 20; // 국가명을 마우스 바로 위에 표시하려면 y 위치에서 20을 뺍니다.
+
+        setHoveredRegionName(countryName);
+        setTooltipPosition({ x, y });
+    };
+
+    const handleRegionOut = () => {
+        setHoveredRegionName('');
+    };
 
     const getCountryNameByCode = countryCode => {
         const lowercaseCountryCode = countryCode.toLowerCase();
@@ -62,10 +79,12 @@ const WorldMap = () => {
                 }}
                 containerClassName="map"
                 onRegionClick={handleClick}
+                onRegionOver={handleRegionOver}
+                onRegionOut={handleRegionOut}
 
                 regionStyle={{
                     initial: {
-                        fill: '#8390FA', //main1
+                        fill: '#8390FA',
                         'fill-opacity': 0.9,
                         stroke: 'none',
                         'stroke-width': 0,
@@ -74,6 +93,11 @@ const WorldMap = () => {
                     selected: {
                         fill: '#5452B7',
                     },
+                    hover: {
+                        "fill-opacity": 0.8,
+                        cursor: "pointer"
+                    },
+                    selectedHover: {}
                 }}
                 regionsSelectable={true}
                 series={{
@@ -85,8 +109,13 @@ const WorldMap = () => {
                         },
                     ],
                 }}
-                
             />
+            {/* 추가: hoveredRegionName이 비어있지 않으면 표시 */}
+            {hoveredRegionName && (
+                <div style={{ position: 'absolute', top: tooltipPosition.y, left: tooltipPosition.x, backgroundColor: 'white', padding: '4px' }}>
+                    {hoveredRegionName}
+                </div>
+            )}
         </S.Wrap>
     );
 };
