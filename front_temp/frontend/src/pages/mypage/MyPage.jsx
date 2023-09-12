@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import * as components from 'components';
 
-import { FaPassport } from 'react-icons/fa6';
 import { TbEPassport } from 'react-icons/tb';
 
 const MyPage = () => {
@@ -17,6 +16,8 @@ const MyPage = () => {
     useEffect(() => {
         console.log(currentPage);
     }, [currentPage]);
+
+    const pages = [1, 2, 3, 4];
     return (
         <S.Wrap>
             <S.PassportConatiner>
@@ -70,12 +71,20 @@ const MyPage = () => {
                         </S.PassportRight>
                     </S.BackPage>
                     <S.FrontPage className={currentPage !== 3}>
-                        <S.Test onClick={e => e.stopPropagation()}>
-                            <S.Test2></S.Test2>
-                        </S.Test>
+                        <S.BackCover></S.BackCover>
                     </S.FrontPage>
                 </S.PageContainer>
             </S.PassportConatiner>
+            <S.IndexContainer>
+                {pages.map((page, index) => (
+                    <S.IndexInnerContainer key={index}>
+                        <S.Index page={page} onClick={() => setCurrentPage(page - 1)} curr={currentPage === page - 1}>
+                            {page}
+                        </S.Index>
+                        <S.IndexLine lastPage={page === 4}></S.IndexLine>
+                    </S.IndexInnerContainer>
+                ))}
+            </S.IndexContainer>
         </S.Wrap>
     );
 };
@@ -177,10 +186,17 @@ const S = {
         padding: 120px 48px;
         width: 100%;
         height: 100%;
-        background-color: ${({ theme }) => theme.color.main3};
+        background-color: ${({ theme }) => theme.color.main2};
         border-radius: 5px 32px 32px 5px;
         box-shadow: ${({ theme }) => theme.shadow.paperRightPage};
         font-family: 'constantia';
+    `,
+    BackCover: styled.div`
+        width: 100%;
+        height: 100%;
+        background-color: ${({ theme }) => theme.color.main2};
+        border-radius: 32px 5px 5px 32px;
+        box-shadow: ${({ theme }) => theme.shadow.pageCoverBackPage};
     `,
     CoverIconContainer: styled.div`
         display: flex;
@@ -245,6 +261,38 @@ const S = {
             linear-gradient(0deg, #f8f9f9, #fffeeb);
         background-size: cover;
         box-shadow: ${({ theme }) => theme.shadow.paperRightPage};
+    `,
+    IndexContainer: styled.div`
+        margin-left: 56px;
+        display: flex;
+        flex-direction: column;
+        width: 40px;
+        height: auto;
+    `,
+    IndexInnerContainer: styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: auto;
+    `,
+    Index: styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        ${({ page }) => (page !== 1 ? null : null)};
+        background-color: ${({ curr, theme }) => (curr ? theme.color.main2 : theme.color.gray)};
+        color: ${({ curr, theme }) => (curr ? theme.color.white : theme.color.black)};
+        cursor: pointer;
+    `,
+    IndexLine: styled.div`
+        width: 0.5px;
+        height: 16px;
+        background-color: ${({ theme }) => theme.color.black};
+        ${({ lastPage }) => (lastPage ? `display: none` : null)}
     `,
 };
 
