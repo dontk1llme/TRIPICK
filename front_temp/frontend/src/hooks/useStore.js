@@ -223,3 +223,36 @@ export const stampState = create(set => ({
             return { stamp: updatedStamps };
         }),
 }));
+
+export const landingState = create(set => ({
+    landingLocation: [
+        {
+            country: '노르웨이',
+            city: '트롬쇠',
+            estimatedClimate: '12',
+            estimatedExchangeRate: '123.69',
+            currency: '크로네',
+            safety: '8.6',
+            imageUrl: require('asset/images/troms.png').default,
+        },
+        {
+            country: '프랑스',
+            city: '파리',
+            estimatedClimate: '21',
+            estimatedExchangeRate: '1430.15',
+            currency: '유로',
+            safety: '8.8',
+            imageUrl: require('asset/images/troms.png').default,
+        },
+        {
+            country: '미국',
+            city: '콜로라도',
+            estimatedClimate: '25',
+            estimatedExchangeRate: '1317.61',
+            currency: '달러',
+            safety: '9.1',
+            imageUrl: require('asset/images/troms.png').default,
+        },
+    ],
+    // setlandingLocation: data => set(state => ({ landingLocation: data })),
+}));
