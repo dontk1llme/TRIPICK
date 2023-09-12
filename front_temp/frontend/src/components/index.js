@@ -13,3 +13,4 @@ export { default as MyStamps } from './mypage/MyStamps';
 export { default as EmptyStamp } from './mypage/EmptyStamp';
 export { default as CollectedStamp } from './mypage/CollectedStamp';
 export { default as CountryList } from './diary/CountryList';
+export { default as LandingCard } from './landing/LandingCard';
