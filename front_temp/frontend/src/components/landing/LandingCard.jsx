@@ -31,12 +31,12 @@ const LandingCard = ({ location }) => {
 const S = {
     LocationContainer: styled.div`
         display: flex;
-        position: relative;
         width: 100%;
         height: 100%;
-    `,
-
+        `,
+        
     LeftContainer: styled.div`
+        position: relative;
         flex: 60%;
     `,
     RightContainer: styled.div`
@@ -45,12 +45,11 @@ const S = {
 
     Image: styled.img`
         width: 900px;
-        height: 750px;
+        height: 690px;
+        position: absolute; /* absolute 포지션 설정 */
         top: 0;
-        // object-fit: cover; /* 이미지를 가득 채우도록 설정 */
+        left: 0; //toptab으로 못 넘어감. . .
     `
 };
-
-
 
 export default LandingCard;
