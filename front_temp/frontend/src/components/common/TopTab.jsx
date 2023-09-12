@@ -77,23 +77,25 @@ const S = {
         }
 
         &:hover {
-            & svg {
-                color: ${({ theme }) => theme.color.main1};
+            & path {
+                fill: ${({ theme }) => theme.color.main1};
             }
         }
     `,
     Profile: styled.div`
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
         cursor: pointer;
         & svg {
             width: 100%;
             height: 100%;
-            color: ${({ theme }) => theme.color.main1};
+            & path {
+                fill: ${({ theme }) => theme.color.main1};
+            }
         }
         &:hover {
-            & svg {
-                color: ${({ theme }) => theme.color.main2};
+            & path {
+                fill: ${({ theme }) => theme.color.main2};
             }
         }
     `,

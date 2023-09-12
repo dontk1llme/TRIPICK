@@ -103,6 +103,7 @@ export const cartState = create(set => ({
             currency: '크로네',
             safety: '8.6',
             imageUrl: require('asset/images/troms.png').default,
+            cart: true,
         },
         {
             country: '프랑스',
@@ -111,7 +112,8 @@ export const cartState = create(set => ({
             estimatedExchangeRate: '1430.15',
             currency: '유로',
             safety: '8.8',
-            imageUrl: require('asset/images/troms.png').default,
+            imageUrl: require('asset/images/paris.png').default,
+            cart: true,
         },
         {
             country: '미국',
@@ -120,7 +122,8 @@ export const cartState = create(set => ({
             estimatedExchangeRate: '1317.61',
             currency: '달러',
             safety: '9.1',
-            imageUrl: require('asset/images/troms.png').default,
+            imageUrl: require('asset/images/colorado.png').default,
+            cart: true,
         },
     ],
     setCartLocation: data => set(state => ({ cartLocation: data })),
