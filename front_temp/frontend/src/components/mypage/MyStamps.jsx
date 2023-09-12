@@ -11,7 +11,7 @@ const MyStamps = ({ page }) => {
         return findStamp.obtained;
     };
     return (
-        <S.Wrap onClick={e => e.stopPropagation()}>
+        <S.Wrap onClick={e => e.stopPropagation()} page={page}>
             <S.StampContainer className="first">
                 {isObtained(4 * (page - 1) + 1) ? (
                     <components.CollectedStamp id={4 * (page - 1) + 1} />
@@ -47,30 +47,56 @@ const MyStamps = ({ page }) => {
 const S = {
     Wrap: styled.div`
         position: relative;
-        /* margin: 80px 32px; */
         width: 100%;
         height: 100%;
         z-index: inherit;
-        & .first {
-            position: absolute;
-            top: 0px;
-            left: 50px;
-        }
-        & .second {
-            position: absolute;
-            top: 140px;
-            left: 200px;
-        }
-        & .third {
-            position: absolute;
-            top: 200px;
-            left: 0px;
-        }
-        & .fourth {
-            position: absolute;
-            top: 340px;
-            left: 180px;
-        }
+
+        ${({ page }) =>
+            page % 2 === 0
+                ? `
+            & .first {
+                position: absolute;
+                top: 0px;
+                left: 110px; 
+            }
+            & .second {
+                position: absolute;
+                top: 140px;
+                left: -30px;   
+            }
+            & .third {
+                position: absolute;
+                top: 200px;
+                left: 160px;  
+            }
+            & .fourth {
+                position: absolute;
+                top: 340px;
+                left: -10px;    
+            }
+        `
+                : `
+            & .first {
+                position: absolute;
+                top: 0px;
+                left: 50px;
+            }
+            & .second {
+                position: absolute;
+                top: 140px;
+                left: 200px;
+            }
+            & .third {
+                position: absolute;
+                top: 200px;
+                left: 0px;
+            }
+            & .fourth {
+                position: absolute;
+                top: 340px;
+                left: 180px;
+            }
+        `}
     `,
     StampContainer: styled.div`
         display: flex;

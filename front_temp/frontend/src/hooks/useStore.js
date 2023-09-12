@@ -163,7 +163,7 @@ export const stampState = create(set => ({
             name: '코알라 짱',
             detail: '코알라가 사는 나라에 3번 이상 방문',
             imageUrl: require('asset/images/stamp3.png').default,
-            obtained: false,
+            obtained: true,
         },
         {
             id: 6,
