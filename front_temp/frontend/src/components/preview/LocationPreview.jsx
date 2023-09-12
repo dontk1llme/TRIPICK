@@ -26,7 +26,7 @@ const LocationPreview = ({ place }) => {
                 </S.InformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>안전 지수</S.InformationTitle>
-                    <S.InformationContent>{place.safety}원 </S.InformationContent>
+                    <S.InformationContent>{place.safety} </S.InformationContent>
                     <S.InformationDescription>/ 10</S.InformationDescription>
                 </S.InformationContainer>
             </S.PreviewInformationContainer>
