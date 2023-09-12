@@ -7,12 +7,19 @@ server:
       force: true
 
 spring:
+  data:
+    mongodb:
+      host: ${MONGODB_DATABASE_URL}
+      port: ${MONGODB_PORT}
+      database: tripick
+      username: ${DATABASE_USERNAME}
+      password: ${DATABASE_PASSWORD}
   config:
     import: env.yml
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: ${DATABASE_URL}
+    url: ${MARIADB_DATABASE_URL}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
     hikari:
@@ -27,9 +34,3 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MariaDBDialect
-
-jwt:
-  header: Authorization
-  secret: ${JWT_SECRET_KEY}
-  access-token-expire: ${ACCESS_TOKEN_EXPIRE}
-  refresh-token-expire: ${REFRESH_TOKEN_EXPIRE}
