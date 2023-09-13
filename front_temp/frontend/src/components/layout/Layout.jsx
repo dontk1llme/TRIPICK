@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import * as components from 'components';
 
 const Layout = () => {
+    const location = useLocation();
     return (
-        <S.Wrap>
+        <S.Wrap overflowHidden={location.pathname === '/mypage'}>
             <components.TopTab />
             <S.Container>
                 <Outlet />
@@ -26,7 +27,7 @@ const S = {
         justify-content: flex-start;
         align-items: start;
         overflow-x: hidden;
-        overflow-y: auto;
+        overflow-y: ${({ overflowHidden }) => (overflowHidden ? 'hidden' : 'auto')};
     `,
     Container: styled.div`
         width: 100%;
