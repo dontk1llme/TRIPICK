@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as utils from 'utils';
+import * as components from 'components';
 
 const TopTab = () => {
     const navigate = useNavigate();
@@ -12,20 +13,23 @@ const TopTab = () => {
             <S.Logo onClick={() => navigate(utils.URL.HOME.MAIN)}>
                 <img src={require('asset/images/logo.png').default} alt="logo" />
             </S.Logo>
+            
             <S.ShortCut>
+                <components.LoginButton></components.LoginButton>
+               
                 <S.Liked onClick={() => navigate(utils.URL.CART.LIST)}>
                     <svg width="37" height="34" viewBox="0 0 37 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M26.7174 1C23.1413 1 20.0522 3.09475 18.5 6.15025C16.9478 3.09475 13.8587 1 10.2826 1C5.15435 1 1 5.29975 1 10.5917C1 15.8837 4.18043 20.7347 8.28913 24.7195C12.3978 28.7042 18.5 32.5 18.5 32.5C18.5 32.5 24.4043 28.7672 28.7109 24.7195C33.3065 20.404 36 15.8995 36 10.5917C36 5.284 31.8457 1 26.7174 1Z"
                             fill="#8390FA"
-                            fill-opacity="0.16"
+                            fillOpacity="0.16"
                         />
                         <path
                             d="M26.7174 1C23.1413 1 20.0522 3.09475 18.5 6.15025C16.9478 3.09475 13.8587 1 10.2826 1C5.15435 1 1 5.29975 1 10.5917C1 15.8837 4.18043 20.7347 8.28913 24.7195C12.3978 28.7042 18.5 32.5 18.5 32.5C18.5 32.5 24.4043 28.7672 28.7109 24.7195C33.3065 20.404 36 15.8995 36 10.5917C36 5.284 31.8457 1 26.7174 1Z"
                             stroke="#8390FA"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         />
                     </svg>
                 </S.Liked>
@@ -64,7 +68,8 @@ const S = {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 99px;
+        // width: 99px; //두 개만 있었을 때
+        width: 150px;
         height: 100%;
     `,
     Liked: styled.div`

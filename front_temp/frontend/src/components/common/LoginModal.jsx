@@ -1,0 +1,104 @@
+import React, { useState } from "react";
+import styled from 'styled-components';
+import { IoClose } from 'react-icons/io5';
+import SignKaKao from '../../asset/images/SignKaKao.png'
+import SignGoogle from '../../asset/images/SignGoogle.png'
+import Coala from '../../asset/images/coala.png'
+
+const LoginModal = ({ setModalOpen }) => {
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleKakaoClick = () => {
+    console.log("카카오 클릭"); 
+  };
+
+  const handleGoogleClick = () => {
+    console.log("구글 클릭"); 
+  };
+
+  return (
+    <S.modalWrapper>
+      <S.modalOverlay onClick={closeModal} />
+      <S.modalContent>
+        <IoClose style={{ position: 'absolute', right: '15px', top: '15px', cursor: 'pointer',  fontSize: '24px' }} onClick={closeModal}></IoClose>
+        <img src={Coala} style={{ width: '50px', height: '50px' }} alt="Coala"></img> 
+
+        <S.textContainer>
+          <br />
+          <p style={{ fontSize: '24px', fontWeight: 'bold' }}>로그인해서</p>
+          <p style={{ fontSize: '24px', fontWeight: 'bold' }}><span style={{ color: '#8390FA', fontSize: '24px', fontWeight: 'bold' }}>트리픽</span>과 함께 떠나 봐요.</p>
+        </S.textContainer>
+
+        <S.buttonContainer>
+          <S.googleButton onClick={handleGoogleClick}><img src={SignGoogle} alt="Sign with Google" style={{ width: '280px', height: '46px' }} /></S.googleButton>
+          <S.kakaoButton onClick={handleKakaoClick}> <img src={SignKaKao} alt="Sign with Kakao" style={{ width: '280px', height: '46px' }} /></S.kakaoButton>
+        </S.buttonContainer>
+      </S.modalContent>
+    </S.modalWrapper>
+  );  
+};
+
+const S = {
+  modalWrapper: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  `,
+  modalOverlay: styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 어두운 오버레이 스타일 */
+  `,
+  modalContent: styled.div`
+    width: 400px;
+    height: 560px;
+    background-color: #fafafa;
+    border-radius: 30px;
+    box-shadow: ${({ theme }) => theme.shadow.card};
+    padding: 30px;
+    position: relative;
+  `,
+  buttonContainer: styled.div`
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  `,
+  kakaoButton: styled.button`
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  `,
+  googleButton: styled.button`
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  `,
+  textContainer: styled.div`
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  `,
+};
+
+export default LoginModal;
