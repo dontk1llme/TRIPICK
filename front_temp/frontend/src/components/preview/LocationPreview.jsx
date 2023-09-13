@@ -14,6 +14,9 @@ const LocationPreview = ({ place }) => {
             const indexOfMinusOne = compareLocation.indexOf(-1);
             if (indexOfMinusOne !== -1) {
                 compareLocation[indexOfMinusOne] = id;
+                if (indexOfMinusOne === 1) {
+                    alert('이동하겠는지 여기서 물어보기');
+                }
             } else {
                 alert('비교함이 가득찼습니다. ');
             }
