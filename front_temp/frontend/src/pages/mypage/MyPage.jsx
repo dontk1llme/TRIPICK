@@ -186,7 +186,7 @@ const S = {
         padding: 120px 48px;
         width: 100%;
         height: 100%;
-        background-color: ${({ theme }) => theme.color.main2};
+        background-color: ${({ theme }) => theme.color.main3};
         border-radius: 5px 32px 32px 5px;
         box-shadow: ${({ theme }) => theme.shadow.paperRightPage};
         font-family: 'constantia';
@@ -194,7 +194,7 @@ const S = {
     BackCover: styled.div`
         width: 100%;
         height: 100%;
-        background-color: ${({ theme }) => theme.color.main2};
+        background-color: ${({ theme }) => theme.color.main3};
         border-radius: 32px 5px 5px 32px;
         box-shadow: ${({ theme }) => theme.shadow.pageCoverBackPage};
     `,
