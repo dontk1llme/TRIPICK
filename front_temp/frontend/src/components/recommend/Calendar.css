@@ -70,11 +70,11 @@
 }
 
 .react-calendar__navigation button:disabled {
-  background-color: #f0f0f0;
+  opacity: 0; /* 투명하게 만듦 */
+  pointer-events: none; /* 이벤트를 비활성화하여 클릭이나 상호작용을 막음 */
 }
 
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
+.react-calendar__navigation button:enabled:hover {
   background-color: #e6e6e6;
 }
 
@@ -101,6 +101,7 @@
 
 .react-calendar__tile:disabled {
   background-color: #f0f0f0;
+  pointer-events: none; /* 이벤트를 비활성화하여 클릭이나 상호작용을 막음 */
 }
 
 .react-calendar__tile:enabled:hover,
@@ -110,22 +111,26 @@
 
 /* 현재 날짜 스타일 */
 .react-calendar__tile--now {
-  background: #ffff76;
+  background: #ffffb3;
+  border-radius: 6px;
 }
 
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-  background: #ffffa9;
+  background: #ffffb3;
+  border-radius: 6px;
 }
 
 /* 활성화된 타일 스타일 */
 .react-calendar__tile--hasActive {
-  background: #76baff;
+  color: white;
+  background: #8390FA;
+  border-radius: 6px;
 }
 
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-  background: #a9d4ff;
+  background: #adb6ff;
 }
 
 /* 선택된 타일 스타일 */
