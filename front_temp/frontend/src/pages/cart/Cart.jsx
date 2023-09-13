@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import { useNavigate } from 'react-router-dom';
+import * as utils from 'utils';
+
 import * as hooks from 'hooks';
-import { IoMdCart } from 'react-icons/io';
+import { GiShoppingCart } from 'react-icons/gi';
 import * as components from 'components';
 
 const Cart = () => {
-    const { cartLocation } = hooks.cartState();
+    const { cartLocation, compareLocation } = hooks.cartState();
+    const navigate = useNavigate();
+    const [compareAmount, setCompareAmount] = useState(0);
+
+    useEffect(() => {
+        const count = compareLocation.filter(value => value !== -1).length;
+        setCompareAmount(count);
+    }, [compareLocation]);
 
     return (
         <S.Wrap>
             <S.TitleContainer>
                 <S.Title>찜한 여행지</S.Title>
                 <S.NavCompare>
-                    <IoMdCart />
-                    <S.CartCount>{cartLocation.length}</S.CartCount>
+                    <GiShoppingCart onClick={() => navigate(utils.URL.CART.COMPARE)} />
+                    <S.CartCount>{compareAmount}</S.CartCount>
                 </S.NavCompare>
             </S.TitleContainer>
             <S.PreviewContainer>
@@ -39,7 +49,7 @@ const S = {
     TitleContainer: styled.div`
         width: 100%;
         height: 40px;
-        margin: 32px 0 36px 0;
+        margin: 32px 0 48px 0;
         display: flex;
     `,
     Title: styled.div`
@@ -93,7 +103,12 @@ const S = {
         border-radius: 100%;
     `,
     PreviewContainer: styled.div`
-        display: flex;
+        margin-bottom: 40px;
+        width: 90%;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        grid-gap: 32px;
     `,
 };
 
