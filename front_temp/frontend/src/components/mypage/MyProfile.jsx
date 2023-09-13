@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
@@ -9,6 +9,14 @@ const MyProfile = () => {
     const { mainStampId, stamp } = hooks.stampState();
     const [mainStampUrl, setMainStampUrl] = useState('');
     const [onEditMode, setOnEditMode] = useState(false);
+
+    const nameInputRef = useRef(null);
+
+    useEffect(() => {
+        if (onEditMode) {
+            nameInputRef.current.focus();
+        }
+    }, [onEditMode]);
 
     useEffect(() => {
         if (mainStampId !== 0) {
@@ -61,6 +69,7 @@ const MyProfile = () => {
                         onChange={e => setName(e.target.value)}
                         readOnly={onEditMode ? null : 'readonly'}
                         edit={onEditMode ? 'edit' : null}
+                        ref={nameInputRef}
                     />
                 </S.TextContainer>
                 <S.TextContainer>
@@ -69,8 +78,7 @@ const MyProfile = () => {
                         type="text"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
-                        readOnly={onEditMode ? null : 'readonly'}
-                        edit={onEditMode ? 'edit' : null}
+                        readOnly="readonly"
                     />
                 </S.TextContainer>
                 <S.TextContainer>
