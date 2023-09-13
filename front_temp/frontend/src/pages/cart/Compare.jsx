@@ -1,13 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { IoChevronBack } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import * as utils from 'utils';
+import { IoChevronBack, IoAdd, IoClose } from 'react-icons/io5';
+import * as hooks from 'hooks';
 
 const Compare = () => {
+    const navigate = useNavigate();
+    const [firstCity, setFirstCity] = useState('');
+    const [secondCity, setSecondCity] = useState('');
+    const { cartLocation, compareLocation, setCompareLocation } = hooks.cartState();
+
+    useEffect(() => {
+        if (compareLocation[0] !== -1) {
+            const firstCityItem = cartLocation.find(item => item.id === compareLocation[0]);
+            if (firstCityItem) {
+                setFirstCity(firstCityItem);
+                console.log(firstCityItem);
+            }
+        }
+        if (compareLocation[1] !== -1) {
+            const secondCityItem = cartLocation.find(item => item.id === compareLocation[1]);
+            if (secondCityItem) {
+                setSecondCity(secondCityItem);
+                console.log(secondCityItem);
+            }
+        }
+    }, []);
+
+    const handleDeleteFirstComparison = () => {
+        setFirstCity('');
+        setCompareLocation([-1, compareLocation[1]]);
+    };
+
+    const handleDeleteSecondComparison = () => {
+        setSecondCity('');
+        setCompareLocation([compareLocation[0], -1]);
+    };
     return (
         <S.Wrap>
             <S.TitleContainer>
-                <S.BackToCart>
+                <S.BackToCart onClick={() => navigate(utils.URL.CART.LIST)}>
                     <IoChevronBack />
                     찜한 여행지
                 </S.BackToCart>
@@ -15,7 +49,89 @@ const Compare = () => {
                 <S.Space></S.Space>
             </S.TitleContainer>
             <S.CompareContainer>
-                <S.CityContainer></S.CityContainer>
+                {compareLocation[0] === -1 ? (
+                    <S.EmptyCityContainer direction="left" onClick={() => navigate(utils.URL.CART.LIST)}>
+                        <IoAdd />
+                        비교할 여행지를 추가하세요.
+                    </S.EmptyCityContainer>
+                ) : (
+                    <S.CityContainer direction="left">
+                        <S.HoverContainer className="hover">
+                            <IoClose onClick={() => handleDeleteFirstComparison()} />
+                        </S.HoverContainer>
+                        <S.CityImage image={firstCity.imageUrl} direction="left">
+                            <S.WeatherInformationContainer direction="left">
+                                <S.WeatherInformation>작년 평균 기온 몇도</S.WeatherInformation>
+                                <S.WeatherInformation>일조시간 몇시간</S.WeatherInformation>
+                                <S.WeatherInformation>뇌우일수 몇일</S.WeatherInformation>
+                                <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation>
+                            </S.WeatherInformationContainer>
+                            <S.DatePeriod>
+                                {firstCity.start_date} ~ {firstCity.end_date}
+                            </S.DatePeriod>
+                            <S.CountryInformation>{firstCity.country}</S.CountryInformation>
+                            <S.CityInformation>{firstCity.city}</S.CityInformation>
+                        </S.CityImage>
+                        <S.DataContainer>
+                            <S.DataItemContainer>
+                                {firstCity.estimatedExchangeRate}원
+                                <S.SubDataContainer>/{firstCity.currency}</S.SubDataContainer>
+                            </S.DataItemContainer>
+                            <S.DataItemContainer>{firstCity.estimatedClimate}°C</S.DataItemContainer>
+                            <S.DataItemContainer>{firstCity.safety}</S.DataItemContainer>
+                            <S.DataItemContainer>{firstCity.estimated_traveler}명</S.DataItemContainer>
+                            <S.DataItemContainer className="ticket">
+                                {' '}
+                                {parseInt(firstCity.ticketPrice, 10).toLocaleString()}원
+                            </S.DataItemContainer>
+                        </S.DataContainer>
+                    </S.CityContainer>
+                )}
+                <S.CompareItemContainer>
+                    <S.CompareItem>예상 환율</S.CompareItem>
+                    <S.CompareItem>예상 날씨</S.CompareItem>
+                    <S.CompareItem>안전지수</S.CompareItem>
+                    <S.CompareItem>여행객 동향</S.CompareItem>
+                    <S.CompareItem>최저가 항공권</S.CompareItem>
+                </S.CompareItemContainer>
+                {compareLocation[1] === -1 ? (
+                    <S.EmptyCityContainer direction="right" onClick={() => navigate(utils.URL.CART.LIST)}>
+                        <IoAdd />
+                        비교할 여행지를 추가하세요.
+                    </S.EmptyCityContainer>
+                ) : (
+                    <S.CityContainer direction="right">
+                        <S.HoverContainer className="hover">
+                            <IoClose onClick={() => handleDeleteSecondComparison()} />
+                        </S.HoverContainer>
+                        <S.DataContainer>
+                            <S.DataItemContainer>
+                                {secondCity.estimatedExchangeRate}원
+                                <S.SubDataContainer>/{secondCity.currency}</S.SubDataContainer>
+                            </S.DataItemContainer>
+                            <S.DataItemContainer>{secondCity.estimatedClimate}°C</S.DataItemContainer>
+                            <S.DataItemContainer>{secondCity.safety}</S.DataItemContainer>
+                            <S.DataItemContainer>{secondCity.estimated_traveler}명</S.DataItemContainer>
+                            <S.DataItemContainer className="ticket">
+                                {' '}
+                                {parseInt(secondCity.ticketPrice, 10).toLocaleString()}원
+                            </S.DataItemContainer>
+                        </S.DataContainer>
+                        <S.CityImage image={secondCity.imageUrl} direction="right">
+                            <S.WeatherInformationContainer direction="right">
+                                <S.WeatherInformation>작년 평균 기온 몇도</S.WeatherInformation>
+                                <S.WeatherInformation>일조시간 몇시간</S.WeatherInformation>
+                                <S.WeatherInformation>뇌우일수 몇일</S.WeatherInformation>
+                                <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation>
+                            </S.WeatherInformationContainer>
+                            <S.DatePeriod>
+                                {secondCity.start_date} ~ {secondCity.end_date}
+                            </S.DatePeriod>
+                            <S.CountryInformation>{secondCity.country}</S.CountryInformation>
+                            <S.CityInformation>{secondCity.city}</S.CityInformation>
+                        </S.CityImage>
+                    </S.CityContainer>
+                )}
             </S.CompareContainer>
         </S.Wrap>
     );
@@ -57,7 +173,7 @@ const S = {
     `,
     TitleContainer: styled.div`
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-around;
         width: 100%;
         height: 40px;
         margin: 32px 0;
@@ -74,14 +190,173 @@ const S = {
         white-space: nowrap;
     `,
     CompareContainer: styled.div`
+        display: flex;
+        justify-content: space-between;
         width: 100%;
-        height: 100%;
+        height: calc(100vh - 171px);
         display: flex;
     `,
-    CityContainer: styled.div`
-        width: 668px;
-        height: 100%;
+    EmptyCityContainer: styled.div`
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        width: 100%;
+        height: 100%;
+        box-shadow: ${({ theme }) => theme.shadow.card};
+        border-radius: ${({ direction }) => (direction === 'left' ? '0 8px 8px 0' : '8px 0 0 8px')};
+        background-color: ${({ theme }) => theme.color.white};
+        transition: transform 0.3s ease;
+        &:hover {
+            color: ${({ theme }) => theme.color.main1};
+            & svg {
+                color: ${({ theme }) => theme.color.main1};
+            }
+            transform: translateY(-5px);
+        }
+
+        & svg {
+            width: 56px;
+            height: 56px;
+            color: ${({ theme }) => theme.color.gray};
+            margin-bottom: 32px;
+        }
+        font-size: ${({ theme }) => theme.fontSize.subTitle2};
+        color: ${({ theme }) => theme.color.gray};
+    `,
+    CompareItemContainer: styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: auto;
+        height: 100%;
+    `,
+    CompareItem: styled.div`
+        width: auto;
+        height: auto;
+        font-size: ${({ theme }) => theme.fontSize.content2};
+        color: ${({ theme }) => theme.color.black};
+        white-space: nowrap;
+        padding: 0 9px;
+    `,
+    CityContainer: styled.div`
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        &:hover {
+            & .hover {
+                width: 100%;
+                height: 100%;
+                border-radius: ${({ direction }) => (direction === 'left' ? '0 8px 8px 0' : '8px 0 0 8px')};
+                z-index: 1;
+            }
+        }
+    `,
+    HoverContainer: styled.div`
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0px;
+        height: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background-color: #5b55497c;
+        & svg {
+            height: 48px;
+            width: 48px;
+            color: ${({ theme }) => theme.color.white};
+            &:hover {
+                color: ${({ theme }) => theme.color.main1};
+            }
+        }
+    `,
+    CityImage: styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: ${({ direction }) => (direction === 'left' ? 'flex-end' : 'flex-start')};
+        width: 100%;
+        height: 100%;
+        margin: ${({ direction }) => (direction === 'left' ? '0 8px 0 0' : '0 0 0 8px')};
+        background-image: url(${props => props.image});
+        background-size: cover;
+        padding: 32px;
+    `,
+    DataContainer: styled.div`
+        display: flex;
+        flex-direction: column;
+        width: 160px;
+        height: 100%;
+        justify-content: space-between;
+        & .ticket {
+            font-size: ${({ theme }) => theme.fontSize.subTitle2};
+        }
+    `,
+    DataItemContainer: styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        width: 160px;
+        height: 105px;
+        border-radius: 8px;
+        font-size: ${({ theme }) => theme.fontSize.subTitle1};
+        font-weight: bold;
+        color: ${({ theme }) => theme.color.main1};
+        background-color: ${({ theme }) => theme.color.white};
+        box-shadow: ${({ theme }) => theme.shadow.card};
+        white-space: nowrap;
+    `,
+    SubDataContainer: styled.div`
+        align-self: flex-end;
+        width: auto;
+        height: auto;
+        font-size: ${({ theme }) => theme.fontSize.content2};
+        color: ${({ theme }) => theme.color.main1};
+        white-space: nowrap;
+        margin-top: 4px;
+    `,
+    WeatherInformationContainer: styled.div`
+        display: flex;
+        flex-direction: column;
+        width: 121px;
+        height: 72px;
+        justify-content: space-between;
+        align-items: ${({ direction }) => (direction === 'left' ? 'flex-end' : 'flex-start')};
+        margin-bottom: 8px;
+    `,
+    WeatherInformation: styled.div`
+        width: auto;
+        height: auto;
+        font-size: ${({ theme }) => theme.fontSize.content2};
+        color: ${({ theme }) => theme.color.white};
+        white-space: nowrap;
+    `,
+    DatePeriod: styled.div`
+        font-size: ${({ theme }) => theme.fontSize.subTitle2};
+        color: ${({ theme }) => theme.color.white};
+        margin-bottom: 16px;
+    `,
+    CountryInformation: styled.div`
+        font-size: ${({ theme }) => theme.fontSize.subTitle1};
+        color: ${({ theme }) => theme.color.white};
+        font-weight: bold;
+        margin-bottom: 16px;
+    `,
+    CityInformation: styled.div`
+        font-size: ${({ theme }) => theme.fontSize.title2};
+        color: ${({ theme }) => theme.color.white};
+        font-weight: bold;
     `,
 };
 
