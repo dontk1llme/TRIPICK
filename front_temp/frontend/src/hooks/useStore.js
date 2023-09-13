@@ -96,6 +96,7 @@ export const albumState = create(set => ({
 export const cartState = create(set => ({
     cartLocation: [
         {
+            id: 1,
             country: '노르웨이',
             city: '트롬쇠',
             estimatedClimate: '12',
@@ -106,6 +107,7 @@ export const cartState = create(set => ({
             cart: true,
         },
         {
+            id: 2,
             country: '프랑스',
             city: '파리',
             estimatedClimate: '21',
@@ -116,6 +118,7 @@ export const cartState = create(set => ({
             cart: true,
         },
         {
+            id: 3,
             country: '미국',
             city: '콜로라도',
             estimatedClimate: '25',
@@ -125,8 +128,32 @@ export const cartState = create(set => ({
             imageUrl: require('asset/images/colorado.png').default,
             cart: true,
         },
+        {
+            id: 4,
+            country: '노르웨이',
+            city: '트롬쇠',
+            estimatedClimate: '12',
+            estimatedExchangeRate: '123.69',
+            currency: '크로네',
+            safety: '8.6',
+            imageUrl: require('asset/images/troms.png').default,
+            cart: true,
+        },
+        {
+            id: 5,
+            country: '프랑스',
+            city: '파리',
+            estimatedClimate: '21',
+            estimatedExchangeRate: '1430.15',
+            currency: '유로',
+            safety: '8.8',
+            imageUrl: require('asset/images/paris.png').default,
+            cart: true,
+        },
     ],
+    compareLocation: [-1, -1],
     setCartLocation: data => set(state => ({ cartLocation: data })),
+    setCompareLocation: data => set(state => ({ compareLocation: data })),
 }));
 
 export const stampState = create(set => ({
@@ -138,7 +165,7 @@ export const stampState = create(set => ({
             name: '푸바오 사랑해',
             detail: '중국을 많이 간 사람에게 주는 스탬프임',
             imageUrl: require('asset/images/main-stamp.png').default,
-            obtained: false,
+            obtained: true,
         },
         {
             id: 2,

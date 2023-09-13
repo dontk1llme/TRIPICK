@@ -3,8 +3,26 @@ import styled from 'styled-components';
 
 import * as hooks from 'hooks';
 import { GoHeartFill, GoHeart } from 'react-icons/go';
+import { GiShoppingCart } from 'react-icons/gi';
 
 const LocationPreview = ({ place }) => {
+    const { compareLocation, setCompareLocation } = hooks.cartState();
+    const handleCompareLocation = id => {
+        const placeIndex = compareLocation.indexOf(id);
+
+        if (placeIndex === -1) {
+            const indexOfMinusOne = compareLocation.indexOf(-1);
+            if (indexOfMinusOne !== -1) {
+                compareLocation[indexOfMinusOne] = id;
+            } else {
+                alert('비교함이 가득찼습니다. ');
+            }
+        } else {
+            compareLocation[placeIndex] = -1;
+        }
+        setCompareLocation([...compareLocation]);
+    };
+
     return (
         <S.Wrap>
             <S.PreviewImage image={place.imageUrl}>
@@ -22,13 +40,20 @@ const LocationPreview = ({ place }) => {
                 <S.InformationContainer>
                     <S.InformationTitle>예상 환율</S.InformationTitle>
                     <S.InformationContent>{place.estimatedExchangeRate}원 </S.InformationContent>
-                    <S.InformationDescription>/ {place.currency}</S.InformationDescription>
+                    <S.InformationDescription>/{place.currency}</S.InformationDescription>
                 </S.InformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>안전 지수</S.InformationTitle>
                     <S.InformationContent>{place.safety} </S.InformationContent>
-                    <S.InformationDescription>/ 10</S.InformationDescription>
+                    <S.InformationDescription>/10</S.InformationDescription>
                 </S.InformationContainer>
+                <S.CompareContainer
+                    onClick={() => {
+                        handleCompareLocation(place.id);
+                    }}
+                    compare={compareLocation.indexOf(place.id)}>
+                    <GiShoppingCart />
+                </S.CompareContainer>
             </S.PreviewInformationContainer>
         </S.Wrap>
     );
@@ -85,6 +110,7 @@ const S = {
     `,
     PreviewInformationContainer: styled.div`
         display: flex;
+        position: relative;
         flex-direction: column;
         justify-content: space-between;
         width: 330px;
@@ -115,6 +141,24 @@ const S = {
         height: auto;
         font-size: ${({ theme }) => theme.fontSize.subTitle2};
         color: ${({ theme }) => theme.color.main1};
+    `,
+    CompareContainer: styled.div`
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+        width: auto;
+        height: auto;
+        cursor: pointer;
+        & svg {
+            width: 20px;
+            height: 20px;
+            color: ${({ compare, theme }) => (compare === -1 ? theme.color.main1 : theme.color.highlight)};
+        }
+        &:hover {
+            & svg {
+                color: ${({ theme }) => theme.color.main2};
+            }
+        }
     `,
 };
 
