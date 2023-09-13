@@ -1,6 +1,9 @@
 export { default as Layout } from './layout/Layout';
 
 export { default as TopTab } from './common/TopTab';
+export { default as LoginButton } from './common/LoginButton';
+export { default as LoginModal } from './common/LoginModal';
+
 
 export { default as LocationPreview } from './preview/LocationPreview';
 
@@ -14,3 +17,4 @@ export { default as EmptyStamp } from './mypage/EmptyStamp';
 export { default as CollectedStamp } from './mypage/CollectedStamp';
 export { default as CountryList } from './diary/CountryList';
 export { default as LandingCard } from './landing/LandingCard';
+

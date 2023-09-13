@@ -126,6 +126,7 @@
   color: white;
   background: #8390FA;
   border-radius: 6px;
+  font-weight: bold;
 }
 
 .react-calendar__tile--hasActive:enabled:hover,
@@ -149,11 +150,11 @@
 
 /* 선택 범위 타일 스타일 */
 .react-calendar--selectRange .react-calendar__tile--hover {
-  background-color: #e6e6e6;
+  background-color: #e6e9ff;
 }
 
 .react-calendar__tile--range {
-  background: #f8f8fa;
+  background: #e2e5ff;
   color: #8390FA;
   border-radius: 0;
  }
