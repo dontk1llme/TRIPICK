@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import {AiFillSafetyCertificate} from 'react-icons/ai'
+import {BiMoneyWithdraw} from 'react-icons/bi'
+import {TiWeatherPartlySunny} from 'react-icons/ti'
 
 import * as hooks from 'hooks';
 
@@ -19,9 +22,9 @@ const LandingCard = ({ location }) => {
             <S.RightContainer>
                 <div>
                     <h2>{templocation.city}, {templocation.country}</h2>
-                    <p>온도: {templocation.estimatedClimate}°C</p>
-                    <p>환율: {templocation.estimatedExchangeRate} {templocation.currency}</p>
-                    <p>안전도: {templocation.safety}</p>
+                    <p><BiMoneyWithdraw/> {templocation.estimatedExchangeRate} {templocation.currency}</p>
+                    <p><TiWeatherPartlySunny/> {templocation.estimatedClimate}°C</p>
+                    <p><AiFillSafetyCertificate/> {templocation.safety} / 10</p>
                 </div>
             </S.RightContainer>
         </S.LocationContainer>
