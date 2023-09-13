@@ -8,6 +8,7 @@ export const URL = {
     },
     CART: {
         LIST: '/cart',
+        COMPARE: '/cart/compare',
     },
     MYPAGE: {
         PASSPORT: '/mypage',
@@ -15,7 +16,7 @@ export const URL = {
     },
     RECOMMEND: {
         CALENDAR: '/recommend',
-    }
+    },
 };
 
 export const MAX_WIDTH = '1920px';
