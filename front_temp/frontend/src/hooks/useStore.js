@@ -499,7 +499,7 @@ export const landingState = create(set => ({
             estimatedExchangeRate: '1430.15',
             currency: '유로',
             safety: '8.8',
-            imageUrl: require('asset/images/troms.png').default,
+            imageUrl: require('asset/images/paris.png').default,
         },
         {
             country: '미국',
@@ -508,7 +508,7 @@ export const landingState = create(set => ({
             estimatedExchangeRate: '1317.61',
             currency: '달러',
             safety: '9.1',
-            imageUrl: require('asset/images/troms.png').default,
+            imageUrl: require('asset/images/colorado.png').default,
         },
     ],
     // setlandingLocation: data => set(state => ({ landingLocation: data })),
