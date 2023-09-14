@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 
 import * as hooks from 'hooks';
-import { GiShoppingCart } from 'react-icons/gi';
+import { AiFillStar } from 'react-icons/ai';
 import * as components from 'components';
 
 const Cart = () => {
@@ -23,7 +23,7 @@ const Cart = () => {
             <S.TitleContainer>
                 <S.Title>찜한 여행지</S.Title>
                 <S.NavCompare>
-                    <GiShoppingCart onClick={() => navigate(utils.URL.CART.COMPARE)} />
+                    <AiFillStar onClick={() => navigate(utils.URL.CART.COMPARE)} />
                     <S.CartCount>{compareAmount}</S.CartCount>
                 </S.NavCompare>
             </S.TitleContainer>
@@ -90,8 +90,8 @@ const S = {
         align-items: center;
 
         position: absolute;
-        bottom: -1px;
-        right: -1px;
+        bottom: -3px;
+        right: -4px;
         z-index: 1;
 
         background-color: ${({ theme }) => theme.color.background};
