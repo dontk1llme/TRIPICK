@@ -2,12 +2,14 @@ package com.tripick.mz.record.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -23,4 +25,12 @@ public class TripRecordImage {
 
     @NotNull
     private String imageUrl;
+
+    public void setImageUrl(String uploadFileUrl) {
+        this.imageUrl = uploadFileUrl;
+    }
+
+    public void setTripRecord(TripRecord tripRecord) {
+        this.tripRecord = tripRecord;
+    }
 }
