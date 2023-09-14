@@ -81,6 +81,17 @@ public class RecordServiceImpl implements RecordService {
         }
     }
 
+    @Override
+    public void deleteTripRecord(int tripRecordId) {
+        // 여행 기록 삭제
+        TripRecord tripRecord = tripRecordRepository.findById(tripRecordId)
+                .orElseThrow(() -> new RuntimeException("여행 기록을 찾을 수 없습니다."));
+        tripRecordRepository.delete(tripRecord);
+
+        // 연결된 이미지 삭제
+        List<TripRecordImage> tripRecordImages = tripRecordImageRepository.findByTripRecordTripRecordId(tripRecordId);
+        tripRecordImageRepository.deleteAll(tripRecordImages);
+    }
 
     // S3에 여행 이미지 업로드
     private List<S3FileDto> uploadImagesToS3(List<MultipartFile> images, int tripRecordId) {

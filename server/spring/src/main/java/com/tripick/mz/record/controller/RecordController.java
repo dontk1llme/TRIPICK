@@ -54,4 +54,15 @@ public class RecordController {
             return new ResponseEntity<>(new ResponseDto(500, "에러:(", "여행 기록 사진 등록 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/delete/{tripRecordId}")
+    public ResponseEntity<?> deleteTripRecord(@PathVariable int tripRecordId){
+        try {
+            recordService.deleteTripRecord(tripRecordId);
+            return new ResponseEntity<>(new ResponseDto(200, "성공:)", "여행 기록 삭제 성공"), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseDto(500, "에러:(", "여행 기록 삭제 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

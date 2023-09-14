@@ -15,4 +15,7 @@ public interface RecordService {
 
     // 여행 기록 이미지 등록
     void saveTripRecordImage(CreateTripRecordImageRequestDto createTripRecordImageRequestDto);
+
+    // 여행 기록 삭제
+    void deleteTripRecord(int tripRecordId);
 }
