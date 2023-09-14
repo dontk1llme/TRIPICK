@@ -3,7 +3,7 @@ package com.tripick.mz.member.service.implement;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.tripick.mz.S3.dto.S3FileDto;
+import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;
 import com.tripick.mz.member.dto.response.BadgeResponseDto;
 import com.tripick.mz.member.dto.response.MemberResponseDto;

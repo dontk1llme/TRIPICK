@@ -1,6 +1,6 @@
 package com.tripick.mz.member.controller;
 
-import com.tripick.mz.S3.dto.S3FileDto;
+import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.common.error.ResponseDto;
 import com.tripick.mz.member.dto.request.UpdateMainBadgeRequestDto;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;

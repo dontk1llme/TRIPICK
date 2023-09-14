@@ -1,6 +1,6 @@
 package com.tripick.mz.member.service;
 
-import com.tripick.mz.S3.dto.S3FileDto;
+import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;
 import com.tripick.mz.member.dto.response.MemberResponseDto;
 import org.springframework.web.multipart.MultipartFile;
