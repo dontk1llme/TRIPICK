@@ -29,7 +29,6 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=m1z5
       - MONGO_INITDB_ROOT_PASSWORD=ssafy1357
-      - MONGO_INITDB_DATABASE: admin
 
   backend:
     build: .
