@@ -3,7 +3,7 @@ package com.tripick.mz.record.service.implement;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.tripick.mz.S3.dto.S3FileDto;
+import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.member.entity.Member;
 import com.tripick.mz.member.repository.MemberRepository;
 import com.tripick.mz.record.dto.request.CreateTripRecordImageRequestDto;
