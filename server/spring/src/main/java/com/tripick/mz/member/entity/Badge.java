@@ -2,11 +2,14 @@ package com.tripick.mz.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -16,7 +19,16 @@ public class Badge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int badgeId;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member member;
+    @NotNull
+    private String name;
+
+    @NotNull
+    private String detail;
+
+    @NotNull
+    private String image;
+
+    @NotNull
+    private int visitCount;
+
 }
