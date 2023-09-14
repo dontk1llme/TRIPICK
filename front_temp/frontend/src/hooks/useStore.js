@@ -22,6 +22,13 @@ export const loginUserState = create(set => ({
     setProfileUrl: data => set(state => ({ profileUrl: data })),
 }));
 
+export const detailState = create(set => ({
+    detailLocation: {},
+    viewDetail: false,
+    setDetailLocation: data => set(state => ({ detailLocation: data })),
+    setViewDetail: data => set(state => ({ viewDetail: data })),
+}));
+
 export const dateState = create(set => ({
     selectedDate: [],
     setSelectedDate: data => set(state => ({ selectedDate: data })),

@@ -2,11 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
+
+import * as utils from 'utils';
 import { GoHeartFill, GoHeart } from 'react-icons/go';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 const LocationPreview = ({ place, type }) => {
     const { compareLocation, setCompareLocation } = hooks.cartState();
+    const { detailLocation, setDetailLocation, viewDetail, setViewDetail } = hooks.detailState();
+
     const handleCompareLocation = id => {
         const placeIndex = compareLocation.indexOf(id);
 
@@ -26,8 +30,15 @@ const LocationPreview = ({ place, type }) => {
         setCompareLocation([...compareLocation]);
     };
 
+    const handleDetails = () => {
+        setDetailLocation(place);
+        if (detailLocation) {
+            setViewDetail(true);
+        }
+    };
+
     return (
-        <S.Wrap>
+        <S.Wrap onClick={() => handleDetails()}>
             <S.PreviewImage image={place.imageUrl}>
                 <S.CountryName>{place.country}</S.CountryName>
                 <S.CityContainer>
@@ -74,6 +85,7 @@ const S = {
         width: 330px;
         margin: 0 28px;
         box-shadow: ${({ theme }) => theme.shadow.card};
+        cursor: pointer;
     `,
     PreviewImage: styled.div`
         display: flex;

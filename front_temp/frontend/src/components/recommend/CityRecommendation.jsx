@@ -61,7 +61,7 @@ const S = {
         align-items: center;
         width: 100%;
         height: 100%;
-        margin-top: 8px;
+        margin-top: 32px;
     `,
     FilterContainer: styled.div`
         display: flex;
@@ -99,9 +99,9 @@ const S = {
     `,
     RecommendationContainer: styled.div`
         display: grid;
-        width: 200%;
+        max-width: 80%;
         margin-top: 24px;
-        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        grid-template-columns: repeat(3, minmax(330px, 1fr));
         grid-gap: 32px;
     `,
 };

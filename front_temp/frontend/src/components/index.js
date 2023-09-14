@@ -5,6 +5,7 @@ export { default as LoginButton } from './common/LoginButton';
 export { default as LoginModal } from './common/LoginModal';
 
 export { default as LocationPreview } from './preview/LocationPreview';
+export { default as LocationDetail } from './preview/LocationDetail';
 
 export { default as AlbumList } from './diary/AlbumList';
 export { default as DetailAlbum } from './diary/DetailAlbum';

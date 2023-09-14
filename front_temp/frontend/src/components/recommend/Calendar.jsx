@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ReactCalendar from 'react-calendar';
-import styles from './calendar.css';
+import styles from './Calendar.css';
 import moment from 'moment';
-import { IoCalendarClearSharp } from 'react-icons/io5';
+
 import * as hooks from 'hooks';
 import styled from 'styled-components';
-import * as components from 'components';
 
 const CalendarComponent = () => {
     const today = new Date();
@@ -13,7 +12,6 @@ const CalendarComponent = () => {
     sixMonthsLater.setMonth(today.getMonth() + 6);
 
     const { selectedDate, setSelectedDate } = hooks.dateState();
-    const [dateSelectMode, setDateSelectMode] = useState(true);
 
     useEffect(() => {
         setSelectedDate([today, today]);
@@ -43,58 +41,100 @@ const CalendarComponent = () => {
         return <div className={tileClasses.join(' ')} />;
     };
 
-    // useRef
-
     return (
-        <div style={{ margin: '30px' }}>
-            <div className="calendar">
-                <p className="text-center" onClick={() => setDateSelectMode(true)}>
-                    <IoCalendarClearSharp style={{ marginRight: '10px' }} />
-                    {formatDate(selectedDate[0])}
-
-                    {selectedDate[1] != selectedDate[0] ? ' - ' + formatDate(selectedDate[1]) : ''}
-                </p>
-                <br />
-
-                {dateSelectMode && (
-                    <div className="styles.calendarContainer">
-                        <ReactCalendar
-                            onChange={setSelectedDate}
-                            value={selectedDate}
-                            selectRange={true}
-                            formatDay={(locale, date) => moment(date).format('DD')}
-                            tileContent={tileContent} // tileContent 함수를 전달
-                            minDate={today} // 오늘 이후만 선택 가능하도록 설정
-                            maxDate={sixMonthsLater} // 6개월 이내까지만 표시
-                        />
-                    </div>
-                )}
-            </div>
-            {dateSelectMode && (
-                <S.RecommendButton onClick={() => setDateSelectMode(false)}>
-                    이 날짜로 여행지 추천받기
-                </S.RecommendButton>
-            )}
-            {!dateSelectMode && <components.CityRecommendation />}
-        </div>
+        <S.Wrap>
+            <ReactCalendar
+                onChange={setSelectedDate}
+                value={selectedDate}
+                selectRange={true}
+                formatDay={(locale, date) => moment(date).format('DD')}
+                tileContent={tileContent} // tileContent 함수를 전달
+                minDate={today} // 오늘 이후만 선택 가능하도록 설정
+                maxDate={sixMonthsLater} // 6개월 이내까지만 표시
+            />
+        </S.Wrap>
     );
 };
 
 const S = {
-    RecommendButton: styled.div`
+    Wrap: styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 410px;
-        height: 64px;
-        border-radius: 16px;
-        margin-top: 32px;
-        background-color: ${({ theme }) => theme.color.main1};
-        font-size: ${({ theme }) => theme.fontSize.subTitle1};
-        color: ${({ theme }) => theme.color.white};
-        cursor: pointer;
-        &:hover {
-            background-color: ${({ theme }) => theme.color.main2};
+        height: 438px;
+        width: 100%;
+        & .react-calendar {
+            width: 500px;
+            max-width: 100%;
+            height: 350px;
+            border-radius: 8px;
+            color: ${({ theme }) => theme.color.black};
+            box-shadow: ${({ theme }) => theme.shadow.card};
+            line-height: 1.125em;
+            background-color: ${({ theme }) => theme.color.white};
+            /* border: 1px solid #a0a096; */
+            border: none;
+            & div {
+                text-align: center;
+                text-decoration: none;
+            }
+            & button {
+                margin: 0;
+                border: 0;
+                outline: none;
+                & :enabled :hover {
+                    cursor: pointer;
+                }
+            }
+            & .react-calendar__navigation {
+                display: flex;
+                height: 44px;
+                margin-bottom: 1em;
+                & > button {
+                    color: ${({ theme }) => theme.color.main1};
+                    min-width: 44px;
+                    background: none;
+                    margin-top: 8px;
+                    font-weight: bold;
+                    &:disabled {
+                        opacity: 0;
+                        pointer-events: none;
+                    }
+                    &:enabled :hover {
+                        background-color: ${({ theme }) => theme.color.background};
+                    }
+                }
+                & .react-calendar__navigation__label__labelText--from {
+                    font-size: ${({ theme }) => theme.fontSize.content1};
+                }
+                & .react-calendar__navigation__arrow {
+                    font-size: 24px;
+                    &:hover {
+                        color: ${({ theme }) => theme.color.main2};
+                    }
+                }
+
+                & > abbr {
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    font-size: ${({ theme }) => theme.fontSize.content1};
+                    text-decoration: none;
+                }
+            }
+        }
+        & .react-calendar__month-view {
+            height: 100%;
+            & > div {
+                & > div {
+                    height: 250px;
+                }
+            }
+        }
+        & .react-calendar__month-view__days {
+            height: 250px;
+        }
+        & abbr {
+            text-decoration: none;
         }
     `,
 };

@@ -17,6 +17,9 @@ export const URL = {
     RECOMMEND: {
         CALENDAR: '/recommend',
     },
+    DETAIL: {
+        ABOUT: '/details',
+    },
 };
 
 export const MAX_WIDTH = '1920px';
