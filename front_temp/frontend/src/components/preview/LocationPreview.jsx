@@ -5,7 +5,7 @@ import * as hooks from 'hooks';
 import { GoHeartFill, GoHeart } from 'react-icons/go';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
-const LocationPreview = ({ place }) => {
+const LocationPreview = ({ place, type }) => {
     const { compareLocation, setCompareLocation } = hooks.cartState();
     const handleCompareLocation = id => {
         const placeIndex = compareLocation.indexOf(id);
@@ -50,15 +50,17 @@ const LocationPreview = ({ place }) => {
                     <S.InformationContent>{place.safety} </S.InformationContent>
                     <S.InformationDescription>/10</S.InformationDescription>
                 </S.InformationContainer>
-                <S.CompareContainer
-                    onClick={() => {
-                        handleCompareLocation(place.id);
-                    }}>
-                    {compareLocation.indexOf(place.id) === -1 ? <AiOutlineStar /> : <AiFillStar />}
-                    <S.ExplanatoryContainer className={compareLocation.indexOf(place.id) === -1 ? 'compare' : null}>
-                        비교함에 담기
-                    </S.ExplanatoryContainer>
-                </S.CompareContainer>
+                {type === 'cart' && (
+                    <S.CompareContainer
+                        onClick={() => {
+                            handleCompareLocation(place.id);
+                        }}>
+                        {compareLocation.indexOf(place.id) === -1 ? <AiOutlineStar /> : <AiFillStar />}
+                        <S.ExplanatoryContainer className={compareLocation.indexOf(place.id) === -1 ? 'compare' : null}>
+                            비교함 담기
+                        </S.ExplanatoryContainer>
+                    </S.CompareContainer>
+                )}
             </S.PreviewInformationContainer>
         </S.Wrap>
     );
