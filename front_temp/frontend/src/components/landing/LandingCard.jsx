@@ -17,6 +17,8 @@ const LandingCard = ({ location }) => {
 
     const navigate = useNavigate();
 
+    // scroll 처음부터 다시 해야 함
+
 
     return (
         <S.LocationContainer>
