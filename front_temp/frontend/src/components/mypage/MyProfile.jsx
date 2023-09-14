@@ -178,6 +178,9 @@ const S = {
         flex-direction: column;
         justify-content: space-between;
         height: 41px;
+        & > input {
+            font: inherit;
+        }
     `,
     SubTitle: styled.div`
         font-size: ${({ theme }) => theme.fontSize.sub};

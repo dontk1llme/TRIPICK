@@ -39,6 +39,13 @@ const GlobalStyles = createGlobalStyle`
         cursor: pointer;
     }
 
+    @font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
     a, abbr, acronym, address, big, cite, code,
@@ -58,7 +65,8 @@ const GlobalStyles = createGlobalStyle`
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    font-family: 'NanumSquareNeo-Variable';
+    /* font-weight: 300; */
     }
     /* HTML5 display-role reset for older browsers */
     article, aside, details, figcaption, figure, 

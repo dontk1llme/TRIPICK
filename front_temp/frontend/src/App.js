@@ -22,6 +22,7 @@ const App = () => {
                             <Route path={utils.URL.MYPAGE.DIARY} element={<pages.Diary />}></Route>
                             <Route path={utils.URL.RECOMMEND.CALENDAR} element={<pages.Recommend />}></Route>
                             <Route path={utils.URL.CART.COMPARE} element={<pages.Compare />}></Route>
+                            <Route path={utils.URL.DETAIL.ABOUT} element={<pages.Detail />}></Route>
                         </Route>
                     </Routes>
                 </Router>

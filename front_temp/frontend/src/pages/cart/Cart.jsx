@@ -107,7 +107,7 @@ const S = {
         width: 90%;
         height: auto;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        grid-template-columns: repeat(3, minmax(330px, 1fr));
         grid-gap: 32px;
     `,
 };
