@@ -29,7 +29,7 @@ const Cart = () => {
             </S.TitleContainer>
             <S.PreviewContainer>
                 {cartLocation.map(location => {
-                    return <components.LocationPreview key={location.idx} place={location} />;
+                    return <components.LocationPreview key={location.idx} place={location} type="cart" />;
                 })}
             </S.PreviewContainer>
         </S.Wrap>
