@@ -4,7 +4,6 @@ export { default as TopTab } from './common/TopTab';
 export { default as LoginButton } from './common/LoginButton';
 export { default as LoginModal } from './common/LoginModal';
 
-
 export { default as LocationPreview } from './preview/LocationPreview';
 
 export { default as AlbumList } from './diary/AlbumList';
@@ -18,3 +17,5 @@ export { default as CollectedStamp } from './mypage/CollectedStamp';
 export { default as CountryList } from './diary/CountryList';
 export { default as LandingCard } from './landing/LandingCard';
 
+export { default as Calendar } from './recommend/Calendar';
+export { default as CityRecommendation } from './recommend/CityRecommendation';

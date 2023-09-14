@@ -1,18 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Calendar from '../../components/recommend/Calendar';
-
+import * as components from 'components';
 
 const Recommend = () => {
-
     return (
         <S.Wrap>
-            <Calendar/>
+            <components.Calendar />
         </S.Wrap>
     );
 };
-
 
 const S = {
     Wrap: styled.div`

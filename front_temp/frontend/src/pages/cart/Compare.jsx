@@ -308,7 +308,11 @@ const S = {
         align-items: center;
         padding: 20px;
         width: 160px;
-        height: 105px;
+        height: 100%;
+        margin-top: 8px;
+        &:first-child {
+            margin-top: 0;
+        }
         border-radius: 8px;
         font-size: ${({ theme }) => theme.fontSize.subTitle1};
         font-weight: bold;

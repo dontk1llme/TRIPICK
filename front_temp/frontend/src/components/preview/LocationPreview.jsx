@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 import * as hooks from 'hooks';
 import { GoHeartFill, GoHeart } from 'react-icons/go';
-import { GiShoppingCart } from 'react-icons/gi';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
-const LocationPreview = ({ place }) => {
+const LocationPreview = ({ place, type }) => {
     const { compareLocation, setCompareLocation } = hooks.cartState();
     const handleCompareLocation = id => {
         const placeIndex = compareLocation.indexOf(id);
@@ -50,13 +50,17 @@ const LocationPreview = ({ place }) => {
                     <S.InformationContent>{place.safety} </S.InformationContent>
                     <S.InformationDescription>/10</S.InformationDescription>
                 </S.InformationContainer>
-                <S.CompareContainer
-                    onClick={() => {
-                        handleCompareLocation(place.id);
-                    }}
-                    compare={compareLocation.indexOf(place.id)}>
-                    <GiShoppingCart />
-                </S.CompareContainer>
+                {type === 'cart' && (
+                    <S.CompareContainer
+                        onClick={() => {
+                            handleCompareLocation(place.id);
+                        }}>
+                        {compareLocation.indexOf(place.id) === -1 ? <AiOutlineStar /> : <AiFillStar />}
+                        <S.ExplanatoryContainer className={compareLocation.indexOf(place.id) === -1 ? 'compare' : null}>
+                            비교함 담기
+                        </S.ExplanatoryContainer>
+                    </S.CompareContainer>
+                )}
             </S.PreviewInformationContainer>
         </S.Wrap>
     );
@@ -155,13 +159,35 @@ const S = {
         & svg {
             width: 20px;
             height: 20px;
-            color: ${({ compare, theme }) => (compare === -1 ? theme.color.main1 : theme.color.highlight)};
+            color: ${({ theme }) => theme.color.main1};
         }
         &:hover {
             & svg {
                 color: ${({ theme }) => theme.color.main2};
             }
+            & > .compare {
+                width: auto;
+                height: 33px;
+                padding: 0 20px;
+                background-color: rgba(94, 97, 86, 0.8);
+                transition: all 0.2s ease-in-out;
+            }
         }
+    `,
+    ExplanatoryContainer: styled.div`
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        top: 16px;
+        left: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: ${({ theme }) => theme.fontSize.sub};
+        color: ${({ theme }) => theme.color.white};
+        white-space: nowrap;
     `,
 };
 
