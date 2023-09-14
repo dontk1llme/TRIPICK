@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,4 +30,7 @@ public class TripRecord extends BaseEntity {
 
     @Column
     private String nationName;
+
+    @OneToMany(mappedBy = "tripRecord", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TripRecordImage> tripRecordImages;
 }
