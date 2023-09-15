@@ -3,7 +3,7 @@ package com.tripick.mz.member.service.implement;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.tripick.mz.S3.dto.S3FileDto;
+import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;
 import com.tripick.mz.member.dto.response.BadgeResponseDto;
 import com.tripick.mz.member.dto.response.MemberResponseDto;
@@ -64,12 +64,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public MemberResponseDto updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto) {
+    public void updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto) {
         String newNickname = updateNicknameRequestDto.getNickname();
         Member member = memberRepository.findById(updateNicknameRequestDto.getMemberId())
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
         member.updateNickname(updateNicknameRequestDto.getNickname());
-        return null;
     }
 
     @Override
@@ -123,6 +122,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void updateMainBadge(int memberId, int badgeId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("멤버 찾을수 없음"));

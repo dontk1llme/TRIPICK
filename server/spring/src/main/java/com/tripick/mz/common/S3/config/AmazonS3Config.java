@@ -1,4 +1,4 @@
-package com.tripick.mz.S3.config;
+package com.tripick.mz.common.S3.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

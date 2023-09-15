@@ -1,6 +1,6 @@
 package com.tripick.mz.member.controller;
 
-import com.tripick.mz.S3.dto.S3FileDto;
+import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.common.error.ResponseDto;
 import com.tripick.mz.member.dto.request.UpdateMainBadgeRequestDto;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;
@@ -30,7 +30,7 @@ public class MemberController {
 
     @PatchMapping("/nickname")
     public ResponseEntity<?> updateNickname(@Valid @RequestBody UpdateNicknameRequestDto updateNicknameRequestDto) {
-        MemberResponseDto memberResponseDto = memberService.updateNickname(updateNicknameRequestDto);
+        memberService.updateNickname(updateNicknameRequestDto);
         return new ResponseEntity<>(new ResponseDto(200, "성공:)", "닉네임 변경 성공"), HttpStatus.OK);
     }
 
