@@ -43,7 +43,21 @@ const MyProfile = () => {
     return (
         <S.Wrap onClick={e => e.stopPropagation()}>
             <S.ProfileImageContainer>
-                <img src={profileUrl} alt="profile" />
+                <svg width="195" height="246" viewBox="0 0 195 246" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect
+                        x="0.5"
+                        y="0.5"
+                        width="194"
+                        height="244.87"
+                        rx="15.5"
+                        stroke="#5E6156"
+                        stroke-dasharray="10 10"
+                    />
+                </svg>
+                <S.ImageOutline>
+                    <img src={profileUrl} alt="profile" />
+                </S.ImageOutline>
+
                 {onEditMode ? (
                     <S.EditProfileImageContainer>
                         <label for="file">
@@ -62,7 +76,7 @@ const MyProfile = () => {
             </S.ProfileImageContainer>
             <S.InformationContainer>
                 <S.TextContainer>
-                    <S.SubTitle>name</S.SubTitle>
+                    <S.SubTitle>name: </S.SubTitle>
                     <S.InformationContent
                         type="text"
                         value={name}
@@ -73,7 +87,7 @@ const MyProfile = () => {
                     />
                 </S.TextContainer>
                 <S.TextContainer>
-                    <S.SubTitle>Email</S.SubTitle>
+                    <S.SubTitle>Email: </S.SubTitle>
                     <S.InformationContent
                         type="text"
                         value={email}
@@ -82,7 +96,7 @@ const MyProfile = () => {
                     />
                 </S.TextContainer>
                 <S.TextContainer>
-                    <S.SubTitle>Since</S.SubTitle>
+                    <S.SubTitle>Since: </S.SubTitle>
                     <S.InformationContent type="text" value={date} readOnly="readonly" />
                 </S.TextContainer>
             </S.InformationContainer>
@@ -112,19 +126,36 @@ const S = {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 182px;
-        height: 229px;
-        border: 1px solid rgba(91, 85, 73, 0.5);
-        margin-bottom: 16px;
-        & > img {
-            width: 166px;
-            height: 213px;
+        width: 100%;
+        height: 245.87px;
+        margin-top: 16px;
+        margin-bottom: 60px;
+        & svg {
+            position: absolute;
+            width: 195px;
+            height: 245.87px;
+        }
+    `,
+    ImageOutline: styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 175px;
+        height: 225px;
+        background-color: ${({ theme }) => theme.color.white};
+        box-shadow: ${({ theme }) => theme.shadow.card};
+        & img {
+            width: 155px;
+            height: 203.95px;
         }
     `,
     EditProfileImageContainer: styled.div`
         position: absolute;
         width: 182px;
         height: 229px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         & > input {
             display: none;
         }
@@ -133,9 +164,8 @@ const S = {
         display: flex;
         justify-content: center;
         align-items: center;
-
-        width: 182px;
-        height: 229px;
+        width: 155px;
+        height: 203.95px;
         background-color: rgba(91, 85, 73, 0.5);
         & svg {
             width: 32px;
@@ -151,10 +181,10 @@ const S = {
     `,
     MainStamp: styled.div`
         position: absolute;
-        top: 233px;
-        right: 80px;
-        width: 80px;
-        height: 80px;
+        top: 260px;
+        right: 70px;
+        width: 100px;
+        height: 100px;
         & > img {
             width: 100%;
             height: 100%;
@@ -171,28 +201,34 @@ const S = {
         flex-direction: column;
         justify-content: space-between;
         align-items: start;
-        margin-top: 16px;
+        margin-left: 26px;
     `,
     TextContainer: styled.div`
         display: flex;
-        flex-direction: column;
+        width: 100%;
         justify-content: space-between;
-        height: 41px;
+        align-items: center;
+        height: 40px;
         & > input {
-            font: inherit;
+            font-size: ${({ theme }) => theme.fontSize.subTitle2};
+            font-family: 'iceHimchan-Rg';
         }
     `,
     SubTitle: styled.div`
-        font-size: ${({ theme }) => theme.fontSize.sub};
-        color: ${({ theme }) => theme.color.black};
+        font-size: ${({ theme }) => theme.fontSize.subTitle2};
+        color: ${({ theme }) => theme.color.dark2};
+        margin-right: 4px;
+        font-family: 'constantia';
     `,
     InformationContent: styled.input`
-        font-size: ${({ theme }) => theme.fontSize.subTitle2};
-        color: ${({ theme }) => theme.color.black};
+        width: 100%;
+        color: ${({ theme }) => theme.color.main2};
+        text-align: center;
         background: none;
         border: none;
         border-bottom: ${({ edit, theme }) => (edit === 'edit' ? `1px solid ${theme.color.black}` : 'none')};
         outline: none;
+        border-bottom: 1px dashed ${({ theme }) => theme.color.dark2};
     `,
     EditContainer: styled.div`
         display: flex;
@@ -208,9 +244,9 @@ const S = {
         height: 29px;
         padding: 8px 24px;
         border-radius: 8px;
-        border: 1px solid ${({ theme }) => theme.color.gray};
+        border: 1px solid rgba(94, 97, 86, 0.5);
         font-size: ${({ theme }) => theme.fontSize.sub};
-        color: ${({ theme }) => theme.color.gray};
+        color: rgba(94, 97, 86, 0.5);
         white-space: nowrap;
         cursor: pointer;
         &:hover {

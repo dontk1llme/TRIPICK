@@ -32,8 +32,9 @@ const shadow = {
     paperLeftPage: `-15px 0px 10px 0px rgba(0, 0, 0, 0.25) inset`,
     paperRightPage: `10px 0px 30px 0px rgba(0, 0, 0, 0.25) inset`,
     paperTotalPage: `10px 11px 15px 0px rgba(0, 0, 0, 0.25)`,
-    paperCoverLeftPage: `0px 0px 30px 5px rgba(0, 0, 0, 0.25) inset, 10px 10px 7px 6px rgba(0, 0, 0, 0.25) 3px 10px 15px 0px rgba(0, 0, 0, 0.25)`,
-    pageCoverBackPage: `0px 0px 30px 5px rgba(0, 0, 0, 0.25) inset, 10px 10px 7px 6px rgba(0, 0, 0, 0.25)`,
+    paperTotalReversePage: `-10px 11px 15px 0px rgba(0, 0, 0, 0.25)`,
+    paperCoverLeftPage: `0px 0px 30px 5px rgba(0, 0, 0, 0.25) inset`,
+    pageCoverBackPage: `0px 0px 30px 5px rgba(0, 0, 0, 0.25) inset`,
 };
 
 const fontSize = {
