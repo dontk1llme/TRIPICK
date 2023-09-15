@@ -52,7 +52,7 @@ const S = {
         z-index: inherit;
 
         ${({ page }) =>
-            page % 2 === 0
+            page % 2 !== 0
                 ? `
             & .first {
                 position: absolute;

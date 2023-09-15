@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import * as components from 'components';
@@ -8,12 +8,16 @@ import { BsCalendarCheck } from 'react-icons/bs';
 
 const Recommend = () => {
     const { selectedDate } = hooks.dateState();
-    const { viewDetail } = hooks.detailState();
+    const { viewDetail, setViewDetail } = hooks.detailState();
     const [dateSelectMode, setDateSelectMode] = useState(true);
 
     const formatDate = date => {
         return moment(date).format('YYYY년 MM월 DD일');
     };
+
+    useEffect(() => {
+        setViewDetail(false);
+    }, []);
 
     return (
         <S.Outer>
