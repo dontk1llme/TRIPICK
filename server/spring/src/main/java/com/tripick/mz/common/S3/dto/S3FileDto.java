@@ -1,4 +1,4 @@
-package com.tripick.mz.S3.dto;
+package com.tripick.mz.common.S3.dto;
 
 import lombok.Builder;
 import lombok.Getter;
