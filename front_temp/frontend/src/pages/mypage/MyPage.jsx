@@ -20,6 +20,12 @@ const MyPage = () => {
     const pages = [1, 2, 3, 4];
     return (
         <S.Wrap>
+            <link
+                href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&family=Odor+Mean+Chey&family=Overpass+Mono&display=swap"
+                rel="stylesheet"></link>
+            <link
+                href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&family=Odor+Mean+Chey&family=Oleo+Script&family=Overpass+Mono&display=swap"
+                rel="stylesheet"></link>
             <S.PassportConatiner>
                 <S.PageContainer
                     onClick={() => handlePage(1)}
@@ -28,14 +34,37 @@ const MyPage = () => {
                     currentPage={currentPage}>
                     <S.BackPage className={currentPage !== 0}>
                         <S.FrontCover>
+                            <S.PassportTitle>PASSPORT</S.PassportTitle>
                             <S.CoverIconContainer>
                                 <img src={require('asset/images/fcon3.png').default} alt="logo" />
                             </S.CoverIconContainer>
-                            <S.PassportTitle>PASSPORT</S.PassportTitle>
-                            <S.TeamTitle>Tripick</S.TeamTitle>
                             <S.CoverPassportIconContainer>
-                                <TbEPassport />
+                                <svg
+                                    width="40"
+                                    height="32"
+                                    viewBox="0 0 40 32"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M4 0C2.93913 0 1.92172 0.421427 1.17157 1.17157C0.421427 1.92172 0 2.93913 0 4V14H12.26C13.18 10.48 16.36 8 20 8C23.64 8 26.82 10.48 27.74 14H40V4C40 2.93913 39.5786 1.92172 38.8284 1.17157C38.0783 0.421427 37.0609 0 36 0H4ZM20 12C18.9391 12 17.9217 12.4214 17.1716 13.1716C16.4214 13.9217 16 14.9391 16 16C16 17.0609 16.4214 18.0783 17.1716 18.8284C17.9217 19.5786 18.9391 20 20 20C21.0609 20 22.0783 19.5786 22.8284 18.8284C23.5786 18.0783 24 17.0609 24 16C24 14.9391 23.5786 13.9217 22.8284 13.1716C22.0783 12.4214 21.0609 12 20 12ZM0 18V28C0 29.0609 0.421427 30.0783 1.17157 30.8284C1.92172 31.5786 2.93913 32 4 32H36C37.0609 32 38.0783 31.5786 38.8284 30.8284C39.5786 30.0783 40 29.0609 40 28V18H27.74C26.82 21.52 23.64 24 20 24C16.36 24 13.18 21.52 12.26 18H0Z"
+                                        fill="url(#paint0_linear_576_1294)"
+                                    />
+                                    <defs>
+                                        <linearGradient
+                                            id="paint0_linear_576_1294"
+                                            x1="-3.0268e-08"
+                                            y1="30"
+                                            x2="40"
+                                            y2="29.5"
+                                            gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#CECDD8" />
+                                            <stop offset="0.552083" stop-color="white" />
+                                            <stop offset="1" stop-color="#CECDD8" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
                             </S.CoverPassportIconContainer>
+                            <S.TeamTitle>Tripick</S.TeamTitle>
                         </S.FrontCover>
                     </S.BackPage>
                     <S.FrontPage className={currentPage !== 1}>
@@ -50,13 +79,11 @@ const MyPage = () => {
                     page="2"
                     currentPage={currentPage}>
                     <S.BackPage className={currentPage !== 1}>
-                        <S.PassportRight>
-                            <components.MyStamps page="1" />
-                        </S.PassportRight>
+                        <S.PassportRight className="info"></S.PassportRight>
                     </S.BackPage>
                     <S.FrontPage className={currentPage !== 2}>
                         <S.PassportLeft>
-                            <components.MyStamps page="2" />
+                            <components.MyStamps page="1" />
                         </S.PassportLeft>
                     </S.FrontPage>
                 </S.PageContainer>
@@ -67,7 +94,7 @@ const MyPage = () => {
                     currentPage={currentPage}>
                     <S.BackPage className={currentPage !== 2}>
                         <S.PassportRight>
-                            <components.MyStamps page="3" />
+                            <components.MyStamps page="2" />
                         </S.PassportRight>
                     </S.BackPage>
                     <S.FrontPage className={currentPage !== 3}>
@@ -143,7 +170,7 @@ const S = {
                 props.page === '1' && props.currentPage >= props.page
                     ? props.theme.shadow.paperTotalPage
                     : props.page === '3' && props.currentPage < props.page
-                    ? props.theme.shadow.paperCoverLeftPage
+                    ? props.theme.shadow.paperTotalReversePage
                     : null};
             z-index: -100;
         }
@@ -168,6 +195,10 @@ const S = {
         transform: rotateY(180deg);
         border-radius: 0px 32px 32px 0px;
         background-color: white;
+        & .info {
+            background: url(${require('asset/images/passport-background3.png').default});
+            background-size: cover;
+        }
     `,
     Test: styled.div`
         position: absolute;
@@ -183,13 +214,12 @@ const S = {
     FrontCover: styled.div`
         display: flex;
         flex-direction: column;
-        padding: 120px 48px;
+        padding: 104px 62px 96px;
         width: 100%;
         height: 100%;
         background-color: ${({ theme }) => theme.color.main3};
         border-radius: 5px 32px 32px 5px;
         box-shadow: ${({ theme }) => theme.shadow.paperRightPage};
-        font-family: 'constantia';
     `,
     BackCover: styled.div`
         width: 100%;
@@ -200,42 +230,46 @@ const S = {
     `,
     CoverIconContainer: styled.div`
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         width: 100%;
         height: auto;
-        margin-bottom: 12px;
+        margin: 40px 0 64px;
         & > img {
-            width: 68px;
-            height: 72px;
+            width: 160px;
+            height: 180px;
             color: white;
         }
     `,
     PassportTitle: styled.div`
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         width: 100%;
         height: auto;
-        font-size: ${({ theme }) => theme.fontSize.title3};
-        color: white;
+        font-family: 'Odor Mean Chey', serif;
+        font-weight: bold;
+        font-size: ${({ theme }) => theme.fontSize.title2};
+        background: linear-gradient(90deg, rgba(228, 228, 228, 0.83) 0%, #fff 54.69%, #cbc9d5 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin: 12px 0 8px;
-        font-family: inherit;
     `,
     TeamTitle: styled.div`
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         width: 100%;
         height: auto;
         margin: 8px 0;
         font-size: ${({ theme }) => theme.fontSize.subTitle1};
         color: white;
-        font-family: inherit;
+        font-family: 'Oleo Script', cursive;
     `,
     CoverPassportIconContainer: styled.div`
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         width: 100%;
         height: auto;
-        margin-top: 186px;
+        margin-bottom: 24px;
         & svg {
             width: 40px;
             height: 32px;
@@ -247,8 +281,7 @@ const S = {
         height: 628px;
         border-radius: 32px 0 0 32px;
         padding: 64px 32px 24px 64px;
-        background: url(${require('asset/images/passport-background1.png').default}),
-            linear-gradient(0deg, #f8f9f9, #fffeeb);
+        background: url(${require('asset/images/passport-background1.png').default});
         background-size: cover;
         box-shadow: ${({ theme }) => theme.shadow.paperLeftPage};
     `,
@@ -257,8 +290,7 @@ const S = {
         height: 628px;
         border-radius: 0 32px 32px 0;
         padding: 64px 64px 24px 32px;
-        background: url(${require('asset/images/passport-background2.png').default}),
-            linear-gradient(0deg, #f8f9f9, #fffeeb);
+        background: url(${require('asset/images/passport-background2.png').default});
         background-size: cover;
         box-shadow: ${({ theme }) => theme.shadow.paperRightPage};
     `,
