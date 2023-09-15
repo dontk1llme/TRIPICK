@@ -2,6 +2,7 @@ package com.tripick.mz.member.service;
 
 import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;
+import com.tripick.mz.member.dto.response.BadgeResponseDto;
 import com.tripick.mz.member.dto.response.MemberResponseDto;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,4 +22,7 @@ public interface MemberService {
 
     //대표 뱃지 변경
     void updateMainBadge(int memberId, int badgeId);
+
+    //내 뱃지 조회
+    List<BadgeResponseDto> getBadgeList(int memberId);
 }
