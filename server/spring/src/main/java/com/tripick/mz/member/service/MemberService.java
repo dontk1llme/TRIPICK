@@ -1,6 +1,6 @@
 package com.tripick.mz.member.service;
 
-import com.tripick.mz.S3.dto.S3FileDto;
+import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;
 import com.tripick.mz.member.dto.response.MemberResponseDto;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,7 +11,7 @@ public interface MemberService {
     //내 정보 조회
     MemberResponseDto getMemberById(int memberId);
     //닉네임 변경
-    MemberResponseDto updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto);
+    void updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto);
 
     //프로필 사진 변경
     List<S3FileDto> updateImage(List<MultipartFile> multipartFiles, int memberId);
