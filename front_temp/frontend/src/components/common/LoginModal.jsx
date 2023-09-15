@@ -24,7 +24,7 @@ const LoginModal = ({ setModalOpen }) => {
   const code = new URL(window.location.href).searchParams.get("code");
 
 
-  // google
+  ///////////// google ////////////////
   const handleGoogleClick = () => {
     console.log("구글 클릭"); 
   };
