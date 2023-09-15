@@ -4,6 +4,7 @@ import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.common.error.ResponseDto;
 import com.tripick.mz.member.dto.request.UpdateMainBadgeRequestDto;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;
+import com.tripick.mz.member.dto.response.BadgeResponseDto;
 import com.tripick.mz.member.dto.response.MemberResponseDto;
 import com.tripick.mz.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,11 @@ public class MemberController {
     public ResponseEntity<?> setMainBadge(@RequestBody UpdateMainBadgeRequestDto requestDto) {
         memberService.updateMainBadge(requestDto.getMemberId(), requestDto.getBadgeId());
         return new ResponseEntity<>(new ResponseDto(200, "성공:)", "대표 뱃지 변경 성공"), HttpStatus.OK);
+    }
+
+    @GetMapping("/badge/{memberId}")
+    public List<BadgeResponseDto> getBadgeList(@PathVariable int memberId) {
+        return memberService.getBadgeList(memberId);
     }
 
 }
