@@ -10,6 +10,7 @@ import * as components from 'components';
 
 const Cart = () => {
     const { cartLocation, compareLocation } = hooks.cartState();
+    const { viewDetail } = hooks.detailState();
     const navigate = useNavigate();
     const [compareAmount, setCompareAmount] = useState(0);
 
@@ -19,30 +20,41 @@ const Cart = () => {
     }, [compareLocation]);
 
     return (
-        <S.Wrap>
-            <S.TitleContainer>
-                <S.Title>찜한 여행지</S.Title>
-                <S.NavCompare>
-                    <AiFillStar onClick={() => navigate(utils.URL.CART.COMPARE)} />
-                    <S.CartCount>{compareAmount}</S.CartCount>
-                </S.NavCompare>
-            </S.TitleContainer>
-            <S.PreviewContainer>
-                {cartLocation.map(location => {
-                    return <components.LocationPreview key={location.idx} place={location} type="cart" />;
-                })}
-            </S.PreviewContainer>
-        </S.Wrap>
+        <S.Outer>
+            {!viewDetail ? (
+                <S.Wrap>
+                    <S.TitleContainer>
+                        <S.Title>찜한 여행지</S.Title>
+                        <S.NavCompare>
+                            <AiFillStar onClick={() => navigate(utils.URL.CART.COMPARE)} />
+                            <S.CartCount>{compareAmount}</S.CartCount>
+                        </S.NavCompare>
+                    </S.TitleContainer>
+                    <S.PreviewContainer>
+                        {cartLocation.map(location => {
+                            return <components.LocationPreview key={location.idx} place={location} type="cart" />;
+                        })}
+                    </S.PreviewContainer>
+                </S.Wrap>
+            ) : (
+                <components.LocationDetail />
+            )}
+        </S.Outer>
     );
 };
 
 const S = {
+    Outer: styled.div`
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    `,
     Wrap: styled.div`
         display: flex;
         flex-direction: column;
         height: 100%;
-        width: 100%;
-        margin: 0 156px;
+        width: 80%;
         justify-content: center;
         align-items: center;
     `,
@@ -107,7 +119,7 @@ const S = {
         width: 90%;
         height: auto;
         display: grid;
-        grid-template-columns: repeat(3, minmax(330px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(330px, calc(100% / 3 - 32px * 2 / 3)));
         grid-gap: 32px;
     `,
 };
