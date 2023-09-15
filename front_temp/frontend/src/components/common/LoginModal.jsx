@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import SignKaKao from '../../asset/images/SignKaKao.png'
 import SignGoogle from '../../asset/images/SignGoogle.png'
+import { useGoogleLogin } from '@react-oauth/google'
 import Coala from '../../asset/images/coala.png'
 
 const LoginModal = ({ setModalOpen }) => {
@@ -25,9 +26,10 @@ const LoginModal = ({ setModalOpen }) => {
 
 
   ///////////// google ////////////////
-  const handleGoogleClick = () => {
-    console.log("구글 클릭"); 
-  };
+  const handleGoogleClick = useGoogleLogin({
+    onSuccess: (codeResponse) => console.log(codeResponse),
+    flow: 'auth-code',
+  })
 
   return (
     <S.modalWrapper>
