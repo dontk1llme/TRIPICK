@@ -3,13 +3,12 @@ import styled from 'styled-components';
 
 import * as hooks from 'hooks';
 
-import * as utils from 'utils';
 import { GoHeartFill, GoHeart } from 'react-icons/go';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 const LocationPreview = ({ place, type }) => {
     const { compareLocation, setCompareLocation } = hooks.cartState();
-    const { detailLocation, setDetailLocation, viewDetail, setViewDetail } = hooks.detailState();
+    const { detailLocation, setDetailLocation, setViewDetail } = hooks.detailState();
 
     const handleCompareLocation = id => {
         const placeIndex = compareLocation.indexOf(id);
@@ -63,7 +62,8 @@ const LocationPreview = ({ place, type }) => {
                 </S.InformationContainer>
                 {type === 'cart' && (
                     <S.CompareContainer
-                        onClick={() => {
+                        onClick={e => {
+                            e.stopPropagation();
                             handleCompareLocation(place.id);
                         }}>
                         {compareLocation.indexOf(place.id) === -1 ? <AiOutlineStar /> : <AiFillStar />}
@@ -135,6 +135,7 @@ const S = {
         width: 330px;
         height: 188px;
         padding: 32px 16px;
+        background-color: ${({ theme }) => theme.color.white};
     `,
     InformationContainer: styled.div`
         display: flex;
@@ -200,6 +201,7 @@ const S = {
         font-size: ${({ theme }) => theme.fontSize.sub};
         color: ${({ theme }) => theme.color.white};
         white-space: nowrap;
+        z-index: 3;
     `,
 };
 

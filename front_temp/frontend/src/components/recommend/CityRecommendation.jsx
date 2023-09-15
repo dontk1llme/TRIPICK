@@ -99,11 +99,19 @@ const S = {
     `,
     RecommendationContainer: styled.div`
         display: grid;
-        max-width: 80%;
+        max-width: 70%;
         margin-top: 24px;
-        grid-template-columns: repeat(3, minmax(330px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(330px, calc(100% / 3 - 32px * 2 / 3)));
         grid-gap: 32px;
     `,
+    // PreviewContainer: styled.div`
+    //     margin-bottom: 40px;
+    //     width: 90%;
+    //     height: auto;
+    //     display: grid;
+    //     grid-template-columns: repeat(auto-fit, minmax(330px, calc(100% / 3 - 32px * 2 / 3)));
+    //     grid-gap: 32px;
+    // `,
 };
 
 export default CityRecommendation;

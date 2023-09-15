@@ -34,8 +34,9 @@ const Recommend = () => {
                     )}
                     {!dateSelectMode && <components.CityRecommendation />}
                 </S.Wrap>
-            ) : // <components.LocationDetail />
-            null}
+            ) : (
+                <components.LocationDetail />
+            )}
         </S.Outer>
     );
 };
