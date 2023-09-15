@@ -10,7 +10,7 @@ import * as components from 'components';
 
 const Cart = () => {
     const { cartLocation, compareLocation } = hooks.cartState();
-    const { viewDetail } = hooks.detailState();
+    const { viewDetail, setViewDetail } = hooks.detailState();
     const navigate = useNavigate();
     const [compareAmount, setCompareAmount] = useState(0);
 
@@ -18,6 +18,10 @@ const Cart = () => {
         const count = compareLocation.filter(value => value !== -1).length;
         setCompareAmount(count);
     }, [compareLocation]);
+
+    useEffect(() => {
+        setViewDetail(false);
+    }, []);
 
     return (
         <S.Outer>
