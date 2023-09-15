@@ -63,6 +63,28 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public List<BadgeResponseDto> getBadgeList(int memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        List<MemberBadge> memberBadges = member.getMemberBadgeList();
+
+        if (memberBadges.isEmpty()) {
+            throw new RuntimeException("보유한 뱃지가 없습니다.");
+        }
+
+        List<BadgeResponseDto> badgeResponses = memberBadges.stream()
+                .map(memberBadge -> {
+                    Badge badge = memberBadge.getBadge();
+                    return new BadgeResponseDto(badge.getBadgeId(), memberBadge.isAchieved());
+                })
+                .collect(Collectors.toList());
+
+        return badgeResponses;
+    }
+
+
+    @Override
     @Transactional
     public void updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto) {
         String newNickname = updateNicknameRequestDto.getNickname();
@@ -134,4 +156,6 @@ public class MemberServiceImpl implements MemberService {
         member.updateMainBadge(badgeId);
         memberRepository.save(member);
     }
+
+
 }
