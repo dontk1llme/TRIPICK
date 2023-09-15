@@ -9,6 +9,7 @@ import com.tripick.mz.member.repository.MemberRepository;
 import com.tripick.mz.record.dto.request.CreateTripRecordImageRequestDto;
 import com.tripick.mz.record.dto.request.CreateTripRecordRequestDto;
 import com.tripick.mz.record.dto.request.UpdateTripRecordContentRequestDto;
+import com.tripick.mz.record.dto.response.TripRecordImageResponseDto;
 import com.tripick.mz.record.dto.response.TripRecordResponseDto;
 import com.tripick.mz.record.entity.TripRecord;
 import com.tripick.mz.record.entity.TripRecordImage;
@@ -45,12 +46,17 @@ public class RecordServiceImpl implements RecordService {
         List<TripRecord> tripRecords = tripRecordRepository.findByMember(member);
 
         return tripRecords.stream().map(tripRecord -> {
-            List<String> imageUrls = tripRecordImageRepository.findByTripRecordTripRecordId(tripRecord.getTripRecordId())
+            List<TripRecordImageResponseDto> images = tripRecordImageRepository.findByTripRecordTripRecordId(tripRecord.getTripRecordId())
                     .stream()
-                    .map(TripRecordImage::getImageUrl)
+                    .map(tripRecordImage -> new TripRecordImageResponseDto(tripRecordImage.getTripRecordImageId(), tripRecordImage.getImageUrl()))
                     .collect(Collectors.toList());
 
-            return new TripRecordResponseDto(tripRecord.getTripRecordId(),tripRecord.getNationName(), tripRecord.getContent(), imageUrls);
+            return new TripRecordResponseDto(
+                    tripRecord.getTripRecordId(),
+                    tripRecord.getNationName(),
+                    tripRecord.getContent(),
+                    images
+            );
         }).collect(Collectors.toList());
     }
 
@@ -98,10 +104,19 @@ public class RecordServiceImpl implements RecordService {
     @Override
     @Transactional
     public void updateTripRecordContent(UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto) {
-        String newContent = updateTripRecordContentRequestDto.getContent();
+        updateTripRecordContentRequestDto.getContent();
         TripRecord tripRecord = tripRecordRepository.findById(updateTripRecordContentRequestDto.getTripRecordId()).orElseThrow(
                 ()-> new RuntimeException("글을 찾을 수 없습니다."));
         tripRecord.updateTripRecordContent(updateTripRecordContentRequestDto.getContent());
+    }
+
+    @Override
+    @Transactional
+    public void deleteTripRecordImage(int tripRecordImageId) {
+        // 여행 기록 이미지 삭제
+        TripRecordImage tripRecordImage = tripRecordImageRepository.findById(tripRecordImageId)
+                .orElseThrow(() -> new RuntimeException("여행 기록 이미지를 찾을 수 없습니다."));
+        tripRecordImageRepository.delete(tripRecordImage);
     }
 
     // S3에 여행 이미지 업로드
