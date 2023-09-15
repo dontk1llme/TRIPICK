@@ -2,6 +2,7 @@ package com.tripick.mz.record.service;
 
 import com.tripick.mz.record.dto.request.CreateTripRecordImageRequestDto;
 import com.tripick.mz.record.dto.request.CreateTripRecordRequestDto;
+import com.tripick.mz.record.dto.request.UpdateTripRecordContentRequestDto;
 import com.tripick.mz.record.dto.response.TripRecordResponseDto;
 
 import java.util.List;
@@ -18,4 +19,7 @@ public interface RecordService {
 
     // 여행 기록 삭제
     void deleteTripRecord(int tripRecordId);
+    
+    // 여행 기록 내용 변경
+    void updateTripRecordContent(UpdateTripRecordContentRequestDto updateNicknameRequestDto);
 }

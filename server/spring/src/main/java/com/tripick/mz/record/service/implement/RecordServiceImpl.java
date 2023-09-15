@@ -8,6 +8,7 @@ import com.tripick.mz.member.entity.Member;
 import com.tripick.mz.member.repository.MemberRepository;
 import com.tripick.mz.record.dto.request.CreateTripRecordImageRequestDto;
 import com.tripick.mz.record.dto.request.CreateTripRecordRequestDto;
+import com.tripick.mz.record.dto.request.UpdateTripRecordContentRequestDto;
 import com.tripick.mz.record.dto.response.TripRecordResponseDto;
 import com.tripick.mz.record.entity.TripRecord;
 import com.tripick.mz.record.entity.TripRecordImage;
@@ -82,6 +83,7 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
+    @Transactional
     public void deleteTripRecord(int tripRecordId) {
         // 여행 기록 삭제
         TripRecord tripRecord = tripRecordRepository.findById(tripRecordId)
@@ -91,6 +93,15 @@ public class RecordServiceImpl implements RecordService {
         // 연결된 이미지 삭제
         List<TripRecordImage> tripRecordImages = tripRecordImageRepository.findByTripRecordTripRecordId(tripRecordId);
         tripRecordImageRepository.deleteAll(tripRecordImages);
+    }
+
+    @Override
+    @Transactional
+    public void updateTripRecordContent(UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto) {
+        String newContent = updateTripRecordContentRequestDto.getContent();
+        TripRecord tripRecord = tripRecordRepository.findById(updateTripRecordContentRequestDto.getTripRecordId()).orElseThrow(
+                ()-> new RuntimeException("글을 찾을 수 없습니다."));
+        tripRecord.updateTripRecordContent(updateTripRecordContentRequestDto.getContent());
     }
 
     // S3에 여행 이미지 업로드

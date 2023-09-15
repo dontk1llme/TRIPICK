@@ -64,12 +64,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public MemberResponseDto updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto) {
+    public void updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto) {
         String newNickname = updateNicknameRequestDto.getNickname();
         Member member = memberRepository.findById(updateNicknameRequestDto.getMemberId())
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
         member.updateNickname(updateNicknameRequestDto.getNickname());
-        return null;
     }
 
     @Override
@@ -123,6 +122,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void updateMainBadge(int memberId, int badgeId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("멤버 찾을수 없음"));
