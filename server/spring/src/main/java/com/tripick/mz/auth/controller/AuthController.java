@@ -6,7 +6,8 @@ import com.tripick.mz.auth.dto.response.AuthResponse;
 import com.tripick.mz.auth.service.AuthService;
 import com.tripick.mz.auth.service.GoogleAuthService;
 import com.tripick.mz.auth.service.KakaoAuthService;
-import com.tripick.mz.auth.util.AuthTokenProvider;
+import com.tripick.mz.auth.token.AuthTokenProvider;
+import com.tripick.mz.auth.util.JwtHeaderUtil;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,6 @@ public class AuthController {
 
   @GetMapping("/refresh")
   public ResponseEntity<AuthResponse> refreshToken(HttpServletRequest request){
-    String appToken = JwtH.getAccessToken(request);
+    String appToken = JwtHeaderUtil.getAccessToken(request);
   }
 }
