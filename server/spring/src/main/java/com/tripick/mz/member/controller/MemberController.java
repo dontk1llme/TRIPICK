@@ -30,7 +30,7 @@ public class MemberController {
 
     @PatchMapping("/nickname")
     public ResponseEntity<?> updateNickname(@Valid @RequestBody UpdateNicknameRequestDto updateNicknameRequestDto) {
-        MemberResponseDto memberResponseDto = memberService.updateNickname(updateNicknameRequestDto);
+        memberService.updateNickname(updateNicknameRequestDto);
         return new ResponseEntity<>(new ResponseDto(200, "성공:)", "닉네임 변경 성공"), HttpStatus.OK);
     }
 

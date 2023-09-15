@@ -33,4 +33,8 @@ public class TripRecord extends BaseEntity {
 
     @OneToMany(mappedBy = "tripRecord", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TripRecordImage> tripRecordImages;
+
+    public void updateTripRecordContent(String content) {
+        this.content = content;
+    }
 }

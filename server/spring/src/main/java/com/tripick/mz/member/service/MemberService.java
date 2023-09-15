@@ -11,7 +11,7 @@ public interface MemberService {
     //내 정보 조회
     MemberResponseDto getMemberById(int memberId);
     //닉네임 변경
-    MemberResponseDto updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto);
+    void updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto);
 
     //프로필 사진 변경
     List<S3FileDto> updateImage(List<MultipartFile> multipartFiles, int memberId);
