@@ -4,6 +4,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.tripick.mz.common.S3.dto.S3FileDto;
+import com.tripick.mz.common.error.NotExistBadgeException;
+import com.tripick.mz.common.error.NotExistMemberException;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;
 import com.tripick.mz.member.dto.response.BadgeResponseDto;
 import com.tripick.mz.member.dto.response.MemberResponseDto;
@@ -38,8 +40,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponseDto getMemberById(int memberId) {
         // 멤버 정보 조회
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
-
+                .orElseThrow(NotExistMemberException::new);
         // 뱃지 정보 조회
         List<MemberBadge> memberBadges = member.getMemberBadgeList();
 
@@ -65,12 +66,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<BadgeResponseDto> getBadgeList(int memberId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(NotExistMemberException::new);
 
         List<MemberBadge> memberBadges = member.getMemberBadgeList();
 
         if (memberBadges.isEmpty()) {
-            throw new RuntimeException("보유한 뱃지가 없습니다.");
+            throw new NotExistBadgeException();
         }
 
         List<BadgeResponseDto> badgeResponses = memberBadges.stream()
@@ -89,7 +90,7 @@ public class MemberServiceImpl implements MemberService {
     public void updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto) {
         String newNickname = updateNicknameRequestDto.getNickname();
         Member member = memberRepository.findById(updateNicknameRequestDto.getMemberId())
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(NotExistMemberException::new);
         member.updateNickname(updateNicknameRequestDto.getNickname());
     }
 
@@ -115,7 +116,7 @@ public class MemberServiceImpl implements MemberService {
 
             // S3에 업로드한 폴더 및 파일 URL
             uploadFileUrl = amazonS3Client.getUrl(bucketName, keyName).toString();
-            Member member = memberRepository.findById(memberId).orElseThrow(RuntimeException::new);
+            Member member = memberRepository.findById(memberId).orElseThrow(NotExistMemberException::new);
             member.updateProfileImage(uploadFileUrl);
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,7 +139,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public String deleteImage(int memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(RuntimeException::new);
+        Member member = memberRepository.findById(memberId).orElseThrow(NotExistMemberException::new);
         member.updateProfileImage(DEFAULT_IMAGE);
         return member.getProfileImage();
     }
@@ -147,10 +148,10 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void updateMainBadge(int memberId, int badgeId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("멤버 찾을수 없음"));
+                .orElseThrow(NotExistMemberException::new);
 
         Badge badge = badgeRepository.findById(badgeId)
-                .orElseThrow(() -> new RuntimeException("뱃지 정보 없음"));
+                .orElseThrow(NotExistBadgeException::new);
 
         // 대표 뱃지 업데이트
         member.updateMainBadge(badgeId);
