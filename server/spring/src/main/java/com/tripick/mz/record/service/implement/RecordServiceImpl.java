@@ -4,6 +4,9 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.tripick.mz.common.S3.dto.S3FileDto;
+import com.tripick.mz.common.error.NotExistMemberException;
+import com.tripick.mz.common.error.NotExistRecordException;
+import com.tripick.mz.common.error.NotExistRecordImageException;
 import com.tripick.mz.member.entity.Member;
 import com.tripick.mz.member.repository.MemberRepository;
 import com.tripick.mz.record.dto.request.CreateTripRecordImageRequestDto;
@@ -41,7 +44,7 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public List<TripRecordResponseDto> getTripRecordsByMemberId(int memberId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("사용자 없음"));
+                .orElseThrow(NotExistMemberException::new);
 
         List<TripRecord> tripRecords = tripRecordRepository.findByMember(member);
 
@@ -64,7 +67,7 @@ public class RecordServiceImpl implements RecordService {
     @Transactional
     public void createTripRecord(CreateTripRecordRequestDto createTripRecordRequestDto) {
         Member member = memberRepository.findById(createTripRecordRequestDto.getMemberId())
-                .orElseThrow(() -> new RuntimeException("Member not found"));
+                .orElseThrow(NotExistMemberException::new);
 
         TripRecord tripRecord = TripRecord.builder()
                 .member(member)
@@ -77,7 +80,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public void saveTripRecordImage(CreateTripRecordImageRequestDto createTripRecordImageRequestDto) {
-        TripRecord tripRecord = tripRecordRepository.findById(createTripRecordImageRequestDto.getTripRecordId()).orElseThrow(() -> new RuntimeException("기록 찾을수 없음"));
+        TripRecord tripRecord = tripRecordRepository.findById(createTripRecordImageRequestDto.getTripRecordId()).orElseThrow(NotExistRecordException::new);
         List<S3FileDto> uploadedFiles = uploadImagesToS3(createTripRecordImageRequestDto.getImages(), createTripRecordImageRequestDto.getTripRecordId());
 
         for (S3FileDto uploadedFile : uploadedFiles) {
@@ -93,7 +96,7 @@ public class RecordServiceImpl implements RecordService {
     public void deleteTripRecord(int tripRecordId) {
         // 여행 기록 삭제
         TripRecord tripRecord = tripRecordRepository.findById(tripRecordId)
-                .orElseThrow(() -> new RuntimeException("여행 기록을 찾을 수 없습니다."));
+                .orElseThrow(NotExistRecordException::new);
         tripRecordRepository.delete(tripRecord);
 
         // 연결된 이미지 삭제
@@ -106,7 +109,7 @@ public class RecordServiceImpl implements RecordService {
     public void updateTripRecordContent(UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto) {
         updateTripRecordContentRequestDto.getContent();
         TripRecord tripRecord = tripRecordRepository.findById(updateTripRecordContentRequestDto.getTripRecordId()).orElseThrow(
-                ()-> new RuntimeException("글을 찾을 수 없습니다."));
+                NotExistRecordException::new);
         tripRecord.updateTripRecordContent(updateTripRecordContentRequestDto.getContent());
     }
 
@@ -115,7 +118,7 @@ public class RecordServiceImpl implements RecordService {
     public void deleteTripRecordImage(int tripRecordImageId) {
         // 여행 기록 이미지 삭제
         TripRecordImage tripRecordImage = tripRecordImageRepository.findById(tripRecordImageId)
-                .orElseThrow(() -> new RuntimeException("여행 기록 이미지를 찾을 수 없습니다."));
+                .orElseThrow(NotExistRecordImageException::new);
         tripRecordImageRepository.delete(tripRecordImage);
     }
 
@@ -127,7 +130,7 @@ public class RecordServiceImpl implements RecordService {
             try (InputStream inputStream = image.getInputStream()) {
                 String originalFileName = image.getOriginalFilename();
                 String uploadFileName = getUuidFileName(originalFileName);
-                String keyName = uploadFileName; // S3에 저장될 경로
+                String keyName = uploadFileName;
 
                 ObjectMetadata objectMetadata = new ObjectMetadata();
                 objectMetadata.setContentLength(image.getSize());
