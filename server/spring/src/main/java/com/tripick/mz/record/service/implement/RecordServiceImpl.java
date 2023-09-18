@@ -20,6 +20,7 @@ import com.tripick.mz.record.repository.TripRecordImageRepository;
 import com.tripick.mz.record.repository.TripRecordRepository;
 import com.tripick.mz.record.service.RecordService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RecordServiceImpl implements RecordService {
@@ -43,6 +45,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<TripRecordResponseDto> getTripRecordsByMemberId(int memberId) {
+        log.info("RecordServiceImpl_getTripRecordsByMemberId -> 여행 기록 조회 시도");
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(NotExistMemberException::new);
 
@@ -66,6 +69,7 @@ public class RecordServiceImpl implements RecordService {
     @Override
     @Transactional
     public void createTripRecord(CreateTripRecordRequestDto createTripRecordRequestDto) {
+        log.info("RecordServiceImpl_createTripRecord -> 여행 기록 작성 시도");
         Member member = memberRepository.findById(createTripRecordRequestDto.getMemberId())
                 .orElseThrow(NotExistMemberException::new);
 
@@ -80,6 +84,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public void saveTripRecordImage(CreateTripRecordImageRequestDto createTripRecordImageRequestDto) {
+        log.info("RecordServiceImpl_saveTripRecordImage -> 여행 기록 사진 등록 시도");
         TripRecord tripRecord = tripRecordRepository.findById(createTripRecordImageRequestDto.getTripRecordId()).orElseThrow(NotExistRecordException::new);
         List<S3FileDto> uploadedFiles = uploadImagesToS3(createTripRecordImageRequestDto.getImages(), createTripRecordImageRequestDto.getTripRecordId());
 
@@ -94,12 +99,11 @@ public class RecordServiceImpl implements RecordService {
     @Override
     @Transactional
     public void deleteTripRecord(int tripRecordId) {
-        // 여행 기록 삭제
+        log.info("RecordServiceImpl_deleteTripRecord -> 여행 기록 삭제 시도");
         TripRecord tripRecord = tripRecordRepository.findById(tripRecordId)
                 .orElseThrow(NotExistRecordException::new);
         tripRecordRepository.delete(tripRecord);
 
-        // 연결된 이미지 삭제
         List<TripRecordImage> tripRecordImages = tripRecordImageRepository.findByTripRecordTripRecordId(tripRecordId);
         tripRecordImageRepository.deleteAll(tripRecordImages);
     }
@@ -107,6 +111,7 @@ public class RecordServiceImpl implements RecordService {
     @Override
     @Transactional
     public void updateTripRecordContent(UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto) {
+        log.info("RecordServiceImpl_updateTripRecordContent -> 여행 기록 내용 수정 시도");
         updateTripRecordContentRequestDto.getContent();
         TripRecord tripRecord = tripRecordRepository.findById(updateTripRecordContentRequestDto.getTripRecordId()).orElseThrow(
                 NotExistRecordException::new);
@@ -116,7 +121,7 @@ public class RecordServiceImpl implements RecordService {
     @Override
     @Transactional
     public void deleteTripRecordImage(int tripRecordImageId) {
-        // 여행 기록 이미지 삭제
+        log.info("RecordServiceImpl_deleteTripRecordImage -> 여행 기록 이미지 삭제 시도");
         TripRecordImage tripRecordImage = tripRecordImageRepository.findById(tripRecordImageId)
                 .orElseThrow(NotExistRecordImageException::new);
         tripRecordImageRepository.delete(tripRecordImage);
