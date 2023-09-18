@@ -1,5 +1,6 @@
 package com.tripick.mz.auth.token;
 
+import com.tripick.mz.auth.exception.TokenValidFailedException;
 import com.tripick.mz.member.entity.Credential;
 import com.tripick.mz.member.entity.Member;
 import com.tripick.mz.member.entity.Role;
@@ -63,7 +64,7 @@ public class AuthTokenProvider {
 
       return new UsernamePasswordAuthenticationToken(principal, authToken, authorities);
     } else {
-      throw new TokenValidFailException();
+      throw new TokenValidFailedException();
     }
   }
 }
