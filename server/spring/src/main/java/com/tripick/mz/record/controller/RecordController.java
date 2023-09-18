@@ -1,13 +1,12 @@
 package com.tripick.mz.record.controller;
 
-import com.tripick.mz.common.error.ResponseDto;
+import com.tripick.mz.common.response.ResponseResult;
 import com.tripick.mz.record.dto.request.CreateTripRecordImageRequestDto;
 import com.tripick.mz.record.dto.request.CreateTripRecordRequestDto;
 import com.tripick.mz.record.dto.request.UpdateTripRecordContentRequestDto;
 import com.tripick.mz.record.dto.response.TripRecordResponseDto;
 import com.tripick.mz.record.service.RecordService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,61 +28,38 @@ public class RecordController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createTripRecord(@RequestBody CreateTripRecordRequestDto createTripRecordRequestDto) {
-        try {
-            recordService.createTripRecord(createTripRecordRequestDto);
-            return new ResponseEntity<>(new ResponseDto(200, "성공:)", "여행 기록 등록 성공"), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseDto(500, "에러:(", "여행 기록 등록 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseResult createTripRecord(@RequestBody CreateTripRecordRequestDto createTripRecordRequestDto) {
+        recordService.createTripRecord(createTripRecordRequestDto);
+        return ResponseResult.successResponse;
     }
 
-
-
     @PostMapping("/saveImage")
-    public ResponseEntity<?> saveTripRecordImage(
+    public ResponseResult saveTripRecordImage(
             @RequestParam("tripRecordId") int tripRecordId,
-            @RequestParam("images") List<MultipartFile> images
-    ){
+            @RequestParam("images") List<MultipartFile> images){
         CreateTripRecordImageRequestDto createTripRecordImageRequestDto = new CreateTripRecordImageRequestDto();
         createTripRecordImageRequestDto.setTripRecordId(tripRecordId);
         createTripRecordImageRequestDto.setImages(images);
 
-        try{
-            recordService.saveTripRecordImage(createTripRecordImageRequestDto);
-            return new ResponseEntity<>(new ResponseDto(200, "성공:)", "여행 기록 사진 등록 성공"), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseDto(500, "에러:(", "여행 기록 사진 등록 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        recordService.saveTripRecordImage(createTripRecordImageRequestDto);
+        return ResponseResult.successResponse;
     }
 
     @PatchMapping("/content")
-    public ResponseEntity<?> updateTripRecordContent(@Valid @RequestBody UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto){
-        try {
-            recordService.updateTripRecordContent(updateTripRecordContentRequestDto);
-            return new ResponseEntity<>(new ResponseDto(200, "성공:)", "여행 기록 내용 변경 성공"), HttpStatus.OK);
-        }catch (Exception e){
-            return  new ResponseEntity<>(new ResponseDto(500,"에러:(","여행 기록 내용 변경 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseResult updateTripRecordContent(@Valid @RequestBody UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto){
+        recordService.updateTripRecordContent(updateTripRecordContentRequestDto);
+        return ResponseResult.successResponse;
     }
 
     @DeleteMapping("/delete-record/{tripRecordId}")
-    public ResponseEntity<?> deleteTripRecord(@PathVariable int tripRecordId){
-        try {
-            recordService.deleteTripRecord(tripRecordId);
-            return new ResponseEntity<>(new ResponseDto(200, "성공:)", "여행 기록 삭제 성공"), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseDto(500, "에러:(", "여행 기록 삭제 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseResult deleteTripRecord(@PathVariable int tripRecordId){
+        recordService.deleteTripRecord(tripRecordId);
+        return ResponseResult.successResponse;
     }
 
     @DeleteMapping("/delete-record-image/{tripRecordImageId}")
-    public ResponseEntity<?> deleteTripRecordImage(@PathVariable int tripRecordImageId){
-        try {
-            recordService.deleteTripRecordImage(tripRecordImageId);
-            return new ResponseEntity<>(new ResponseDto(200, "성공:)", "여행 기록 사진 개별 삭제 성공"), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseDto(500, "에러:(", "여행 기록 사진 개별 삭제 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseResult deleteTripRecordImage(@PathVariable int tripRecordImageId){
+        recordService.deleteTripRecordImage(tripRecordImageId);
+        return ResponseResult.successResponse;
     }
 }
