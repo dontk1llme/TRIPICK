@@ -16,6 +16,7 @@ import com.tripick.mz.member.repository.BadgeRepository;
 import com.tripick.mz.member.repository.MemberRepository;
 import com.tripick.mz.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -38,6 +40,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final BadgeRepository badgeRepository;
     public MemberResponseDto getMemberById(int memberId) {
+        log.info("MemberServiceImpl_getMemberById -> 사용자 정보 조회 시도");
         // 멤버 정보 조회
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(NotExistMemberException::new);
@@ -65,6 +68,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<BadgeResponseDto> getBadgeList(int memberId) {
+        log.info("MemberServiceImpl_getBadgeList -> 사용자 보유 뱃지 조회 시도");
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(NotExistMemberException::new);
 
@@ -88,7 +92,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void updateNickname(UpdateNicknameRequestDto updateNicknameRequestDto) {
-        String newNickname = updateNicknameRequestDto.getNickname();
+        log.info("MemberServiceImpl_updateNickname -> 사용자 닉네임 수정 시도");
         Member member = memberRepository.findById(updateNicknameRequestDto.getMemberId())
                 .orElseThrow(NotExistMemberException::new);
         member.updateNickname(updateNicknameRequestDto.getNickname());
@@ -97,6 +101,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public List<S3FileDto> updateImage(List<MultipartFile> multipartFiles,int memberId) {
+        log.info("MemberServiceImpl_updateImage -> 사용자 프로필 사진 수정 시도");
         List<S3FileDto> s3files = new ArrayList<>();
         String originalFileName = multipartFiles.get(0).getOriginalFilename();
         String uploadFileName = getUuidFileName(originalFileName);
@@ -119,6 +124,7 @@ public class MemberServiceImpl implements MemberService {
             Member member = memberRepository.findById(memberId).orElseThrow(NotExistMemberException::new);
             member.updateProfileImage(uploadFileUrl);
         } catch (IOException e) {
+            log.error("MemberServiceImpl_updateImage -> 사용자 이미지 변경 실패: {}", e.getMessage());
             e.printStackTrace();
         }
 
@@ -139,6 +145,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public String deleteImage(int memberId) {
+        log.info("MemberServiceImpl_deleteImage -> 사용자 프로필 사진 수정 시도");
         Member member = memberRepository.findById(memberId).orElseThrow(NotExistMemberException::new);
         member.updateProfileImage(DEFAULT_IMAGE);
         return member.getProfileImage();
@@ -147,6 +154,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void updateMainBadge(int memberId, int badgeId) {
+        log.info("MemberServiceImpl_updateMainBadge -> 사용자 메인 뱃지 수정 시도");
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(NotExistMemberException::new);
 
