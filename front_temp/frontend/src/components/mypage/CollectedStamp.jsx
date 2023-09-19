@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
@@ -6,12 +6,27 @@ import { BiCheck } from 'react-icons/bi';
 
 const CollectedStamp = ({ id }) => {
     const { stamp, mainStampId, setMainStampId } = hooks.stampState();
+    const { view, setView, setMessage, response, setResponse, setType } = hooks.modalState();
     const thisStamp = stamp.find(stamp => stamp.id === id);
 
     useEffect(() => {
-        console.log(mainStampId);
-        console.log(id);
+        console.log('main', mainStampId);
+        console.log('id', id);
     }, [mainStampId]);
+
+    const handleSetMain = id => {
+        setType('checking');
+        setMessage(`${stamp[id - 1].name}을 메인 스탬프로 설정했습니다.`);
+        setView(true);
+        setMainStampId(id);
+    };
+
+    const handleRemoveMain = () => {
+        setType('checking');
+        setMessage('메인 스탬프가 뿅~ 없어졌지렁');
+        setView(true);
+        setMainStampId(0);
+    };
 
     return (
         <S.Wrap>
@@ -20,11 +35,11 @@ const CollectedStamp = ({ id }) => {
                     <S.StampTitle>{thisStamp.name}</S.StampTitle>
                     <S.StampDetail>{thisStamp.detail}</S.StampDetail>
                     {mainStampId === id ? (
-                        <S.IsMainButton onClick={() => setMainStampId(0)}>
+                        <S.IsMainButton onClick={handleRemoveMain}>
                             <BiCheck />
                         </S.IsMainButton>
                     ) : (
-                        <S.CheckMainButton onClick={() => setMainStampId(id)}>
+                        <S.CheckMainButton onClick={() => handleSetMain(id)}>
                             <BiCheck />
                         </S.CheckMainButton>
                     )}

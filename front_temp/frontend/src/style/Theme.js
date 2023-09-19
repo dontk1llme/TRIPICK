@@ -18,6 +18,7 @@ const color = {
     main1: '#8390FA',
     main2: '#5452B7',
     main3: '#3D3B8E',
+    main4: '#CB9CF2',
     highlight: '#F4E409',
     warning: '#C14953',
     dark1: '#5B5549',
