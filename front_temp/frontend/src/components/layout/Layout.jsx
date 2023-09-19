@@ -23,6 +23,9 @@ const Layout = () => {
                     <components.Modal />
                 </S.Modal>
             )}
+            <S.TopTabContainer>
+                <components.TopTab />
+            </S.TopTabContainer>
             <S.Container>
                 <Outlet />
             </S.Container>
@@ -53,6 +56,13 @@ const S = {
         height: 100vh;
         width: 100vw;
         z-index: 1000;
+    `,
+    TopTabContainer: styled.div`
+        position: fixed; /* 화면 상단에 고정 */
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000; /* 다른 요소 위에 표시하기 위한 z-index 설정 */
     `,
     Container: styled.div`
         width: 100%;
