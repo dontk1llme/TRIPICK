@@ -11,7 +11,7 @@ spring:
     mongodb:
       host: ${MONGODB_DATABASE_URL}
       port: ${MONGODB_PORT}
-      database: tripick
+      database: ${MONGODB_DATABASE_NAME}
       username: ${DATABASE_USERNAME}
       password: ${DATABASE_PASSWORD}
   config:
