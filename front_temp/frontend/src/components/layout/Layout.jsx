@@ -32,7 +32,7 @@ const S = {
         overflow-y: ${({ overflowHidden }) => (overflowHidden ? 'hidden' : 'auto')};
     `,
     TopTabContainer: styled.div`
-        position: fixed; /* 화면 상단에 고정 */
+        // position: fixed; /* 화면 상단에 고정 */
         top: 0;
         left: 0;
         right: 0;
