@@ -21,7 +21,7 @@ public interface RecordService {
     void deleteTripRecord(int tripRecordId);
     
     // 여행 기록 내용 변경
-    void updateTripRecordContent(UpdateTripRecordContentRequestDto updateNicknameRequestDto);
+    void updateTripRecordContent(UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto);
 
     //여행 기록 이미지 삭제
     void deleteTripRecordImage(int tripRecordImageId);
