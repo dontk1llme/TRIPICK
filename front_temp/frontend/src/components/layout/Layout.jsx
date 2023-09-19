@@ -8,7 +8,9 @@ const Layout = () => {
     const location = useLocation();
     return (
         <S.Wrap overflowHidden={location.pathname === '/mypage'}>
-            <components.TopTab />
+            <S.TopTabContainer>
+                <components.TopTab />
+            </S.TopTabContainer>
             <S.Container>
                 <Outlet />
             </S.Container>
@@ -28,6 +30,13 @@ const S = {
         align-items: start;
         overflow-x: hidden;
         overflow-y: ${({ overflowHidden }) => (overflowHidden ? 'hidden' : 'auto')};
+    `,
+    TopTabContainer: styled.div`
+        position: fixed; /* 화면 상단에 고정 */
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000; /* 다른 요소 위에 표시하기 위한 z-index 설정 */
     `,
     Container: styled.div`
         width: 100%;
