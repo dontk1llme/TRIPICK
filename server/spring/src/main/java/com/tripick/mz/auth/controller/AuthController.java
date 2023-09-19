@@ -2,14 +2,17 @@ package com.tripick.mz.auth.controller;
 
 import com.tripick.mz.auth.common.ApiResponse;
 import com.tripick.mz.auth.dto.request.AuthRequest;
+import com.tripick.mz.auth.dto.request.AuthRequestDto;
 import com.tripick.mz.auth.dto.response.AuthResponse;
 import com.tripick.mz.auth.service.AuthService;
 import com.tripick.mz.auth.service.GoogleAuthService;
-import com.tripick.mz.auth.service.KakaoAuthService;
-import com.tripick.mz.auth.token.AuthTokenProvider;
+import com.tripick.mz.auth.service.implement.AuthServiceImple;
+import com.tripick.mz.auth.token.JwtToken;
 import com.tripick.mz.auth.util.JwtHeaderUtil;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,29 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-  private final KakaoAuthService kakaoAuthService;
-  private final GoogleAuthService googleAuthService;
-  private final AuthTokenProvider authTokenProvider;
-  private final AuthService authService;
+  private final AuthServiceImple authServiceImple;
 
-  /**
-   * KAKAO 소셜 로그인 기능
-   */
-  @PostMapping(value="/kakao")
-  public ResponseEntity<AuthResponse> kakaoAuthRequest(@RequestBody AuthRequest authRequest){
-    return ApiResponse.success(kakaoAuthService.login(authRequest));
-  }
-
-  /**
-   * GOOGLE 소셜 로그인 기능
-   */
-  @PostMapping(value="/google")
-  public ResponseEntity<AuthResponse> googleAuthRequest(@RequestBody AuthRequest authRequest){
-    return ApiResponse.success(googleAuthService.login(authRequest));
-  }
-
-  @GetMapping("/refresh")
-  public ResponseEntity<AuthResponse> refreshToken(HttpServletRequest request){
-    String appToken = JwtHeaderUtil.getAccessToken(request);
+  @PostMapping("/login")
+  public ResponseEntity<JwtToken> loginSuccess(AuthRequestDto authRequestDto) {
+    JwtToken token = authServiceImple.login(authRequestDto.getEmail(), authRequestDto.getPassword());
+    return ResponseEntity.ok(token);
   }
 }
