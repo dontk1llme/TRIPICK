@@ -7,10 +7,12 @@ import { IoPencil } from 'react-icons/io5';
 const MyProfile = () => {
     const { name, email, profileUrl, date, setName, setEmail, setProfileUrl, setLoginUser } = hooks.loginUserState();
     const { mainStampId, stamp } = hooks.stampState();
+    const { view, response, setView, setMessage, setResponse, setType } = hooks.modalState();
     const [mainStampUrl, setMainStampUrl] = useState('');
     const [onEditMode, setOnEditMode] = useState(false);
 
     const nameInputRef = useRef(null);
+    const wrapRef = useRef(null);
 
     useEffect(() => {
         if (onEditMode) {
@@ -30,18 +32,94 @@ const MyProfile = () => {
         console.log(mainStampUrl);
     }, [mainStampId]);
 
+    useEffect(() => {
+        if (!view && onEditMode) {
+            nameInputRef.current.focus();
+        }
+    }, [view]);
+
     const saveProfile = () => {
-        const profile = { name, email, profileUrl, date };
-        setLoginUser(profile);
-        setOnEditMode(false);
+        if (name.length < 2 || name.length > 10) {
+            setView(true);
+            setMessage('닉네임은 두글자 이상 열글자 이하여야 합니다.');
+            setType('warning');
+            nameInputRef.current.focus();
+        } else {
+            const profile = { name, email, profileUrl, date };
+            setLoginUser(profile);
+            setOnEditMode(false);
+            setView(true);
+            setMessage('변경된 프로필이 저장되었습니다. ');
+            setType('checking');
+        }
     };
+
+    const handleNameKeyDown = e => {
+        if (e.key === 'Enter') {
+            saveProfile();
+        }
+    };
+
+    useEffect(() => {
+        if (response === 'yes') {
+            setView(false);
+            setMessage('');
+            setResponse('');
+            setType('');
+        }
+    }, [response]);
 
     const handleProfileImageUpload = async event => {
         const file = await event.target.files[0];
         await setProfileUrl(file);
     };
+
+    // 수정 중일 때 바깥 클릭한 상황
+    const [pendingAction, setPendingAction] = useState(null);
+
+    useEffect(() => {
+        const handleOutsideClick = event => {
+            if (wrapRef.current && !wrapRef.current.contains(event.target) && onEditMode) {
+                event.preventDefault();
+                event.stopPropagation();
+                setView(true);
+                setType('query');
+                setMessage('변경 내용을 저장하시겠습니까?');
+                setPendingAction(event);
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => document.removeEventListener('mousedown', handleOutsideClick);
+    }, [onEditMode]);
+
+    useEffect(() => {
+        if (!view) {
+            if (response === 'yes' && pendingAction) {
+                if (pendingAction.target && typeof pendingAction.target.onClick === 'function') {
+                    pendingAction.target.onClick(pendingAction);
+                }
+                setPendingAction(null);
+                setView(false);
+                setMessage('');
+                setResponse('');
+                setType('');
+                if (!view) {
+                    saveProfile();
+                }
+            } else if (response === 'no') {
+                nameInputRef.current.focus();
+                setPendingAction(null);
+                setView(false);
+                setMessage('');
+                setResponse('');
+                setType('');
+            }
+        }
+    }, [response, view]);
+
     return (
-        <S.Wrap onClick={e => e.stopPropagation()}>
+        <S.Wrap onClick={e => e.stopPropagation()} ref={wrapRef}>
             <S.ProfileImageContainer>
                 <svg width="195" height="246" viewBox="0 0 195 246" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect
@@ -84,6 +162,7 @@ const MyProfile = () => {
                         readOnly={onEditMode ? null : 'readonly'}
                         edit={onEditMode ? 'edit' : null}
                         ref={nameInputRef}
+                        onKeyDown={handleNameKeyDown}
                     />
                 </S.TextContainer>
                 <S.TextContainer>
