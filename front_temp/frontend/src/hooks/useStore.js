@@ -34,6 +34,17 @@ export const dateState = create(set => ({
     setSelectedDate: data => set(state => ({ selectedDate: data })),
 }));
 
+export const modalState = create(set => ({
+    view: false,
+    message: '',
+    response: '',
+    type: '',
+    setView: data => set(state => ({ view: data })),
+    setMessage: data => set(state => ({ message: data })),
+    setResponse: data => set(state => ({ response: data })),
+    setType: data => set(state => ({ type: data })),
+}));
+
 export const albumState = create(set => ({
     selectedAlbum: '0',
     selectedImage: { albumId: '0', imageUrl: '' },

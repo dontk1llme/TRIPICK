@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Outlet, useLocation } from 'react-router-dom';
 
 import * as components from 'components';
+import * as hooks from 'hooks';
 
 const Layout = () => {
     const location = useLocation();
+    const { view } = hooks.modalState();
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        if (view) {
+            setScrollY(window.scrollY);
+        }
+    }, [view]);
     return (
         <S.Wrap overflowHidden={location.pathname === '/mypage'}>
             <components.TopTab />
+            {view && (
+                <S.Modal scrollY={scrollY}>
+                    <components.Modal />
+                </S.Modal>
+            )}
             <S.Container>
                 <Outlet />
             </S.Container>
@@ -28,6 +42,17 @@ const S = {
         align-items: start;
         overflow-x: hidden;
         overflow-y: ${({ overflowHidden }) => (overflowHidden ? 'hidden' : 'auto')};
+    `,
+    Modal: styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: ${({ scrollY }) => scrollY + 'px'};
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        z-index: 1000;
     `,
     Container: styled.div`
         width: 100%;

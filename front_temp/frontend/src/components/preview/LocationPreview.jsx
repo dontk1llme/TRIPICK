@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
+import { useNavigate } from 'react-router-dom';
+import * as utils from 'utils';
 
 import { GoHeartFill, GoHeart } from 'react-icons/go';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
@@ -9,6 +11,8 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 const LocationPreview = ({ place, type }) => {
     const { compareLocation, setCompareLocation } = hooks.cartState();
     const { detailLocation, setDetailLocation, setViewDetail } = hooks.detailState();
+    const { setView, message, setMessage, response, setResponse, setType } = hooks.modalState();
+    const navigate = useNavigate();
 
     const handleCompareLocation = id => {
         const placeIndex = compareLocation.indexOf(id);
@@ -17,17 +21,35 @@ const LocationPreview = ({ place, type }) => {
             const indexOfMinusOne = compareLocation.indexOf(-1);
             if (indexOfMinusOne !== -1) {
                 compareLocation[indexOfMinusOne] = id;
-                if (indexOfMinusOne === 1) {
-                    alert('이동하겠는지 여기서 물어보기');
+                if (indexOfMinusOne === 1 || compareLocation[1] !== -1) {
+                    setView(true);
+                    setMessage('비교함으로 이동하시겠습니까?');
+                    setType('query');
                 }
             } else {
-                alert('비교함이 가득찼습니다. ');
+                setView(true);
+                setMessage('비교함이 가득 찼습니다. ');
+                setType('warning');
             }
         } else {
             compareLocation[placeIndex] = -1;
         }
         setCompareLocation([...compareLocation]);
     };
+
+    useEffect(() => {
+        if (response === 'yes' && message === '비교함으로 이동하시겠습니까?') {
+            navigate(utils.URL.CART.COMPARE);
+            setResponse('');
+            setMessage('');
+            setType('');
+        } else if (response === 'no') {
+            setView(false);
+            setResponse('');
+            setMessage('');
+            setType('');
+        }
+    }, [response]);
 
     const handleDetails = () => {
         setDetailLocation(place);
