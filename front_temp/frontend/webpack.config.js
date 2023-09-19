@@ -59,14 +59,9 @@ module.exports = (env, options) => {
         ],
         devServer: {
             hot: true,
-            //host: 'localhost',
+            // host: 'j9a305.p.ssafy.io',
+            allowedHosts: 'all',
             port: 3000,
-            allowedHosts: [
-                'http://tripick.site',
-                'https://tripick.site',
-                'http://j9a305.p.ssafy.io',
-                'https://j9a305.p.ssafy.io'
-            ],
             historyApiFallback: true,
         },
     };
