@@ -51,7 +51,7 @@ public class RecordController {
     }
 
     @PatchMapping("/content")
-    public ResponseResult updateTripRecordContent(@Valid @RequestBody UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto){
+    public ResponseResult updateTripRecordContent(@RequestBody UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto){
         log.info("RecordController_updateTripRecordContent -> 여행 기록 내용 수정");
         recordService.updateTripRecordContent(updateTripRecordContentRequestDto);
         return ResponseResult.successResponse;
