@@ -44,8 +44,8 @@ public class MemberController {
         return ResponseResult.successResponse;
     }
 
-    @PatchMapping("/delete-profile-image")
-    public ResponseResult deleteImage(int memberId) {
+    @PatchMapping("/delete-profile-image/{memberId}")
+    public ResponseResult deleteImage(@PathVariable int memberId) {
         log.info("MemberController_deleteImage -> 사용자 프로필 사진 삭제");
         memberService.deleteImage(memberId);
         return ResponseResult.successResponse;
