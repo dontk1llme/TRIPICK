@@ -61,6 +61,7 @@ module.exports = (env, options) => {
             hot: true,
             //host: 'localhost',
             port: 3000,
+            disableHostCheck: true,
             historyApiFallback: true,
         },
     };
