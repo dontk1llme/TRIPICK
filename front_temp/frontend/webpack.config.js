@@ -61,7 +61,12 @@ module.exports = (env, options) => {
             hot: true,
             //host: 'localhost',
             port: 3000,
-            disableHostCheck: true,
+            allowedHosts: [
+                'http://tripick.site',
+                'https://tripick.site',
+                'http://j9a305.p.ssafy.io',
+                'https://j9a305.p.ssafy.io'
+            ],
             historyApiFallback: true,
         },
     };
