@@ -3,6 +3,7 @@ export { default as Layout } from './layout/Layout';
 export { default as TopTab } from './common/TopTab';
 export { default as LoginButton } from './common/LoginButton';
 export { default as LoginModal } from './common/LoginModal';
+export { default as Modal } from './common/Modal';
 
 export { default as LocationPreview } from './preview/LocationPreview';
 export { default as LocationDetail } from './preview/LocationDetail';

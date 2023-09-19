@@ -10,6 +10,7 @@ const AlbumList = () => {
     const albumNameRef = useRef(null);
     const albumNameRefs = useRef([]);
     const addAlbumRef = useRef(null);
+    const newAlbumRef = useRef(null);
 
     const [albumName, setAlbumName] = useState('');
     const [addAlbumMode, setAddAlbumMode] = useState(false);
@@ -190,9 +191,29 @@ const AlbumList = () => {
         };
     }, [contextMenu, editingAlbumId]);
 
+    useEffect(() => {
+        const handleOutsideClick = e => {
+            if (
+                addAlbumMode &&
+                addAlbumRef.current &&
+                !addAlbumRef.current.contains(e.target) &&
+                !newAlbumRef.current.contains(e.target)
+            ) {
+                setAddAlbumMode(false);
+                setAlbumName('');
+            }
+        };
+
+        document.addEventListener('click', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, [addAlbumMode]);
+
     return (
         <S.Wrap>
-            <S.NewAlbumContainer onClick={handleNewAlbum} ref={addAlbumRef}>
+            <S.NewAlbumContainer onClick={handleNewAlbum} ref={newAlbumRef}>
                 <S.NewAlbum>
                     새 기록
                     <IoAdd />
