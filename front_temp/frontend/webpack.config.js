@@ -59,7 +59,7 @@ module.exports = (env, options) => {
         ],
         devServer: {
             hot: true,
-            host: 'localhost',
+            //host: 'localhost',
             port: 3000,
             historyApiFallback: true,
         },
