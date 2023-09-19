@@ -1,21 +1,21 @@
 package com.tripick.mz.member.controller;
 
-import com.tripick.mz.S3.dto.S3FileDto;
-import com.tripick.mz.common.error.ResponseDto;
+import com.tripick.mz.common.response.ResponseResult;
+import com.tripick.mz.common.response.SingleResponseResult;
 import com.tripick.mz.member.dto.request.UpdateMainBadgeRequestDto;
 import com.tripick.mz.member.dto.request.UpdateNicknameRequestDto;
+import com.tripick.mz.member.dto.response.BadgeResponseDto;
 import com.tripick.mz.member.dto.response.MemberResponseDto;
 import com.tripick.mz.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
 
-
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/member")
 @RestController
@@ -24,32 +24,44 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/{memberId}")
-    public MemberResponseDto getMember(@PathVariable int memberId) {
-        return memberService.getMemberById(memberId);
+    public ResponseResult getMember(@PathVariable int memberId) {
+        log.info("MemberController_getMember -> 사용자 정보 조회");
+        MemberResponseDto memberResponseDto = memberService.getMemberById(memberId);
+        return new SingleResponseResult<>(memberResponseDto);
     }
 
     @PatchMapping("/nickname")
-    public ResponseEntity<?> updateNickname(@Valid @RequestBody UpdateNicknameRequestDto updateNicknameRequestDto) {
-        MemberResponseDto memberResponseDto = memberService.updateNickname(updateNicknameRequestDto);
-        return new ResponseEntity<>(new ResponseDto(200, "성공:)", "닉네임 변경 성공"), HttpStatus.OK);
+    public ResponseResult updateNickname(@Valid @RequestBody UpdateNicknameRequestDto updateNicknameRequestDto) {
+        log.info("MemberController_updateNickname -> 사용자 닉네임 수정");
+        memberService.updateNickname(updateNicknameRequestDto);
+        return ResponseResult.successResponse;
     }
 
     @PatchMapping("/update-profile-image")
-    public ResponseEntity<?> updateImage(@RequestParam("files") List<MultipartFile> multipartFiles, @RequestParam("memberId") int memberId) {
-        List<S3FileDto> uploadedFiles = memberService.updateImage(multipartFiles, memberId);
-        return new ResponseEntity<>(new ResponseDto(200, "성공:)", "프로필 사진 변경 성공"), HttpStatus.OK);
+    public ResponseResult updateImage(@RequestParam("files") List<MultipartFile> multipartFiles, @RequestParam("memberId") int memberId) {
+        log.info("MemberController_updateImage -> 사용자 프로필 사진 수정");
+        memberService.updateImage(multipartFiles, memberId);
+        return ResponseResult.successResponse;
     }
 
     @PatchMapping("/delete-profile-image")
-    public ResponseEntity<?> deleteImage(@RequestParam("memberId") int memberId) {
-        String deletedImageUrl = memberService.deleteImage(memberId);
-        return new ResponseEntity<>(new ResponseDto(200, "성공:)", "프로필 사진 삭제 성공"), HttpStatus.OK);
+    public ResponseResult deleteImage(int memberId) {
+        log.info("MemberController_deleteImage -> 사용자 프로필 사진 삭제");
+        memberService.deleteImage(memberId);
+        return ResponseResult.successResponse;
     }
 
     @PatchMapping("/update-main-badge")
-    public ResponseEntity<?> setMainBadge(@RequestBody UpdateMainBadgeRequestDto requestDto) {
-        memberService.updateMainBadge(requestDto.getMemberId(), requestDto.getBadgeId());
-        return new ResponseEntity<>(new ResponseDto(200, "성공:)", "대표 뱃지 변경 성공"), HttpStatus.OK);
+    public ResponseResult setMainBadge(@RequestBody UpdateMainBadgeRequestDto updateMainBadgeRequestDto) {
+        log.info("MemberController_setMainBadge -> 사용자 메인 뱃지 설정");
+        memberService.updateMainBadge(updateMainBadgeRequestDto.getMemberId(), updateMainBadgeRequestDto.getBadgeId());
+        return ResponseResult.successResponse;
     }
 
+    @GetMapping("/badge/{memberId}")
+    public ResponseResult getBadgeList(@PathVariable int memberId) {
+        log.info("MemberController_getBadgeList -> 사용자 보유 뱃지 조회");
+        List<BadgeResponseDto> badgeResponseDto = memberService.getBadgeList(memberId);
+        return new SingleResponseResult<>(badgeResponseDto);
+    }
 }
