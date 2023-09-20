@@ -11,7 +11,7 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 const LocationPreview = ({ place, type }) => {
     const { cartLocation, setCartLocation, compareLocation, setCompareLocation } = hooks.cartState();
     const { detailLocation, setDetailLocation, setViewDetail } = hooks.detailState();
-    const { setView, message, setMessage, response, setResponse, type: modalType, setType } = hooks.modalState();
+    const { view, setView, message, setMessage, response, setResponse, type: modalType, setType } = hooks.modalState();
     const [currentPlace, setCurrentPlace] = useState(null);
     const navigate = useNavigate();
 
@@ -41,12 +41,12 @@ const LocationPreview = ({ place, type }) => {
     const handleCartLocation = place => {
         const placeIndex = cartLocation.indexOf(place);
         console.log(placeIndex);
-        if (placeIndex === -1) {
+        if (!view && placeIndex === -1) {
             setCartLocation([...cartLocation, place]);
             setView(true);
             setMessage('보관함에 추천 여행지를 담았습니다. ');
             setType('checking');
-        } else {
+        } else if (!view && placeIndex !== -1) {
             console.log('보관함에서 삭제');
             setMessage('보관함에서 여행지를 삭제하시겠습니까?');
             setView(true);
@@ -72,6 +72,13 @@ const LocationPreview = ({ place, type }) => {
                 setMessage('');
                 setResponse('');
                 setCurrentPlace(null);
+            }
+        }
+        if (modalType === 'checking' && message === '보관함에 추천 여행지를 담았습니다. ') {
+            if (response === 'yes') {
+                setType('');
+                setMessage('');
+                setResponse('');
             }
         }
     }, [modalType, response, currentPlace]);

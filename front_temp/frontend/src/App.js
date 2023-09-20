@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { CountryProvider } from './components/diary/CountryContext';
-import { GoogleOAuthProvider } from '@react-oauth/google'
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import * as styles from 'style';
 import * as utils from 'utils';
@@ -13,8 +13,8 @@ const App = () => {
     return (
         <ThemeProvider theme={styles.Theme}>
             <CountryProvider>
-            <GoogleOAuthProvider  clientId={`${process.env.REACT_APP_GOOGLE_REST_API_KEY}`}>
-                <styles.GlobalStyles />
+                <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_REST_API_KEY}`}>
+                    <styles.GlobalStyles />
                     <Router>
                         <Routes>
                             <Route path={utils.URL.HOME.MAIN} element={<components.Layout />}>
@@ -25,6 +25,8 @@ const App = () => {
                                 <Route path={utils.URL.RECOMMEND.CALENDAR} element={<pages.Recommend />}></Route>
                                 <Route path={utils.URL.CART.COMPARE} element={<pages.Compare />}></Route>
                                 <Route path={utils.URL.DETAIL.ABOUT} element={<pages.Detail />}></Route>
+                                <Route path={utils.URL.MBTI.MAIN} element={<pages.Mbti />}></Route>
+                                <Route path={utils.URL.MBTI.TEST} element={<pages.MbtiTest />}></Route>
                             </Route>
                         </Routes>
                     </Router>
