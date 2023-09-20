@@ -25,7 +25,7 @@ const S = {
         display: flex;
         width: 100%;
         height: 100%;
-        margin: 0 156px;
+        margin: 60px 156px;
     `,
     AlbumContainer: styled.div`
         display: flex;

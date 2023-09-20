@@ -53,6 +53,7 @@ const S = {
         justify-content: center;
         width: 100%;
         height: 100%;
+        margin: 60px 0px;
     `,
     Wrap: styled.div`
         display: flex;
@@ -61,6 +62,8 @@ const S = {
         width: 80%;
         justify-content: center;
         align-items: center;
+        margin: 60px 0px;
+        
     `,
     TitleContainer: styled.div`
         width: 100%;

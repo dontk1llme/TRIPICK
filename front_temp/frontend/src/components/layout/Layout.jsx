@@ -17,7 +17,9 @@ const Layout = () => {
     }, [view]);
     return (
         <S.Wrap overflowHidden={location.pathname === '/mypage'}>
-            <components.TopTab />
+            <S.TopTabContainer>
+                <components.TopTab />
+            </S.TopTabContainer>
             {view && (
                 <S.Modal scrollY={scrollY}>
                     <components.Modal />
@@ -42,6 +44,11 @@ const S = {
         align-items: start;
         overflow-x: hidden;
         overflow-y: ${({ overflowHidden }) => (overflowHidden ? 'hidden' : 'auto')};
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Microsoft Edge */
+        &::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+        }
     `,
     Modal: styled.div`
         display: flex;
@@ -59,6 +66,7 @@ const S = {
         left: 0;
         right: 0;
         z-index: 1000; /* 다른 요소 위에 표시하기 위한 z-index 설정 */
+        position: fixed; // 얘 하나 추가함
     `,
     Container: styled.div`
         width: 100%;
