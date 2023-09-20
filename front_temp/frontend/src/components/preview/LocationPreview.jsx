@@ -47,8 +47,9 @@ const LocationPreview = ({ place, type }) => {
             setMessage('보관함에 추천 여행지를 담았습니다. ');
             setType('checking');
         } else {
-            setView(true);
+            console.log('보관함에서 삭제');
             setMessage('보관함에서 여행지를 삭제하시겠습니까?');
+            setView(true);
             setType('query');
             setCurrentPlace(place);
         }
@@ -64,14 +65,16 @@ const LocationPreview = ({ place, type }) => {
                 setType('');
                 setMessage('');
                 setResponse('');
+                setCurrentPlace(null);
             } else if (response === 'no') {
                 setView(false);
                 setType('');
                 setMessage('');
                 setResponse('');
+                setCurrentPlace(null);
             }
         }
-    }, [type, response, currentPlace]);
+    }, [modalType, response, currentPlace]);
 
     useEffect(() => {
         if (response === 'yes' && message === '비교함으로 이동하시겠습니까?') {
