@@ -32,5 +32,6 @@ public class Credential {
     private String socialPlatform;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Role role;
 }
