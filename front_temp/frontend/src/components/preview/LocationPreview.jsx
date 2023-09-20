@@ -9,7 +9,7 @@ import { GoHeartFill, GoHeart } from 'react-icons/go';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 const LocationPreview = ({ place, type }) => {
-    const { compareLocation, setCompareLocation } = hooks.cartState();
+    const { cartLocation, setCartLocation, compareLocation, setCompareLocation } = hooks.cartState();
     const { detailLocation, setDetailLocation, setViewDetail } = hooks.detailState();
     const { setView, message, setMessage, response, setResponse, setType } = hooks.modalState();
     const navigate = useNavigate();
@@ -35,6 +35,17 @@ const LocationPreview = ({ place, type }) => {
             compareLocation[placeIndex] = -1;
         }
         setCompareLocation([...compareLocation]);
+    };
+
+    const handleCartLocation = place => {
+        const placeIndex = cartLocation.indexOf(place);
+        console.log(placeIndex);
+        if (placeIndex === -1) {
+            setCartLocation([...cartLocation, place]);
+        } else {
+            const updatedCartLocation = cartLocation.filter(cart => cart !== place);
+            setCartLocation([...updatedCartLocation]);
+        }
     };
 
     useEffect(() => {
@@ -64,7 +75,13 @@ const LocationPreview = ({ place, type }) => {
                 <S.CountryName>{place.country}</S.CountryName>
                 <S.CityContainer>
                     {place.city}
-                    <S.HeartContainer>{place.cart ? <GoHeartFill /> : <GoHeart />}</S.HeartContainer>
+                    <S.HeartContainer
+                        onClick={e => {
+                            e.stopPropagation();
+                            handleCartLocation(place);
+                        }}>
+                        {cartLocation.indexOf(place) !== -1 ? <GoHeartFill /> : <GoHeart />}
+                    </S.HeartContainer>
                 </S.CityContainer>
             </S.PreviewImage>
             <S.PreviewInformationContainer>
