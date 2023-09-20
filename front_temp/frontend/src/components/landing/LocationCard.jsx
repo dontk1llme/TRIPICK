@@ -31,6 +31,8 @@ const LocationCard = ({ locationData, navigateToCalendar }) => {
         </S.LeftContainer>
         <S.RightContainer>
           <S.ColumnComponent>
+          <br></br>
+          <br></br>
             <S.SubTitle2 style={{ color: '#8390FA', cursor: 'pointer' }}>
               더 알아보기 <FaArrowAltCircleRight />
             </S.SubTitle2>
@@ -52,8 +54,6 @@ const LocationCard = ({ locationData, navigateToCalendar }) => {
             </S.SubTitle1>
           </S.ColumnComponent>
           <S.ColumnComponent>
-            <br></br>
-            <br></br>
             <br></br>
             <br></br>
             <br></br>

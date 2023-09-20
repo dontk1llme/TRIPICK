@@ -153,6 +153,7 @@ const S = {
         margin: 0 28px;
         box-shadow: ${({ theme }) => theme.shadow.card};
         cursor: pointer;
+        
     `,
     PreviewImage: styled.div`
         display: flex;

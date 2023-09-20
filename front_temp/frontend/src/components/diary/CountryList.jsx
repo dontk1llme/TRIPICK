@@ -74,17 +74,14 @@ const CountryList = () => {
 
     return (
         <S.Wrap style={{ width: 264, height: 648 }}>
-            {/* 검색 바 추가 */}
-            <input
-                type="text"
-                placeholder="국가 검색하기"
-                value={searchQuery}
-                onChange={handleSearchChange}
-            />
-            
-            {/* 간격 주기 */}
-            <div style={{ margin: '10px 0' }}></div>
-
+                <S.SearchBar
+                    type="text"
+                    placeholder="국가 검색하기"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    
+                />
+                <div style={{ margin: '10px 0' }}></div> 
 
 
             {/* 검색 결과를 필터링하여 국가 이름 목록을 렌더링 */}
@@ -126,6 +123,15 @@ const S = {
             height: 100%;
         }
     `,
+    SearchBar: styled.input`
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+
+    
+    `
 };
 
 export default CountryList;
