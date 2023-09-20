@@ -25,6 +25,7 @@ const LandingCard = ({ location }) => {
 
     return (
         <S.WholeContainer>
+            {/* 1 */}
             <S.LocationContainer >
                     <S.LeftContainer>
                         <div>
@@ -63,14 +64,17 @@ const LandingCard = ({ location }) => {
                                     <span>scroll </span> <br></br>
                                     <span style= {{paddingLeft: '17px'}}><LiaChevronDownSolid ></LiaChevronDownSolid></span>
                                 </S.SubTitle2>
+                                <br></br>
+                                <br></br>
                             </S.ColumnComponent>
                     </S.RightContainer>
                 </S.LocationContainer>
 
+                {/* 2 */}
                 <S.LocationContainer >
                     <S.LeftContainer>
                         <div>
-                            <S.Image src={location1.imageUrl} alt={location1.city} />
+                            <S.Image src={location2.imageUrl} alt={location2.city} />
                         </div>
                     </S.LeftContainer>
                     <S.RightContainer>
@@ -78,14 +82,14 @@ const LandingCard = ({ location }) => {
                                 <S.SubTitle2  style={{color:'#8390FA', cursor: 'pointer',}}>더 알아보기 <FaArrowAltCircleRight /> </S.SubTitle2>
                                 <br></br>
                                 <p>
-                                    <S.Title>{location1.city}</S.Title> 
-                                    <S.SubTitle1> {location1.country}</S.SubTitle1>
+                                    <S.Title>{location2.city}</S.Title> 
+                                    <S.SubTitle1> {location2.country}</S.SubTitle1>
                                 </p>
                             </S.ColumnComponent>
                             <S.ColumnComponent>
-                                <S.SubTitle1><BiMoneyWithdraw style={{color: '#8390FA'}}/> {location1.estimatedExchangeRate} {location1.currency} / 원 <br></br></S.SubTitle1>
-                                <S.SubTitle1><TiWeatherPartlySunny style={{color: '#8390FA' }}/> {location1.estimatedClimate}°C <br></br></S.SubTitle1>
-                                <S.SubTitle1><AiFillSafetyCertificate style={{color: '#8390FA' }}/> {location1.safety} / 10</S.SubTitle1>
+                                <S.SubTitle1><BiMoneyWithdraw style={{color: '#8390FA'}}/> {location2.estimatedExchangeRate} {location2.currency} / 원 <br></br></S.SubTitle1>
+                                <S.SubTitle1><TiWeatherPartlySunny style={{color: '#8390FA' }}/> {location2.estimatedClimate}°C <br></br></S.SubTitle1>
+                                <S.SubTitle1><AiFillSafetyCertificate style={{color: '#8390FA' }}/> {location2.safety} / 10</S.SubTitle1>
                             </S.ColumnComponent>
                             <S.ColumnComponent>
                                 <br></br>
@@ -105,6 +109,53 @@ const LandingCard = ({ location }) => {
                                     <span>scroll </span> <br></br>
                                     <span style= {{paddingLeft: '17px'}}><LiaChevronDownSolid ></LiaChevronDownSolid></span>
                                 </S.SubTitle2>
+                                <br></br>
+                                <br></br>
+                            </S.ColumnComponent>
+                    </S.RightContainer>
+            </S.LocationContainer>
+
+            {/* 3 */}
+            <S.LocationContainer >
+                    <S.LeftContainer>
+                        <div>
+                            <S.Image src={location3.imageUrl} alt={location3.city} />
+                        </div>
+                    </S.LeftContainer>
+                    <S.RightContainer>
+                            <S.ColumnComponent>
+                                <S.SubTitle2  style={{color:'#8390FA', cursor: 'pointer',}}>더 알아보기 <FaArrowAltCircleRight /> </S.SubTitle2>
+                                <br></br>
+                                <p>
+                                    <S.Title>{location3.city}</S.Title> 
+                                    <S.SubTitle1> {location3.country}</S.SubTitle1>
+                                </p>
+                            </S.ColumnComponent>
+                            <S.ColumnComponent>
+                                <S.SubTitle1><BiMoneyWithdraw style={{color: '#8390FA'}}/> {location3.estimatedExchangeRate} {location3.currency} / 원 <br></br></S.SubTitle1>
+                                <S.SubTitle1><TiWeatherPartlySunny style={{color: '#8390FA' }}/> {location3.estimatedClimate}°C <br></br></S.SubTitle1>
+                                <S.SubTitle1><AiFillSafetyCertificate style={{color: '#8390FA' }}/> {location3.safety} / 10</S.SubTitle1>
+                            </S.ColumnComponent>
+                            <S.ColumnComponent>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <S.Button onClick={() => navigate(utils.URL.RECOMMEND.CALENDAR)}>
+                                    {/* 나중엔 로그인 여부도 따져야 할 듯? */}
+                                    날짜 선택하고 여행지 추천받기
+                                </S.Button>
+                                <br></br>
+                                <br></br>
+                                <S.SubTitle2 style={{color: '#8390FA', paddingLeft: '170px'}}> 
+                                    <span>scroll </span> <br></br>
+                                    <span style= {{paddingLeft: '17px'}}><LiaChevronDownSolid ></LiaChevronDownSolid></span>
+                                </S.SubTitle2>
+                                <br></br>
+                                <br></br>
                             </S.ColumnComponent>
                     </S.RightContainer>
             </S.LocationContainer>
@@ -116,21 +167,20 @@ const LandingCard = ({ location }) => {
 
 const S = {
     WholeContainer: styled.div`
-        
+        overflow-y: scroll; /* 세로 스크롤 가능한 컨테이너로 설정 */
+        scroll-snap-type: y mandatory; /* 세로 방향 스크롤 스냅을 활성화하고 필수로 설정 */
+        height: 100vh; /* 컨테이너의 높이 설정 (화면 높이에 맞게 조절) */
+        weight: 95vw;
+        overflow-x: hidden;
     `,
     
-
     LocationContainer: styled.div`
         display: flex;
         // width: 981.6px;
         // height: 757.60px;
         width: 100vw;
-        height: 650px;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* Microsoft Edge */
-        &::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Opera */
-        }
+        height: 757.6px;
+        scroll-snap-align: start;
         `,
         
     LeftContainer: styled.div`
