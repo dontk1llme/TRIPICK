@@ -20,6 +20,10 @@ export const URL = {
     DETAIL: {
         ABOUT: '/details',
     },
+    MBTI: {
+        MAIN: '/mbti',
+        TEST: '/mbti/test',
+    },
 };
 
 export const MAX_WIDTH = '1920px';
