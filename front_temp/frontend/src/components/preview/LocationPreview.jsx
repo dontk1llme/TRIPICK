@@ -11,7 +11,8 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 const LocationPreview = ({ place, type }) => {
     const { cartLocation, setCartLocation, compareLocation, setCompareLocation } = hooks.cartState();
     const { detailLocation, setDetailLocation, setViewDetail } = hooks.detailState();
-    const { setView, message, setMessage, response, setResponse, setType } = hooks.modalState();
+    const { setView, message, setMessage, response, setResponse, type: modalType, setType } = hooks.modalState();
+    const [currentPlace, setCurrentPlace] = useState(null);
     const navigate = useNavigate();
 
     const handleCompareLocation = id => {
@@ -42,11 +43,35 @@ const LocationPreview = ({ place, type }) => {
         console.log(placeIndex);
         if (placeIndex === -1) {
             setCartLocation([...cartLocation, place]);
+            setView(true);
+            setMessage('보관함에 추천 여행지를 담았습니다. ');
+            setType('checking');
         } else {
-            const updatedCartLocation = cartLocation.filter(cart => cart !== place);
-            setCartLocation([...updatedCartLocation]);
+            setView(true);
+            setMessage('보관함에서 여행지를 삭제하시겠습니까?');
+            setType('query');
+            setCurrentPlace(place);
         }
     };
+
+    useEffect(() => {
+        if (modalType === 'query' && currentPlace && message === '보관함에서 여행지를 삭제하시겠습니까?') {
+            if (response === 'yes') {
+                console.log('yes');
+                console.log(currentPlace);
+                const updatedCartLocation = cartLocation.filter(cart => cart !== currentPlace);
+                setCartLocation([...updatedCartLocation]);
+                setType('');
+                setMessage('');
+                setResponse('');
+            } else if (response === 'no') {
+                setView(false);
+                setType('');
+                setMessage('');
+                setResponse('');
+            }
+        }
+    }, [type, response, currentPlace]);
 
     useEffect(() => {
         if (response === 'yes' && message === '비교함으로 이동하시겠습니까?') {
