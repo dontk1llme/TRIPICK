@@ -40,153 +40,141 @@ const LandingCard = ({ location }) => {
       };
         
       // SectionsContainer 태그로 전체를 감싸고 개별 페이지는 Section 태그 사용
-      return (
-        <SectionsContainer {...options}>
-          <Section>Page 1
-            <S.Image src={location1.imageUrl} alt={location1.city} />
-            
-          </Section>
-          <Section>Page 2
-            <S.Image src={location2.imageUrl} alt={location2.city} />
-          </Section>
-          <Section>Page 3
-            <S.Image src={location3.imageUrl} alt={location3.city} />
-          </Section>
-        </SectionsContainer>)
 
+        
     
 
 
-    // return (
-    //     <S.LocationContainer >
-    //         {/* <Header><TopTab></TopTab></Header> */}
-    //         <SectionsContainer {...options} style={{width: '970px'}}>
-    //                 <Section>
-    //                     <S.LeftContainer>
-    //                         <div>
-    //                             <S.Image src={location1.imageUrl} alt={location1.city} />
-    //                         </div>
-    //                     </S.LeftContainer>
-    //                     <S.RightContainer>
-    //                             <S.ColumnComponent>
-    //                                 <S.SubTitle2  style={{color:'#8390FA', cursor: 'pointer',}}>더 알아보기 <FaArrowAltCircleRight /> </S.SubTitle2>
-    //                                 <br></br>
-    //                                 <p>
-    //                                     <S.Title>{location1.city}</S.Title> 
-    //                                     <S.SubTitle1> {location1.country}</S.SubTitle1>
-    //                                 </p>
-    //                             </S.ColumnComponent>
-    //                             <S.ColumnComponent>
-    //                                 <S.SubTitle1><BiMoneyWithdraw style={{color: '#8390FA'}}/> {location1.estimatedExchangeRate} {location1.currency} / 원 <br></br></S.SubTitle1>
-    //                                 <S.SubTitle1><TiWeatherPartlySunny style={{color: '#8390FA' }}/> {location1.estimatedClimate}°C <br></br></S.SubTitle1>
-    //                                 <S.SubTitle1><AiFillSafetyCertificate style={{color: '#8390FA' }}/> {location1.safety} / 10</S.SubTitle1>
-    //                             </S.ColumnComponent>
-    //                             <S.ColumnComponent>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <S.Button onClick={() => navigate(utils.URL.RECOMMEND.CALENDAR)}>
-    //                                     {/* 나중엔 로그인 여부도 따져야 할 듯? */}
-    //                                     날짜 선택하고 여행지 추천받기
-    //                                 </S.Button>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <S.SubTitle2 style={{color: '#8390FA', paddingLeft: '170px'}}> 
-    //                                     <span>scroll </span> <br></br>
-    //                                     <span style= {{paddingLeft: '17px'}}><LiaChevronDownSolid ></LiaChevronDownSolid></span>
-    //                                 </S.SubTitle2>
-    //                             </S.ColumnComponent>
-    //                     </S.RightContainer>
-    //                 </Section>
-    //                 <Section>
-    //                     <S.LeftContainer>
-    //                         <div>
-    //                             <S.Image src={location2.imageUrl} alt={location2.city} />
-    //                         </div>
-    //                     </S.LeftContainer>
-    //                     <S.RightContainer>
-    //                             <S.ColumnComponent>
-    //                                 <S.SubTitle2  style={{color:'#8390FA', cursor: 'pointer',}}>더 알아보기 <FaArrowAltCircleRight /> </S.SubTitle2>
-    //                                 <br></br>
-    //                                 <p>
-    //                                     <S.Title>{location2.city}</S.Title> 
-    //                                     <S.SubTitle1> {location2.country}</S.SubTitle1>
-    //                                 </p>
-    //                             </S.ColumnComponent>
-    //                             <S.ColumnComponent>
-    //                                 <S.SubTitle1><BiMoneyWithdraw style={{color: '#8390FA'}}/> {location2.estimatedExchangeRate} {location2.currency} / 원 <br></br></S.SubTitle1>
-    //                                 <S.SubTitle1><TiWeatherPartlySunny style={{color: '#8390FA' }}/> {location2.estimatedClimate}°C <br></br></S.SubTitle1>
-    //                                 <S.SubTitle1><AiFillSafetyCertificate style={{color: '#8390FA' }}/> {location2.safety} / 10</S.SubTitle1>
-    //                             </S.ColumnComponent>
-    //                             <S.ColumnComponent>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <S.Button onClick={() => navigate(utils.URL.RECOMMEND.CALENDAR)}>
-    //                                     {/* 나중엔 로그인 여부도 따져야 할 듯? */}
-    //                                     날짜 선택하고 여행지 추천받기
-    //                                 </S.Button>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <S.SubTitle2 style={{color: '#8390FA', paddingLeft: '170px'}}> 
-    //                                     <span>scroll </span> <br></br>
-    //                                     <span style= {{paddingLeft: '17px'}}><LiaChevronDownSolid ></LiaChevronDownSolid></span>
-    //                                 </S.SubTitle2>
-    //                             </S.ColumnComponent>
-    //                     </S.RightContainer>
-    //                 </Section>
-    //                 <Section>
-    //                     <S.LeftContainer>
-    //                         <div>
-    //                             <S.Image src={location3.imageUrl} alt={location3.city} />
-    //                         </div>
-    //                     </S.LeftContainer>
-    //                     <S.RightContainer>
-    //                             <S.ColumnComponent>
-    //                                 <S.SubTitle2  style={{color:'#8390FA', cursor: 'pointer',}}>더 알아보기 <FaArrowAltCircleRight /> </S.SubTitle2>
-    //                                 <br></br>
-    //                                 <p>
-    //                                     <S.Title>{location3.city}</S.Title> 
-    //                                     <S.SubTitle1> {location3.country}</S.SubTitle1>
-    //                                 </p>
-    //                             </S.ColumnComponent>
-    //                             <S.ColumnComponent>
-    //                                 <S.SubTitle1><BiMoneyWithdraw style={{color: '#8390FA'}}/> {location3.estimatedExchangeRate} {location3.currency} / 원 <br></br></S.SubTitle1>
-    //                                 <S.SubTitle1><TiWeatherPartlySunny style={{color: '#8390FA' }}/> {location3.estimatedClimate}°C <br></br></S.SubTitle1>
-    //                                 <S.SubTitle1><AiFillSafetyCertificate style={{color: '#8390FA' }}/> {location3.safety} / 10</S.SubTitle1>
-    //                             </S.ColumnComponent>
-    //                             <S.ColumnComponent>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <S.Button onClick={() => navigate(utils.URL.RECOMMEND.CALENDAR)}>
-    //                                     {/* 나중엔 로그인 여부도 따져야 할 듯? */}
-    //                                     날짜 선택하고 여행지 추천받기
-    //                                 </S.Button>
-    //                                 <br></br>
-    //                                 <br></br>
-    //                                 <S.SubTitle2 style={{color: '#8390FA', paddingLeft: '170px'}}> 
-    //                                     <span>scroll </span> <br></br>
-    //                                     <span style= {{paddingLeft: '17px'}}><LiaChevronDownSolid ></LiaChevronDownSolid></span>
-    //                                 </S.SubTitle2>
-    //                             </S.ColumnComponent>
-    //                     </S.RightContainer>
-    //                 </Section>
-    //         </SectionsContainer>
-    //     </S.LocationContainer>
-    // );
+    return (
+        <S.LocationContainer >
+            {/* <Header><TopTab></TopTab></Header> */}
+            <SectionsContainer {...options} style={{ width: '970px', display: 'flex' }}>
+                    <Section>
+                        <S.LeftContainer>
+                            <div>
+                                <S.Image src={location1.imageUrl} alt={location1.city} />
+                            </div>
+                        </S.LeftContainer>
+                        <S.RightContainer>
+                                <S.ColumnComponent>
+                                    <S.SubTitle2  style={{color:'#8390FA', cursor: 'pointer',}}>더 알아보기 <FaArrowAltCircleRight /> </S.SubTitle2>
+                                    <br></br>
+                                    <p>
+                                        <S.Title>{location1.city}</S.Title> 
+                                        <S.SubTitle1> {location1.country}</S.SubTitle1>
+                                    </p>
+                                </S.ColumnComponent>
+                                <S.ColumnComponent>
+                                    <S.SubTitle1><BiMoneyWithdraw style={{color: '#8390FA'}}/> {location1.estimatedExchangeRate} {location1.currency} / 원 <br></br></S.SubTitle1>
+                                    <S.SubTitle1><TiWeatherPartlySunny style={{color: '#8390FA' }}/> {location1.estimatedClimate}°C <br></br></S.SubTitle1>
+                                    <S.SubTitle1><AiFillSafetyCertificate style={{color: '#8390FA' }}/> {location1.safety} / 10</S.SubTitle1>
+                                </S.ColumnComponent>
+                                <S.ColumnComponent>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <S.Button onClick={() => navigate(utils.URL.RECOMMEND.CALENDAR)}>
+                                        {/* 나중엔 로그인 여부도 따져야 할 듯? */}
+                                        날짜 선택하고 여행지 추천받기
+                                    </S.Button>
+                                    <br></br>
+                                    <br></br>
+                                    <S.SubTitle2 style={{color: '#8390FA', paddingLeft: '170px'}}> 
+                                        <span>scroll </span> <br></br>
+                                        <span style= {{paddingLeft: '17px'}}><LiaChevronDownSolid ></LiaChevronDownSolid></span>
+                                    </S.SubTitle2>
+                                </S.ColumnComponent>
+                        </S.RightContainer>
+                    </Section>
+                    <Section>
+                        <S.LeftContainer>
+                            <div>
+                                <S.Image src={location2.imageUrl} alt={location2.city} />
+                            </div>
+                        </S.LeftContainer>
+                        <S.RightContainer>
+                                <S.ColumnComponent>
+                                    <S.SubTitle2  style={{color:'#8390FA', cursor: 'pointer',}}>더 알아보기 <FaArrowAltCircleRight /> </S.SubTitle2>
+                                    <br></br>
+                                    <p>
+                                        <S.Title>{location2.city}</S.Title> 
+                                        <S.SubTitle1> {location2.country}</S.SubTitle1>
+                                    </p>
+                                </S.ColumnComponent>
+                                <S.ColumnComponent>
+                                    <S.SubTitle1><BiMoneyWithdraw style={{color: '#8390FA'}}/> {location2.estimatedExchangeRate} {location2.currency} / 원 <br></br></S.SubTitle1>
+                                    <S.SubTitle1><TiWeatherPartlySunny style={{color: '#8390FA' }}/> {location2.estimatedClimate}°C <br></br></S.SubTitle1>
+                                    <S.SubTitle1><AiFillSafetyCertificate style={{color: '#8390FA' }}/> {location2.safety} / 10</S.SubTitle1>
+                                </S.ColumnComponent>
+                                <S.ColumnComponent>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <S.Button onClick={() => navigate(utils.URL.RECOMMEND.CALENDAR)}>
+                                        {/* 나중엔 로그인 여부도 따져야 할 듯? */}
+                                        날짜 선택하고 여행지 추천받기
+                                    </S.Button>
+                                    <br></br>
+                                    <br></br>
+                                    <S.SubTitle2 style={{color: '#8390FA', paddingLeft: '170px'}}> 
+                                        <span>scroll </span> <br></br>
+                                        <span style= {{paddingLeft: '17px'}}><LiaChevronDownSolid ></LiaChevronDownSolid></span>
+                                    </S.SubTitle2>
+                                </S.ColumnComponent>
+                        </S.RightContainer>
+                    </Section>
+                    <Section>
+                        <S.LeftContainer>
+                            <div>
+                                <S.Image src={location3.imageUrl} alt={location3.city} />
+                            </div>
+                        </S.LeftContainer>
+                        <S.RightContainer>
+                                <S.ColumnComponent>
+                                    <S.SubTitle2  style={{color:'#8390FA', cursor: 'pointer',}}>더 알아보기 <FaArrowAltCircleRight /> </S.SubTitle2>
+                                    <br></br>
+                                    <p>
+                                        <S.Title>{location3.city}</S.Title> 
+                                        <S.SubTitle1> {location3.country}</S.SubTitle1>
+                                    </p>
+                                </S.ColumnComponent>
+                                <S.ColumnComponent>
+                                    <S.SubTitle1><BiMoneyWithdraw style={{color: '#8390FA'}}/> {location3.estimatedExchangeRate} {location3.currency} / 원 <br></br></S.SubTitle1>
+                                    <S.SubTitle1><TiWeatherPartlySunny style={{color: '#8390FA' }}/> {location3.estimatedClimate}°C <br></br></S.SubTitle1>
+                                    <S.SubTitle1><AiFillSafetyCertificate style={{color: '#8390FA' }}/> {location3.safety} / 10</S.SubTitle1>
+                                </S.ColumnComponent>
+                                <S.ColumnComponent>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <S.Button onClick={() => navigate(utils.URL.RECOMMEND.CALENDAR)}>
+                                        {/* 나중엔 로그인 여부도 따져야 할 듯? */}
+                                        날짜 선택하고 여행지 추천받기
+                                    </S.Button>
+                                    <br></br>
+                                    <br></br>
+                                    <S.SubTitle2 style={{color: '#8390FA', paddingLeft: '170px'}}> 
+                                        <span>scroll </span> <br></br>
+                                        <span style= {{paddingLeft: '17px'}}><LiaChevronDownSolid ></LiaChevronDownSolid></span>
+                                    </S.SubTitle2>
+                                </S.ColumnComponent>
+                        </S.RightContainer>
+                    </Section>
+            </SectionsContainer>
+        </S.LocationContainer>
+    );
 };
 
 const S = {
