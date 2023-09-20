@@ -108,7 +108,6 @@ const LandingCard = ({ location }) => {
                             </S.ColumnComponent>
                     </S.RightContainer>
             </S.LocationContainer>
-
         </S.WholeContainer>
             
     );
@@ -117,9 +116,9 @@ const LandingCard = ({ location }) => {
 
 const S = {
     WholeContainer: styled.div`
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+        
     `,
+    
 
     LocationContainer: styled.div`
         display: flex;
@@ -127,6 +126,11 @@ const S = {
         // height: 757.60px;
         width: 100vw;
         height: 650px;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Microsoft Edge */
+        &::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+        }
         `,
         
     LeftContainer: styled.div`
