@@ -7,7 +7,7 @@ import { IoPencil } from 'react-icons/io5';
 const MyProfile = () => {
     const { name, email, profileUrl, date, setName, setEmail, setProfileUrl, setLoginUser } = hooks.loginUserState();
     const { mainStampId, stamp } = hooks.stampState();
-    const { view, response, setView, setMessage, setResponse, setType } = hooks.modalState();
+    const { view, response, setView, setMessage, setResponse, type, setType } = hooks.modalState();
     const [mainStampUrl, setMainStampUrl] = useState('');
     const [onEditMode, setOnEditMode] = useState(false);
 
@@ -79,7 +79,8 @@ const MyProfile = () => {
 
     useEffect(() => {
         const handleOutsideClick = event => {
-            if (wrapRef.current && !wrapRef.current.contains(event.target) && onEditMode) {
+            if (wrapRef.current && !wrapRef.current.contains(event.target) && onEditMode && type !== 'warning') {
+                console.log(name.length);
                 event.preventDefault();
                 event.stopPropagation();
                 setView(true);
@@ -91,7 +92,7 @@ const MyProfile = () => {
 
         document.addEventListener('mousedown', handleOutsideClick);
         return () => document.removeEventListener('mousedown', handleOutsideClick);
-    }, [onEditMode]);
+    }, [onEditMode, type]);
 
     useEffect(() => {
         if (!view) {

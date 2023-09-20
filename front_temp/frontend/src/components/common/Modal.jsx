@@ -5,7 +5,7 @@ import * as hooks from 'hooks';
 import { IoCheckmarkSharp, IoHelpSharp, IoAlertSharp } from 'react-icons/io5';
 
 const Modal = () => {
-    const { view, message, response, type, setResponse, setView } = hooks.modalState();
+    const { view, message, type, setResponse, setView } = hooks.modalState();
     const handleYes = () => {
         setResponse('yes');
         setView(false);
@@ -24,6 +24,10 @@ const Modal = () => {
         }
     };
 
+    const handleClick = e => {
+        e.stopPropagation();
+    };
+
     useEffect(() => {
         if (view) {
             document.querySelector('[data-modal-wrap]').focus();
@@ -31,8 +35,8 @@ const Modal = () => {
     }, [view]);
 
     return (
-        <S.Wrap onKeyDown={handleEnterPress} tabIndex={0} data-modal-wrap>
-            <S.Border>
+        <S.Wrap onKeyDown={handleEnterPress} tabIndex={0} data-modal-wrap onClick={handleClick}>
+            <S.Border strokeColor={type}>
                 <svg width="594" height="202" viewBox="0 0 594 202" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="0.5" y="0.5" width="593" height="201" rx="15.5" stroke-dasharray="10 10" />
                 </svg>
