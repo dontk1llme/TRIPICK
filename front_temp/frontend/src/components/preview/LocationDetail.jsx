@@ -115,7 +115,7 @@ const S = {
         align-items: center;
         width: 100%;
         height: 100%;
-        margin: 60px 0px;
+        margin: 12px 0px;
     `,
 
     ImageContainer: styled.div`

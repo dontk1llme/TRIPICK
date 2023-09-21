@@ -601,7 +601,9 @@ export const mbtiState = create(set => ({
             ans2: '"사람 많은 거 보니 맛집인데? 들어가 보자" 그때그때 끌리는 곳으로 향한다. ',
         },
     ],
-    answers: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    answers: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    result: '',
     setQuestions: data => set(state => ({ questions: data })),
     setAnswers: data => set(state => ({ answers: data })),
+    setResult: data => set(state => ({ result: data })),
 }));

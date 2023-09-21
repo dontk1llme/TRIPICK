@@ -6,28 +6,36 @@ import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 
 const MbtiTest = () => {
-    const { questions, answers, setQuestions, setAnswer } = hooks.mbtiState();
+    const { questions, answers, result, setResult } = hooks.mbtiState();
     const [currentNumber, setCurrentNumber] = useState(1);
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(answers);
+        console.log(currentNumber);
         if (questions) {
             setCurrentQuestion(questions.find(question => question.no === currentNumber));
         }
-        if (currentNumber > 12) {
-            navigate(utils.URL.MBTI.MAIN);
+        if (currentNumber === 13) {
+            const ei = answers[0] + answers[1] + answers[2] >= 5 ? 'I' : 'E';
+            const sn = answers[3] + answers[4] + answers[5] >= 5 ? 'S' : 'N';
+            const ft = answers[6] + answers[7] + answers[8] >= 5 ? 'T' : 'F';
+            const pj = answers[9] + answers[10] + answers[11] >= 5 ? 'P' : 'J';
+            if (ei && sn && ft && pj) {
+                setResult(ei + sn + ft + pj);
+                navigate(utils.URL.MBTI.RESULT);
+            }
         }
     }, [currentNumber]);
 
     const handleClick1 = () => {
-        answers[currentNumber] = 1;
-        console.log(answers);
+        answers[currentNumber - 1] = 1;
         setCurrentNumber(currentNumber + 1);
     };
 
     const handleClick2 = () => {
-        answers[currentNumber] = 2;
+        answers[currentNumber - 1] = 2;
         setCurrentNumber(currentNumber + 1);
     };
 
