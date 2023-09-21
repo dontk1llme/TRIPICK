@@ -12,8 +12,12 @@ const MbtiResult = () => {
 
 const S = {
     Wrap: styled.div`
-        width: 100%;
-        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: ${({ theme }) => theme.fontSize.title1};
+        width: 100vw;
+        height: 100vh;
     `,
 };
 
