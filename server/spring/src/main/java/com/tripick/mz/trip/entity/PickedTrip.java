@@ -1,48 +1,47 @@
 package com.tripick.mz.trip.entity;
 
-import com.tripick.mz.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import javax.persistence.Id;
 
-@Entity
+@Data
+@Document(collection = "picked_trip")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@Table(name = "picked_trip")
 public class PickedTrip {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int pickedTripId;
+    private String id;
 
-    @ManyToOne
-    @JoinColumn(nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member member;
+    @Field("member_id")
+    private String memberId;
+    private String city;
+    private String country;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private City city;
+    @Field("start_date")
+    private String startDate;
 
-    @NotNull
-    private LocalDate startDate;
+    @Field("end_date")
+    private String endDate;
+    private int traveler;
+    private float climate;
 
-    @NotNull
-    private LocalDate endDate;
+    @Field("exchange_rate")
+    private float exchangeRate;
 
-    @NotNull
-    private float currency;
+    @Field("price_index")
+    private float priceIndex;
 
+    @Field("crime_rate")
     private float crimeRate;
 
-    @NotNull
-    private int travelerEstimation;
-
-    private float relativePriceIndex;
-
-    @NotNull
+    @Field("flight_fee")
+    private int flightFee;
     private boolean activated;
 }
