@@ -23,6 +23,7 @@ export const URL = {
     MBTI: {
         MAIN: '/mbti',
         TEST: '/mbti/test',
+        RESULT: '/mbti/result',
     },
 };
 
