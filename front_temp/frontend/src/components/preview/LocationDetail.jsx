@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
@@ -8,11 +8,53 @@ import { IoChevronBack } from 'react-icons/io5';
 
 const LocationDetail = () => {
     const { detailLocation, setDetailLocation, viewDetail, setViewDetail } = hooks.detailState();
+    const { view, setView, message, setMessage, response, setResponse, type: modalType, setType } = hooks.modalState();
+    const { cartLocation, setCartLocation } = hooks.cartState();
 
     const handleView = () => {
         setDetailLocation({});
         setViewDetail(false);
     };
+
+    const handleCartLocation = () => {
+        const placeIndex = cartLocation.indexOf(detailLocation);
+        console.log(placeIndex);
+        if (!view && placeIndex === -1) {
+            setCartLocation([...cartLocation, detailLocation]);
+            setView(true);
+            setMessage('보관함에 추천 여행지를 담았습니다. ');
+            setType('checking');
+        } else if (!view && placeIndex !== -1) {
+            console.log('보관함에서 삭제');
+            setMessage('보관함에서 여행지를 삭제하시겠습니까?');
+            setView(true);
+            setType('query');
+        }
+    };
+
+    useEffect(() => {
+        if (modalType === 'query' && message === '보관함에서 여행지를 삭제하시겠습니까?') {
+            if (response === 'yes') {
+                const updatedCartLocation = cartLocation.filter(cart => cart !== detailLocation);
+                setCartLocation([...updatedCartLocation]);
+                setType('');
+                setMessage('');
+                setResponse('');
+            } else if (response === 'no') {
+                setView(false);
+                setType('');
+                setMessage('');
+                setResponse('');
+            }
+        }
+        if (modalType === 'checking' && message === '보관함에 추천 여행지를 담았습니다. ') {
+            if (response === 'yes') {
+                setType('');
+                setMessage('');
+                setResponse('');
+            }
+        }
+    }, [modalType, response]);
 
     return (
         <S.Wrap>
@@ -22,7 +64,9 @@ const LocationDetail = () => {
                 </S.BackContainer>
                 <S.CountryName>{detailLocation.country}</S.CountryName>
                 <S.CityName>{detailLocation.city}</S.CityName>
-                <S.CartContainer>{detailLocation.cart ? <GoHeartFill /> : <GoHeart />}</S.CartContainer>
+                <S.CartContainer onClick={handleCartLocation}>
+                    {cartLocation.indexOf(detailLocation) !== -1 ? <GoHeartFill /> : <GoHeart />}
+                </S.CartContainer>
             </S.ImageContainer>
             <S.InformationContainer>
                 <S.InformationBox className="type1">
