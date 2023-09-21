@@ -34,4 +34,8 @@ public class Credential {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public String getRoleKey() {
+        return this.role.getKey();
+    }
 }
