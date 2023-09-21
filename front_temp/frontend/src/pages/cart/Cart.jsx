@@ -62,7 +62,6 @@ const S = {
         width: 80%;
         justify-content: center;
         align-items: center;
-        margin: 12px 0px;
     `,
     TitleContainer: styled.div`
         width: 100%;

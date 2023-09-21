@@ -57,6 +57,7 @@ const S = {
         height: calc(100vh - 60px);
         justify-content: center; /* 가로 중앙 정렬 */
         align-items: center; /* 세로 중앙 정렬 */
+        margin: 60px 0px;
     `,
     SelectedDateContainer: styled.div`
         display: flex;
