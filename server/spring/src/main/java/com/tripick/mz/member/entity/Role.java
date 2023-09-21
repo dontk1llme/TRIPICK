@@ -1,19 +1,14 @@
 package com.tripick.mz.member.entity;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum Role {
-    USER("USER"),
-    ADMIN("ADMIN");
+    USER("ROLE_USER", "사용자"),
+    ADMIN("ROLE_ADMIN", "관리자");
 
-    private final String value;
-
-    Role(String value) {
-        this.value = value;
-    }
-
-    public String getValue(){
-        return value;
-    }
+    private final String key;
+    private final String title;
 }

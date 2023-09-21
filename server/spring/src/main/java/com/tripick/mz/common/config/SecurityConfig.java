@@ -22,7 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final JwtTokenProvider jwtTokenProvider;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
