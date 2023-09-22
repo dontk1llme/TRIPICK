@@ -18,10 +18,14 @@ const MbtiTest = () => {
             setCurrentQuestion(questions.find(question => question.no === currentNumber));
         }
         if (currentNumber === 13) {
-            const ei = answers[0] + answers[1] + answers[2] >= 5 ? 'I' : 'E';
-            const sn = answers[3] + answers[4] + answers[5] >= 5 ? 'S' : 'N';
-            const ft = answers[6] + answers[7] + answers[8] >= 5 ? 'T' : 'F';
-            const pj = answers[9] + answers[10] + answers[11] >= 5 ? 'P' : 'J';
+            const ei =
+                (answers[0] === 1 ? 1 : 2) + (answers[1] === 1 ? 2 : 1) + (answers[2] === 1 ? 1 : 2) >= 5 ? 'I' : 'E';
+            const sn =
+                (answers[3] === 1 ? 1 : 2) + (answers[4] === 1 ? 2 : 1) + (answers[5] === 1 ? 2 : 1) >= 5 ? 'S' : 'N';
+            const ft =
+                (answers[6] === 1 ? 1 : 2) + (answers[7] === 1 ? 1 : 2) + (answers[8] === 1 ? 1 : 2) >= 5 ? 'T' : 'F';
+            const pj =
+                (answers[9] === 1 ? 1 : 2) + (answers[10] === 1 ? 1 : 2) + (answers[11] === 1 ? 1 : 2) >= 5 ? 'P' : 'J';
             if (ei && sn && ft && pj) {
                 setResult(ei + sn + ft + pj);
                 navigate(utils.URL.MBTI.RESULT);
@@ -116,7 +120,7 @@ const S = {
         justify-content: flex-start;
     `,
     Progress: styled.div`
-        width: calc(${({ progress }) => (progress / 12) * 100}%);
+        width: calc(${({ progress }) => ((progress - 1) / 12) * 100}%);
         height: 100%;
         background-color: ${({ theme }) => theme.color.main1};
         border-radius: 8px;
