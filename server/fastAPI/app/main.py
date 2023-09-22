@@ -6,6 +6,10 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from typing import Union
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
+<<<<<<< HEAD
+=======
+from app.recommendation import Recommendation
+>>>>>>> a21f2f04812f3eefa00b62e68b1720cc789b1fa2
 from datetime import datetime
 from recommendation import Recommendation
 

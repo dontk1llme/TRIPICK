@@ -1,5 +1,5 @@
 # 나의 python 버전
-FROM python:3.11.1
+FROM python:3.11.4
 
 # /code 폴더 만들기
 WORKDIR /code
@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r /code/requirements.txt
 COPY ./app /code/app
 
 # 실행
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
