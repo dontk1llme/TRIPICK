@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useCountriesData } from './CountryContext';
 import * as hooks from 'hooks'
-const krdata = require('world_countries_lists/data/countries/ko/countries.json');
+const krdata = require('./countries.json');
+
 
 const CountryList = () => {
     const { countriesCodesArray, setCountriesCodesArray } = useCountriesData();
