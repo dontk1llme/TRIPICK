@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useCountriesData } from './CountryContext';
+import * as hooks from 'hooks'
 const krdata = require('world_countries_lists/data/countries/ko/countries.json');
 
 const CountryList = () => {
@@ -8,6 +9,7 @@ const CountryList = () => {
     const [countriesNamesArray, setCountriesNamesArray] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchResultInKrData, setIsSearchResultInKrData] = useState(false); // 초기값을 false로 설정
+    const { selectedCountry, setSelectedCountry} = hooks.albumState();
 
     // 필터링된 국가 이름 배열
     const filteredCountryNames = countriesNamesArray
@@ -17,6 +19,7 @@ const CountryList = () => {
         // 국가 코드 배열이 변경될 때마다 국가 이름 배열 업데이트
         getCountriesNamesList();
     }, [countriesCodesArray]);
+
 
     // 국가 코드를 국가 이름으로 변환하는 함수
     const getCountryNameByCode = countryCode => {
@@ -33,7 +36,12 @@ const CountryList = () => {
         list.sort((a, b) => a.localeCompare(b));
         
         setCountriesNamesArray(list);
+        setSelectedCountry(list);
     };
+
+    useEffect(() => {
+        console.log('selectedCountry:', selectedCountry);
+    }, [selectedCountry]);
 
     // 검색어 변경 핸들러
     const handleSearchChange = event => {
@@ -68,8 +76,6 @@ const CountryList = () => {
             setIsSearchResultInKrData(false); // 검색 결과가 없을 때 설정
             console.log('krdata에 없음');
         }
-
-
     };
 
     return (
