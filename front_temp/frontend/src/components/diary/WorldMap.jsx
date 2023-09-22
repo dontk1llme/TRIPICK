@@ -12,7 +12,6 @@ const WorldMap = () => {
     useEffect(() => {
         // countriesCodesArray가 변경될 때마다 getCountriesData 함수 호출
         getCountriesData(countriesCodesArray);
-        console.log(data)
     }, [countriesCodesArray]);
 
     const getCountryLowerCode = countryCode => {
@@ -32,6 +31,7 @@ const WorldMap = () => {
             value: ', '+ getCountryNameByCode(code), // 또는 다른 원하는 값으로 설정
         }));
         setData(newData); // data 배열 업데이트
+        
         getCountriesNamesList(codesArray);
     };
 
