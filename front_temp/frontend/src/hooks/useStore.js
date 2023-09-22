@@ -46,6 +46,7 @@ export const modalState = create(set => ({
 }));
 
 export const albumState = create(set => ({
+    selectedCountry: [],
     selectedAlbum: '0',
     selectedImage: { albumId: '0', imageUrl: '' },
     albumList: [
@@ -114,6 +115,7 @@ export const albumState = create(set => ({
     setSelectedAlbum: data => set(state => ({ selectedAlbum: data })),
     setAlbumList: data => set(state => ({ albumList: data })),
     setImageList: data => set(state => ({ imageList: data })),
+    setSelectedCountry: data => set(state => ({ selectedCountry: data })),
 }));
 
 export const recommendationState = create(set => ({

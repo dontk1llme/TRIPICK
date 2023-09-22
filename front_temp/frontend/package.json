@@ -5,6 +5,7 @@
     "dependencies": {
         "@emotion/core": "^11.0.0",
         "@emotion/styled": "^11.11.0",
+        "@react-jvectormap/core": "^1.0.4",
         "@react-oauth/google": "^0.11.1",
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^13.0.0",
@@ -23,6 +24,7 @@
         "react-icons": "^4.10.1",
         "react-jvectormap": "^0.0.16",
         "react-scripts": "5.0.1",
+        "react-svg-worldmap": "^2.0.0-alpha.16",
         "styled-components": "^6.0.4",
         "web-vitals": "^2.1.0",
         "world_countries_lists": "^2.8.2",
