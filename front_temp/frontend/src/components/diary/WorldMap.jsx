@@ -17,7 +17,7 @@ const WorldMap = () => {
     const getCountryLowerCode = countryCode => {
         const lowercaseCountryCode = countryCode.toLowerCase();
         return lowercaseCountryCode;
-    }
+    };
 
     const getCountryNameByCode = countryCode => {
         const lowercaseCountryCode = countryCode.toLowerCase();
@@ -28,10 +28,10 @@ const WorldMap = () => {
     const getCountriesData = codesArray => {
         const newData = codesArray.map(code => ({
             country: getCountryLowerCode(code),
-            value: ', '+ getCountryNameByCode(code), // 또는 다른 원하는 값으로 설정
+            value: ', ' + getCountryNameByCode(code), // 또는 다른 원하는 값으로 설정
         }));
         setData(newData); // data 배열 업데이트
-        
+
         getCountriesNamesList(codesArray);
     };
 
@@ -40,13 +40,13 @@ const WorldMap = () => {
         setCountriesNamesArray(list);
     };
 
-    const getStyle = ({ countryValue, countryCode, minValue, maxValue, }) => ({
-        fill: countriesCodesArray.includes(countryCode) ? "#5452B7" : "#8390FA",
-        stroke: "5452B7",
+    const getStyle = ({ countryValue, countryCode, minValue, maxValue }) => ({
+        fill: countriesCodesArray.includes(countryCode) ? '#5452B7' : '#8390FA',
+        stroke: '5452B7',
         strokeWidth: 2,
         // cursor: "pointer",
-      });
-      
+    });
+
     return (
         <S.Wrap style={{ width: 840, height: 336 }}>
             <MapMap
@@ -54,11 +54,9 @@ const WorldMap = () => {
                 value-suffix="people"
                 data={data} // 업데이트된 data 배열 사용
                 size={445}
-                richInteraction='true'
+                richInteraction="true"
                 frame
-                styleFunction={getStyle}
-            >
-            </MapMap>
+                styleFunction={getStyle}></MapMap>
         </S.Wrap>
     );
 };
