@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
+import * as hooks from 'hooks';
 
 const Mbti = () => {
     const navigate = useNavigate();
+    const { setAnswers, setResult } = hooks.mbtiState();
+    useEffect(() => {
+        setAnswers([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+        // setResult('');
+    }, []);
     return (
         <S.Wrap>
             <S.SubTitle>내 성격에 맞는 여행지는 어디일까?</S.SubTitle>
@@ -41,6 +47,7 @@ const S = {
         font-size: ${({ theme }) => theme.fontSize.title3};
         color: ${({ theme }) => theme.color.black};
         white-space: nowrap;
+        margin-bottom: 16px;
     `,
     Title: styled.div`
         font-size: ${({ theme }) => theme.fontSize.title1};
