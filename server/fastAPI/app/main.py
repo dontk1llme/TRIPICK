@@ -3,7 +3,6 @@ from fastapi import FastAPI, Query
 from pydantic import BaseModel
 from recommendation import Recommendation
 from datetime import datetime
-import db
 
 app = FastAPI()
 
