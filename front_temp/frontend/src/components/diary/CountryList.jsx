@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import { useCountriesData } from './CountryContext';
 import * as hooks from 'hooks'
 const krdata = require('./countries.json');
+// countries.json 지도에는 있으나 krdata에 없는 값 추가 완료. 아래는 추가 내용
+// id 1001부터
+// alpha2는 I
+// name은 N 해석한 값
+// {"id": , "alpha2": "", "alpha3":"", "name": ""},
 
 
 const CountryList = () => {
