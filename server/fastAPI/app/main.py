@@ -1,7 +1,7 @@
 from typing import Union
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
-from recommendation import Recommendation
+from app.recommendation import Recommendation
 from datetime import datetime
 
 app = FastAPI()
