@@ -1,5 +1,5 @@
 # 나의 python 버전
-FROM python:3.7
+FROM python:3.11.4
 
 # /code 폴더 만들기
 WORKDIR /code
