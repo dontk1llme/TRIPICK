@@ -1,3 +1,8 @@
+import sys
+import os
+# Append the /app directory to the Python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 import pymongo
 import pandas as pd 
 import json
@@ -15,9 +20,9 @@ counties = db.countries
 # for city in all :
 #     print(city)
 
+def get_city_all():
+    return cities
+    
 def get_city_data():
     city =  cities.find_one({'name':'프랑크푸르트'},{'_id':False})
     return city
-
-test =  cities.find_one({'name':'프랑크푸르트'},{'_id':False})
-print(test)
