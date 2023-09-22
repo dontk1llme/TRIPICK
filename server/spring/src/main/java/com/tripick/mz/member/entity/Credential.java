@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -29,13 +31,18 @@ public class Credential {
 
     @NotNull
     @Column(length = 10)
-    private String socialPlatform;
+    @Enumerated(EnumType.STRING)
+    private ProviderType providerType;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
     public String getRoleKey() {
-        return this.role.getKey();
+        return this.role.getCode();
     }
 }
