@@ -1,6 +1,6 @@
 from datetime import datetime
-import db
-import dummy
+import app.db
+import app.dummy
 
 now = datetime.now()
 # dummy data
