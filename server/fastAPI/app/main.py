@@ -18,8 +18,8 @@ def read_root():
 # 오늘 날짜에 추천하는 여행지 5개
 @app.get("/recommendation/now")
 def get_recommendation_now():
-    result = recommendation.now()
-    return result
+    recommedation_now = recommendation.now()
+    return recommedation_now
 
 # 사용자 설정 날짜에 추천하는 여행지 12개 (통합, 환율, 날씨, 안전 각 3개씩)
 @app.get("/recommendation/set-date")
