@@ -22,8 +22,9 @@ const MbtiResult = () => {
     };
 
     const copyLink = () => {
+        const urlWithoutResult = currentURL.replace('/result', '');
         navigator.clipboard
-            .writeText(currentURL)
+            .writeText(urlWithoutResult)
             .then(() => {
                 setView(true);
                 setMessage('링크가 복사되었습니다.');
@@ -64,7 +65,7 @@ const MbtiResult = () => {
             <S.Title>당신에게 추천하는 여행지는?</S.Title>
             <S.ImageContainer className="image">{imageUrl && <img src={imageUrl} alt="mbti image" />}</S.ImageContainer>
             <S.LinkContainer>
-                <S.Link>{currentURL}</S.Link>
+                <S.Link>{currentURL.replace('/result', '')}</S.Link>
                 <S.LinkButton onClick={copyLink}>링크 복사</S.LinkButton>
             </S.LinkContainer>
             <S.ButtonsContainer>
