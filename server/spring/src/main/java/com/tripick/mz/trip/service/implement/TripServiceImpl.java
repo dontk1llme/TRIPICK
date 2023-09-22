@@ -1,5 +1,7 @@
 package com.tripick.mz.trip.service.implement;
 
+import com.tripick.mz.common.error.CustomException;
+import com.tripick.mz.common.error.ExceptionCode;
 import com.tripick.mz.trip.dto.request.PickTripRequestDto;
 import com.tripick.mz.trip.dto.response.PickedTripResponseDto;
 import com.tripick.mz.trip.entity.PickedTrip;
@@ -55,7 +57,9 @@ public class TripServiceImpl implements TripService {
         query.addCriteria(Criteria.where("_id").is(pickedTripId));
         update.set("activated", false);
 
-        mongoTemplate.updateMulti(query, update, "picked_trip");
+        if(mongoTemplate.updateMulti(query, update, "picked_trip").getMatchedCount() == 0) {
+            throw new CustomException(ExceptionCode.NOT_EXIST_PICKED_TRIP_EXCEPTION);
+        }
     }
 
     @Override
