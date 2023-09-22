@@ -4,13 +4,12 @@ import dummy
 
 now = datetime.now()
 # dummy data
-
 class Recommendation:
     def __init__(self):
         self.data = [...]
 
     def now(self):
-        result = db.get_db()
+        city_data = db.get_city_data()
         return dummy.result_dict_now
 
     def set_date(self, start_date: str, end_date: str):

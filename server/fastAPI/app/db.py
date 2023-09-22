@@ -18,3 +18,6 @@ counties = db.countries
 def get_db():
     same_ages =  cities.find_one({'name':'프랑크푸르트'},{'_id':False})
     return same_ages
+
+test =  cities.find_one({'name':'프랑크푸르트'},{'_id':False})
+print(test)
