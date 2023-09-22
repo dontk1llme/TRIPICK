@@ -4,9 +4,14 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from datetime import datetime
+<<<<<<< HEAD
 import pandas as pd
 import db
 import dummy
+=======
+import app.db
+import app.dummy
+>>>>>>> a21f2f04812f3eefa00b62e68b1720cc789b1fa2
 
 
 now = datetime.now()
