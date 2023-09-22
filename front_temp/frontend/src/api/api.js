@@ -22,4 +22,7 @@ export const instance = axios.create({
 //     },
 // );
 
-export const apis = {};
+export const apis = {
+    
+    getMbtiResult: 
+};
