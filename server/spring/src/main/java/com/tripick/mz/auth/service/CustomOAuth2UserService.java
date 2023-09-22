@@ -1,76 +1,85 @@
 package com.tripick.mz.auth.service;
 
-import com.tripick.mz.auth.model.OAuth2UserInfo;
-import com.tripick.mz.auth.model.OAuth2UserInfoFactory;
-import com.tripick.mz.member.entity.Credential;
+import com.tripick.mz.auth.dto.UserPrincipal;
+import com.tripick.mz.member.entity.ProviderType;
 import com.tripick.mz.member.entity.Member;
-import com.tripick.mz.member.entity.Role;
-import com.tripick.mz.member.repository.CredentialRepository;
 import com.tripick.mz.member.repository.MemberRepository;
-import java.nio.file.attribute.UserPrincipal;
-import java.security.AuthProvider;
+import javax.naming.AuthenticationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-@RequiredArgsConstructor
 @Service
-public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+@RequiredArgsConstructor
+public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
   private final MemberRepository memberRepository;
-  private final CredentialRepository credentialRepository;
 
   @Override
-  public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
+  public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+    OAuth2User user = super.loadUser(userRequest);
 
-    OAuth2UserService oAuth2UserService = new DefaultOAuth2UserService();
-    OAuth2User oAuth2User = oAuth2UserService.loadUser(oAuth2UserRequest);
-
-    return processOAuth2User(oAuth2UserRequest, oAuth2User);
+    try {
+      return this.process(userRequest, user);
+    } catch (AuthenticationException ex) {
+      throw ex;
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
+    }
   }
 
-  protected OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User){
-    AuthProvider authProvider = AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase());
-    OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(authProvider, oAuth2User.getAttributes());
+  private OAuth2User process(OAuth2UserRequest userRequest, OAuth2User user) {
+    ProviderType providerType = ProviderType.valueOf(userRequest.getClientRegistration().getRegistrationId().toUpperCase());
 
-    if(!StringUtils.hasText(oAuth2UserInfo.getEmail())){
-      throw new RuntimeException("Email not found from OAuth2 provider");
-    }
+    OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(providerType, user.getAttributes());
+    Member savedUser = memberRepository.findByMemberId(userInfo.getId());
 
-    Credential credential = credentialRepository.findByEmail(oAuth2UserInfo.getEmail()).orElse(null);
-    Member member = memberRepository.findByCredential(credential.getCredentialId()).orElseThrow(RuntimeException::new);
-    if(credential != null){
-      if(!credential.getSocialPlatform().equals(authProvider)){
-        throw new RuntimeException("Email already signed up.");
+    if (savedUser != null) {
+      if (providerType != savedUser.getProviderType()) {
+        throw new OAuthProviderMissMatchException(
+            "Looks like you're signed up with " + providerType +
+                " account. Please use your " + savedUser.getProviderType() + " account to login."
+        );
       }
-      member = updateMember(member, oAuth2UserInfo);
+      updateUser(savedUser, userInfo);
     } else {
-      member = registerMember(authProvider, oAuth2UserInfo);
+      savedUser = createMember(userInfo, providerType);
     }
-    return UserPrincipal.create(member, oAuth2UserInfo.getAttributes());
+
+    return UserPrincipal.create(savedUser, user.getAttributes());
   }
 
-  private Member registerMember(AuthProvider authProvider, Oauth2UserInfo oauth2UserInfo){
-    Credential crdential = Credential.builder()
-        .email(oauth2UserInfo.getEmail())
-        .role(Role.USER)
-        .socialPlatform(authProvider.getName())
-        .build();
+  private Member createMember(OAuth2UserInfo userInfo, ProviderType providerType) {
+    LocalDateTime now = LocalDateTime.now();
+    User user = new User(
+        userInfo.getId(),
+        userInfo.getName(),
+        userInfo.getEmail(),
+        "Y",
+        userInfo.getImageUrl(),
+        providerType,
+        RoleType.USER,
+        now,
+        now
+    );
 
-    Member member = Member.builder()
-        .credential(credential)
-        .nickname(oauth2UserInfo.getName())
-        .build();
-
-    return memberRepository.save(member);
+    return userRepository.saveAndFlush(user);
   }
 
-  private Member updateMember(Member member, OAuth2UserInfo oAuth2UserInfo){
-    return memberRepository.save(member.update(oAuth2UserInfo));
+  private User updateUser(User user, OAuth2UserInfo userInfo) {
+    if (userInfo.getName() != null && !user.getUsername().equals(userInfo.getName())) {
+      user.setUsername(userInfo.getName());
+    }
+
+    if (userInfo.getImageUrl() != null && !user.getProfileImageUrl().equals(userInfo.getImageUrl())) {
+      user.setProfileImageUrl(userInfo.getImageUrl());
+    }
+
+    return user;
   }
 }
