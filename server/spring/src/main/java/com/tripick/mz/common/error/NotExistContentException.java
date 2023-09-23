@@ -1,10 +1,10 @@
 package com.tripick.mz.common.error;
 
-public class NotExistBadgeException extends RuntimeException{
-    public NotExistBadgeException() {
-        super(ExceptionCode.NOT_EXIST_BADGE_EXCEPTION.getErrorMessage());
+public class NotExistContentException extends RuntimeException{
+    public NotExistContentException() {
+        super(ExceptionCode.NOT_EXIST_TRIP_CONTENT.getErrorMessage());
     }
-    public NotExistBadgeException(String message) {
+    public NotExistContentException(String message) {
         super(message);
     }
 }

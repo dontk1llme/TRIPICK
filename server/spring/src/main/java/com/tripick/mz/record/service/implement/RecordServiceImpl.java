@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.tripick.mz.common.S3.dto.S3FileDto;
+import com.tripick.mz.common.error.NotExistContentException;
 import com.tripick.mz.common.error.NotExistMemberException;
 import com.tripick.mz.common.error.NotExistRecordException;
 import com.tripick.mz.common.error.NotExistRecordImageException;
@@ -112,11 +113,17 @@ public class RecordServiceImpl implements RecordService {
     @Transactional
     public void updateTripRecordContent(UpdateTripRecordContentRequestDto updateTripRecordContentRequestDto) {
         log.info("RecordServiceImpl_updateTripRecordContent -> 여행 기록 내용 수정 시도");
-        updateTripRecordContentRequestDto.getContent();
+
+        if(updateTripRecordContentRequestDto.getContent() == null) {
+            throw new NotExistContentException();
+        }
+
         TripRecord tripRecord = tripRecordRepository.findById(updateTripRecordContentRequestDto.getTripRecordId()).orElseThrow(
                 NotExistRecordException::new);
         tripRecord.updateTripRecordContent(updateTripRecordContentRequestDto.getContent());
     }
+
+
 
     @Override
     @Transactional
