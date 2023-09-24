@@ -68,6 +68,31 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
+    public List<TripRecordResponseDto> getTripRecordsByNationName(int memberId, String nationName) {
+        log.info("RecordServiceImpl_getTripRecordsByNationName -> 나라 이름과 사용자 ID별 여행 기록 조회 시도");
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(NotExistMemberException::new);
+
+        List<TripRecord> tripRecords = tripRecordRepository.findByMemberAndNationName(member, nationName);
+
+        return tripRecords.stream().map(tripRecord -> {
+            List<TripRecordImageResponseDto> images = tripRecordImageRepository.findByTripRecordTripRecordId(tripRecord.getTripRecordId())
+                    .stream()
+                    .map(tripRecordImage -> new TripRecordImageResponseDto(tripRecordImage.getTripRecordImageId(), tripRecordImage.getImageUrl()))
+                    .collect(Collectors.toList());
+
+            return new TripRecordResponseDto(
+                    tripRecord.getTripRecordId(),
+                    tripRecord.getNationName(),
+                    tripRecord.getContent(),
+                    images
+            );
+        }).collect(Collectors.toList());
+    }
+
+
+    @Override
     @Transactional
     public void createTripRecord(CreateTripRecordRequestDto createTripRecordRequestDto) {
         log.info("RecordServiceImpl_createTripRecord -> 여행 기록 작성 시도");
