@@ -31,8 +31,7 @@ public class Credential {
 
     @NotNull
     @Column(length = 10)
-    @Enumerated(EnumType.STRING)
-    private ProviderType providerType;
+    private String providerType;
 
     @NotNull
     @Enumerated(EnumType.STRING)
