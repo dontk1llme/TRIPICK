@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
+import * as api from 'api';
 import { IoAdd, IoFolder, IoCheckmarkCircleOutline } from 'react-icons/io5';
+import { apis } from 'api';
 
 const AlbumList = () => {
-    const { selectedAlbum, setSelectedAlbum, albumList, setAlbumList } = hooks.albumState();
+    const { selectedAlbum, setSelectedAlbum, albumList, setAlbumList, currentCountry } = hooks.albumState();
     const containerRef = useRef(null);
     const albumNameRef = useRef(null);
     const albumNameRefs = useRef([]);
@@ -84,19 +86,37 @@ const AlbumList = () => {
     };
 
     const handleSaveNewAlbum = () => {
-        const updatedAlbumList = [
-            ...albumList,
-            {
-                albumId: (albumList.length + 1).toString(),
-                albumName: albumName,
-                imageUrl: [],
-            },
-        ];
-        if (updatedAlbumList) {
-            setAlbumList(updatedAlbumList);
-        }
-        setAddAlbumMode(false);
-        setAlbumName('');
+        const data = {
+            memberId: 1,
+            nationName: currentCountry,
+            content: albumName,
+        };
+
+        api.apis
+            .createRecord(data)
+            .then(response => {
+                console.log(response);
+                api.apis
+                    .getNationRecord(1, currentCountry)
+                    .then(response => {
+                        setAlbumList(response.data);
+                        setAddAlbumMode(false);
+                        setAlbumName('');
+                    })
+                    .catch(error => console.log(error));
+            })
+            .catch(error => console.log(error));
+        // const updatedAlbumList = [
+        //     ...albumList,
+        //     {
+        //         albumId: (albumList.length + 1).toString(),
+        //         albumName: albumName,
+        //         imageUrl: [],
+        //     },
+        // ];
+        // if (updatedAlbumList) {
+        //     setAlbumList(updatedAlbumList);
+        // }
     };
 
     const handleAlbumNameChange = e => {
@@ -221,42 +241,48 @@ const AlbumList = () => {
             </S.NewAlbumContainer>
             <S.AlbumListContainer ref={containerRef}>
                 <S.AlbumList>
-                    {albumList.map(album => {
-                        return (
-                            <S.AlbumPreview
-                                key={album.albumId}
-                                selected={album.albumId === selectedAlbum ? 'selected' : null}>
-                                <S.PreviewImg
-                                    id="image"
-                                    onContextMenu={e => handleRightClick(e, album)}
-                                    onClick={() => handleSelectedAlbum(album.albumId)}>
-                                    {album.imageUrl.length > 0 ? (
-                                        <img src={album.imageUrl[0].url} alt="album preview" />
-                                    ) : (
-                                        <IoFolder />
+                    {albumList.length > 0 ? (
+                        albumList.map(album => {
+                            return (
+                                <S.AlbumPreview
+                                    key={album.albumId}
+                                    selected={album.albumId === selectedAlbum ? 'selected' : null}>
+                                    <S.PreviewImg
+                                        id="image"
+                                        onContextMenu={e => handleRightClick(e, album)}
+                                        onClick={() => handleSelectedAlbum(album.albumId)}>
+                                        {album.imageUrl.length > 0 ? (
+                                            <img src={album.imageUrl[0].url} alt="album preview" />
+                                        ) : (
+                                            <IoFolder />
+                                        )}
+                                        {album.albumId === selectedAlbum ? (
+                                            <S.CheckSelectedAlbum>
+                                                <IoCheckmarkCircleOutline />
+                                            </S.CheckSelectedAlbum>
+                                        ) : null}
+                                    </S.PreviewImg>
+                                    {contextMenu.visible && (
+                                        <ContextMenu
+                                            position={{ x: contextMenu.x, y: contextMenu.y }}
+                                            album={contextMenu.album}
+                                            onClose={() => setContextMenu({ ...contextMenu, visible: false })}
+                                        />
                                     )}
-                                    {album.albumId === selectedAlbum ? (
-                                        <S.CheckSelectedAlbum>
-                                            <IoCheckmarkCircleOutline />
-                                        </S.CheckSelectedAlbum>
-                                    ) : null}
-                                </S.PreviewImg>
-                                {contextMenu.visible && (
-                                    <ContextMenu
-                                        position={{ x: contextMenu.x, y: contextMenu.y }}
-                                        album={contextMenu.album}
-                                        onClose={() => setContextMenu({ ...contextMenu, visible: false })}
-                                    />
-                                )}
-                                <S.AlbumName
-                                    ref={el => (albumNameRefs.current[album.albumId] = el)}
-                                    value={album.albumName}
-                                    readOnly={editingAlbumId === album.albumId ? null : 'readOnly'}
-                                    onKeyDown={e => handleEditKeyDown(e, album.albumId)}
-                                    onChange={e => handleEditAlbumName(album.albumId, e.target.value)}></S.AlbumName>
-                            </S.AlbumPreview>
-                        );
-                    })}
+                                    <S.AlbumName
+                                        ref={el => (albumNameRefs.current[album.albumId] = el)}
+                                        value={album.albumName}
+                                        readOnly={editingAlbumId === album.albumId ? null : 'readOnly'}
+                                        onKeyDown={e => handleEditKeyDown(e, album.albumId)}
+                                        onChange={e =>
+                                            handleEditAlbumName(album.albumId, e.target.value)
+                                        }></S.AlbumName>
+                                </S.AlbumPreview>
+                            );
+                        })
+                    ) : (
+                        <S.EmptyCountryAlbum>앨범이 없습니다. </S.EmptyCountryAlbum>
+                    )}
                 </S.AlbumList>
                 {addAlbumMode && (
                     <S.AddAlbumContainer ref={addAlbumRef}>
@@ -483,6 +509,9 @@ const S = {
         background-color: ${({ theme }) => theme.color.black};
         width: 60px;
         height: 0.5px;
+    `,
+    EmptyCountryAlbum: styled.div`
+        font-size: ${({ theme }) => theme.fontSize.content1};
     `,
 };
 

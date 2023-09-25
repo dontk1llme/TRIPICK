@@ -3,7 +3,9 @@ import * as utils from 'utils';
 import * as hooks from 'hooks';
 
 export const instance = axios.create({
-    baseURL: utils.API_BASE_URL,
+    // baseURL: utils.API_BASE_URL,
+    baseURL: 'https://tripick.site',
+    // baseURL: '',
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         Accept: 'application/json',
@@ -23,6 +25,8 @@ export const instance = axios.create({
 // );
 
 export const apis = {
-    
-    getMbtiResult: 
+    getNowRecommendations: () => instance.get('/fastapi/recommendation/now'),
+
+    createRecord: data => instance.post('/record/create', data),
+    getNationRecord: (memberId, nationName) => instance.get(`/record/${memberId}/nation/${nationName}`),
 };

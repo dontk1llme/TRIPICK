@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import * as components from 'components';
+import * as api from 'api';
 import * as hooks from 'hooks';
 
 const Landing = () => {
+    const { landingLocation, setLandingLocation } = hooks.landingState();
+    useEffect(() => {
+        api.apis
+            .getNowRecommendations()
+            .then(response => {
+                console.log(response);
+                setLandingLocation(Object.values(response.data));
+            })
+            .catch(error => console.log(error));
+    }, []);
 
-    return ( 
-    <S.Wrap>
-      <components.LandingCard/>
-    </S.Wrap>);
+    useEffect(() => {
+        console.log(landingLocation);
+    }, [landingLocation]);
+    return (
+        <S.Wrap>
+            <components.LandingCard />
+        </S.Wrap>
+    );
 };
-
-
 
 const S = {
     Wrap: styled.div`
@@ -22,4 +35,3 @@ const S = {
 };
 
 export default Landing;
-
