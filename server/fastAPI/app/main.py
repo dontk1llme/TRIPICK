@@ -15,7 +15,7 @@ app = FastAPI()
 # CORS 미들웨어 추가
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://tripick.site:3000","http://tripick.site:3000"],  # 허용할 오리진(도메인) 추가
+    allow_origins=["http://localhost:3000","https://tripick.site:3000","http://tripick.site:3000"],  # 허용할 오리진(도메인) 추가
     allow_credentials=True,
     allow_methods=["*"],  # 모든 HTTP 메서드를 허용
     allow_headers=["*"],  # 모든 헤더를 허용
