@@ -24,10 +24,10 @@ public class RecordController {
     private final RecordService recordService;
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<List<TripRecordResponseDto>> getTripRecordsByMemberId(@PathVariable int memberId) {
+    public ResponseEntity<List<String>> getTripRecordsByMemberId(@PathVariable int memberId) {
         log.info("RecordController_getTripRecordsByMemberId -> 사용자별 여행 기록 조회");
-        List<TripRecordResponseDto> tripRecords = recordService.getTripRecordsByMemberId(memberId);
-        return ResponseEntity.ok(tripRecords);
+        List<String> nations = recordService.getTripRecordsByMemberId(memberId);
+        return ResponseEntity.ok(nations);
     }
 
     @GetMapping("/{memberId}/nation/{nationName}")
