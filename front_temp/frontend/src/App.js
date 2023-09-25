@@ -18,7 +18,6 @@ const App = () => {
                     <Router>
                         <Routes>
                                 <Route path={utils.URL.HOME.MAIN} element={<components.Layout />}>
-                                <Route path={utils.URL.OPENING.OPENING} element={<pages.Opening/>}></Route>
                                 <Route path={utils.URL.HOME.LANDING} element={<pages.Landing />}></Route>
                                 <Route path={utils.URL.CART.LIST} element={<pages.Cart />}></Route>
                                 <Route path={utils.URL.MYPAGE.PASSPORT} element={<pages.MyPage />}></Route>
