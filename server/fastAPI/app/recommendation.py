@@ -3,6 +3,7 @@ import os
 # Append the /app directory to the Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from datetime import datetime
+from tabulate import tabulate
 import pandas as pd
 import db
 import dummy
@@ -53,9 +54,9 @@ for city in city_all.find():
     }
     df = df._append(city_dict, ignore_index=True)
 
-df['temp_Rank'] = df['temp'].rank()
-df['crime_rank'] = df['crime'].rank(ascending=True)
-print(df)
+df['temp_Rank'] = df['temp'].rank().astype(int)
+df['crime_rank'] = df['crime'].rank(ascending=True).astype(int)
+print(tabulate(df, headers='keys', tablefmt='psql', showindex=True))
 
 
 

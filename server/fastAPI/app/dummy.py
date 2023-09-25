@@ -12,7 +12,7 @@ result_dict_now = {
             'temp_max':33.2,
             'temp_min':19.2,
         },
-        'image_url' : 's3://tripickbucket/Tripick/countries/frankfurt.jpg'
+        'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/frankfurt.jpg'
     },
     'recommendation_2' : {
         'name':'오사카',
@@ -27,7 +27,7 @@ result_dict_now = {
             'temp_max':33.2,
             'temp_min':19.2,
         },
-         'image_url' : 's3://tripickbucket/Tripick/countries/osaka.jpg'
+         'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/osaka.jpg'
     },
     'recommendation_3' : {
         'name':'타이페이',
@@ -42,7 +42,7 @@ result_dict_now = {
             'temp_max':33.2,
             'temp_min':19.2,
         },
-         'image_url' : 's3://tripickbucket/Tripick/countries/taipei.jpg'
+         'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/taipei.jpg'
     },
     'recommendation_4' : {
         'name':'상하이',
@@ -57,7 +57,7 @@ result_dict_now = {
             'temp_max':33.2,
             'temp_min':19.2,
         },
-         'image_url' : 's3://tripickbucket/Tripick/countries/shanghai.jpg'
+         'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/shanghai.jpg'
     },
     'recommendation_5' : {
         'name':'바르셀로나',
@@ -72,7 +72,7 @@ result_dict_now = {
             'temp_max':33.2,
             'temp_min':19.2,
         },
-         'image_url' : 's3://tripickbucket/Tripick/countries/barcelona.jpg'
+         'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/barcelona.jpg'
     }
 }
 
@@ -91,7 +91,8 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/frankfurt.jpg'
+             'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/frankfurt.jpg'
+
         },
         'recommendation_2' : {
             'name':'오사카',
@@ -106,7 +107,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/osaka.jpg'
+             'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/osaka.jpg'
         },
         'recommendation_3' : {
             'name':'타이페이',
@@ -121,7 +122,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/taipei.jpg'
+            'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/taipei.jpg'
         }
     },
      'recommendation_exchange' :{
@@ -138,7 +139,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/frankfurt.jpg'
+            'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/frankfurt.jpg'
         },
         'recommendation_2' : {
             'name':'오사카',
@@ -153,7 +154,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/osaka.jpg'
+             'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/osaka.jpg'
         },
         'recommendation_3' : {
             'name':'타이페이',
@@ -168,7 +169,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/taipei.jpg'
+             'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/taipei.jpg'
         }
     },
      'recommendation_climate' :{
@@ -185,7 +186,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/frankfurt.jpg'
+            'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/frankfurt.jpg'
         },
         'recommendation_2' : {
             'name':'오사카',
@@ -200,7 +201,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/osaka.jpg'
+             'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/osaka.jpg'
         },
         'recommendation_3' : {
             'name':'타이페이',
@@ -215,7 +216,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/taipei.jpg'
+             'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/taipei.jpg'
         }
     },
      'recommendation_crime' :{
@@ -232,7 +233,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/frankfurt.jpg'
+             'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/frankfurt.jpg'
         },
         'recommendation_2' : {
             'name':'오사카',
@@ -247,7 +248,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/osaka.jpg'
+             'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/osaka.jpg'
         },
         'recommendation_3' : {
             'name':'타이페이',
@@ -262,7 +263,7 @@ result_dict_set_date = {
                 'temp_max':33.2,
                 'temp_min':19.2,
             },
-             'image_url' : 's3://tripickbucket/Tripick/countries/taipei.jpg'
+             'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/taipei.jpg'
         }
     }
 }
