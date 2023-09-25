@@ -64,9 +64,14 @@ public class OAuth2Attribute {
         return map;
     }
 
-    public Member toMemberEntity() {
+    public Member toMemberEntity(Credential credential) {
+        if(picture == null) {
+            picture = "사진 없음";
+        }
+
         return Member.builder()
                 .nickname(name)
+                .credential(credential)
                 .profileImage(picture)
                 .build();
     }

@@ -1,6 +1,6 @@
 package com.tripick.mz.common.config;
 
-import com.tripick.mz.auth.filter.JwtAuthFilter;
+import com.tripick.mz.auth.filter.JwtFilter;
 import com.tripick.mz.auth.handler.OAuth2SuccessHandler;
 import com.tripick.mz.auth.service.OAuthService;
 import com.tripick.mz.auth.service.TokenService;
@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .successHandler(successHandler)
                 .userInfoEndpoint().userService(oAuth2UserService);
 
-        httpSecurity.addFilterBefore(new JwtAuthFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(new JwtFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

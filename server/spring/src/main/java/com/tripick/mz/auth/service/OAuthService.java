@@ -53,10 +53,11 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
     Credential credential = credentialRepository.findByEmail(attribute.getEmail())
             .orElse(attribute.toCredentialEntity());
 
+    log.info("credentialId = {}", credential.getCredentialId());
     credentialRepository.save(credential);
 
     Member member = memberRepository.findByCredential(credential)
-            .orElse(attribute.toMemberEntity());
+            .orElse(attribute.toMemberEntity(credential));
 
     return memberRepository.save(member);
   }
