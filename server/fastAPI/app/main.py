@@ -4,12 +4,22 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from typing import Union
 from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
 from recommendation import Recommendation
 
 
 app = FastAPI()
+
+# CORS 미들웨어 추가
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://tripick.site:3000","http://tripick.site:3000"],  # 허용할 오리진(도메인) 추가
+    allow_credentials=True,
+    allow_methods=["*"],  # 모든 HTTP 메서드를 허용
+    allow_headers=["*"],  # 모든 헤더를 허용
+)
 
 # 인스턴스 생성
 recommendation = Recommendation()
