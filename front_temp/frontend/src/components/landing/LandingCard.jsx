@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
@@ -20,6 +20,7 @@ const LandingCard = () => {
     const navigate = useNavigate();
 
     const scrollContainerRef = useRef(null);
+    const [isScrollEnabled, setIsScrollEnabled] = useState(false); 
 
     const handleScrollToNext = () => {
         if (scrollContainerRef.current) {
@@ -40,10 +41,15 @@ const LandingCard = () => {
         }
     };
 
+    const handleContainerClick = () => {
+        setIsScrollEnabled(true); // 클릭 시 스크롤 활성화 상태로 변경
+    };
+
     return (
-        <S.WholeContainer ref={scrollContainerRef}>
+        <S.WholeContainer  ref={scrollContainerRef}
+            style={{ overflowY: isScrollEnabled ? 'scroll' : 'hidden' }}>
              <S.OpeningContainer>
-                <Opening />
+                <Opening scrollContainerRef={scrollContainerRef} /> 
             </S.OpeningContainer>
             {landingLocation.map((location, index) => (
                 <LocationCard

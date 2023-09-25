@@ -5,12 +5,15 @@ import logo from '../../asset/images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 
-const Opening = () => {
+const Opening = ({ scrollContainerRef })  => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.style.overflowY = isOpen ? 'hidden' : 'scroll';
+    }
   };
 
   return (
