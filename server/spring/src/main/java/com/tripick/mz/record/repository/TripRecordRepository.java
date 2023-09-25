@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface TripRecordRepository extends JpaRepository<TripRecord, Integer> {
     List<TripRecord> findByMember(Member member);
+
+    List<TripRecord> findByMemberAndNationName(Member member, String nationName);
 }
