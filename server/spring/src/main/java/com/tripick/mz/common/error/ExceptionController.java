@@ -46,4 +46,10 @@ public class ExceptionController {
         return ResponseResult.exceptionResponse(ExceptionCode.NOT_EXIST_BADGE_EXCEPTION);
     }
 
+    @ExceptionHandler(NotExistContentException.class)
+    public ResponseResult NotExistContentException(NotExistContentException err){
+        log.info("Error : {}", err.getClass());
+        log.info("Error Message : {}", err.getMessage());
+        return ResponseResult.exceptionResponse(ExceptionCode.NOT_EXIST_TRIP_CONTENT);
+    }
 }
