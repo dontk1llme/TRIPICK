@@ -41,16 +41,17 @@ const LandingCard = () => {
 
     return (
         <S.WholeContainer ref={scrollContainerRef}>
-            {landingLocation.map((location, index) => (
-                <LocationCard
-                    key={index}
-                    locationData={location}
-                    navigateToCalendar={() => navigate(utils.URL.RECOMMEND.CALENDAR)}
-                    handleScrollToNext={handleScrollToNext}
-                    handleScrollToTop={handleScrollToTop}
-                    last={index === landingLocation.length - 1}
-                />
-            ))}
+            {landingLocation.length > 0 &&
+                landingLocation.map((location, index) => (
+                    <LocationCard
+                        key={index}
+                        locationData={location}
+                        navigateToCalendar={() => navigate(utils.URL.RECOMMEND.CALENDAR)}
+                        handleScrollToNext={handleScrollToNext}
+                        handleScrollToTop={handleScrollToTop}
+                        last={index === landingLocation.length - 1}
+                    />
+                ))}
         </S.WholeContainer>
     );
 };
