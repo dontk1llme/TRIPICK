@@ -2,9 +2,12 @@ package com.tripick.mz.auth.service;
 
 import com.tripick.mz.auth.dto.UserDto;
 import com.tripick.mz.auth.exception.InvalidRefreshTokenException;
+import com.tripick.mz.member.entity.Credential;
+import com.tripick.mz.member.repository.CredentialRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -35,6 +38,8 @@ public class TokenService implements InitializingBean {
     private static final String USER_EMAIL_KEY = "USER_EMAIL";
     private static final String AUTHORITIES_KEY = "AUTHORITIES";
 
+    private static CredentialRepository credentialRepository;
+
     @Value("${jwt.secret}")
     private String secret;
     @Value("${jwt.bearer.type")
@@ -43,6 +48,9 @@ public class TokenService implements InitializingBean {
     private long accessTokenPeriodInMsec;
     @Value("${jwt.refresh-token-expire-time}")
     private long refreshTokenPeriodInMsec;
+    @Value("${jwt.refresh-token")
+    private String refreshTokenKey;
+
     private Key key;
 
     @Override
@@ -68,7 +76,7 @@ public class TokenService implements InitializingBean {
 
         if(cookies != null) {
             for(Cookie cookie : cookies) {
-                if(cookie.getName().equals(refreshToken)){
+                if(cookie.getName().equals(refreshTokenKey)){
                     refreshToken = cookie.getValue();
                     break;
                 }

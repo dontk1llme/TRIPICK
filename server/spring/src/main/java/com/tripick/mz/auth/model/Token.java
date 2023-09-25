@@ -4,10 +4,11 @@ import lombok.*;
 
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
-@RequiredArgsConstructor
 @Getter
 public class Token {
     private String token;
-    private String refreshToken;
+
+    public Token(String token){
+        this.token = token;
+    }
 }

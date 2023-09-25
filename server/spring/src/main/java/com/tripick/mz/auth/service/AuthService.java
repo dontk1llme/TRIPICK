@@ -1,8 +1,10 @@
 package com.tripick.mz.auth.service;
 
 import com.tripick.mz.auth.dto.UserDto;
+import com.tripick.mz.auth.dto.response.AuthResDto;
 import com.tripick.mz.auth.model.Token;
 import com.tripick.mz.member.repository.CredentialRepository;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -20,10 +22,15 @@ public class AuthService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDto principal = (UserDto) authentication.getPrincipal();
 
-        String savedRefreshToken = credentialRepository.findByEmail(principal.getEmail()).orElseThrow(RuntimeException::new).getRefreshToken();
+        String savedRefreshToken = credentialRepository.findByEmail(principal.getEmail())
+            .orElseThrow(RuntimeException::new).getRefreshToken();
         String refreshedAccessToken = tokenService.refreshAccessToken(savedRefreshToken, principal);
 
         return new Token(refreshedAccessToken);
+    }
+
+    public AuthResDto login(String registrationId, String code) throws IOException {
+        return new AuthResDto();
     }
 
     public void signOut() {
@@ -33,6 +40,6 @@ public class AuthService {
 
         Long expirationInMs = tokenService.getExpirationInMs(accessToken);
 
-        tokenService.deleteRefreshToken(principal.getEmail());
+//        tokenService.deleteRefreshToken(principal.getEmail());
     }
 }
