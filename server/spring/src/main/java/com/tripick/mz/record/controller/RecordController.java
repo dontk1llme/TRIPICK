@@ -30,6 +30,13 @@ public class RecordController {
         return ResponseEntity.ok(tripRecords);
     }
 
+    @GetMapping("/{memberId}/nation/{nationName}")
+    public ResponseEntity<List<TripRecordResponseDto>> getTripRecordsByNationName(@PathVariable int memberId, @PathVariable String nationName) {
+        log.info("RecordController_getTripRecordsByNationName -> 나라 이름과 사용자 ID별 여행 기록 조회");
+        List<TripRecordResponseDto> tripRecords = recordService.getTripRecordsByNationName(memberId, nationName);
+        return ResponseEntity.ok(tripRecords);
+    }
+
     @PostMapping("/create")
     public ResponseResult createTripRecord(@RequestBody CreateTripRecordRequestDto createTripRecordRequestDto) {
         log.info("RecordController_createTripRecord -> 여행 기록 등록");
