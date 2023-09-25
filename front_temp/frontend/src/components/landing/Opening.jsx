@@ -21,7 +21,6 @@ const Opening = () => {
       <S.Logo
         src={logo}
         isOpen={isOpen}
-        onClick={() => navigate(utils.URL.HOME.LANDING)}
       />
       <S.BoxRight isOpen={isOpen}>
       </S.BoxRight>

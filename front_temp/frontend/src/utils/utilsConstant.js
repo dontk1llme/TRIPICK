@@ -25,9 +25,6 @@ export const URL = {
         TEST: '/mbti/test',
         RESULT: '/mbti/result',
     },
-    OPENING: {
-        OPENING: '/',
-    }
 };
 
 export const MAX_WIDTH = '1920px';
