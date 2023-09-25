@@ -8,9 +8,9 @@ import com.tripick.mz.record.dto.response.TripRecordResponseDto;
 import java.util.List;
 
 public interface RecordService {
-    // 여행 기록 조회
-    List<TripRecordResponseDto> getTripRecordsByMemberId(int memberId);
-
+    // 여행 기록이 있는 나라 조회
+    List<String> getTripRecordsByMemberId(int memberId);
+    
     // 여행 기록 생성
     void createTripRecord(CreateTripRecordRequestDto createTripRecordRequestDto);
 
