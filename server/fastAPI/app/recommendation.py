@@ -37,7 +37,7 @@ for city in city_all.find():
     temp = 99999
     rainy_days = 99999
     if climate_dict is not None:
-        temp = climate_dict.get('temp_avg')
+        temp = climate_dict.get('temp_avg') - 21
         rainy_days = climate_dict.get('rainy_days')
     price = city.get('price_index').get(now.date().strftime("%Y"))
     traveler = city.get('traveler').get(now.date().strftime("%Y-%m-01"))
