@@ -26,4 +26,6 @@ public interface RecordService {
     //여행 기록 이미지 삭제
     void deleteTripRecordImage(int tripRecordImageId);
 
+    //나라별 기록 조회
+    List<TripRecordResponseDto> getTripRecordsByNationName(int memberId, String nationName);
 }
