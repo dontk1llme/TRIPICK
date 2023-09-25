@@ -8,16 +8,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
 from recommendation import Recommendation
-
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:3000",
-     "http://localhost",
-    "https://tripick.site",
-    "http://tripick.site",
-]
+# origins = [
+#     "http://localhost:3000",
+#      "http://localhost",
+#     "https://tripick.site",
+#     "http://tripick.site",
+# ]
+
+origins = ["*"]
 
 # CORS 미들웨어 추가
 app.add_middleware(
