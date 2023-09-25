@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
@@ -13,12 +13,14 @@ import { LiaChevronDownSolid } from 'react-icons/lia';
 import LocationCard from './LocationCard';
 
 import * as hooks from 'hooks';
+import Opening from './Opening';
 
 const LandingCard = () => {
     const { landingLocation } = hooks.landingState();
     const navigate = useNavigate();
 
     const scrollContainerRef = useRef(null);
+    const [isScrollEnabled, setIsScrollEnabled] = useState(false);
 
     const handleScrollToNext = () => {
         if (scrollContainerRef.current) {
@@ -39,19 +41,25 @@ const LandingCard = () => {
         }
     };
 
+    const handleContainerClick = () => {
+        setIsScrollEnabled(true); // 클릭 시 스크롤 활성화 상태로 변경
+    };
+
     return (
-        <S.WholeContainer ref={scrollContainerRef}>
-            {landingLocation.length > 0 &&
-                landingLocation.map((location, index) => (
-                    <LocationCard
-                        key={index}
-                        locationData={location}
-                        navigateToCalendar={() => navigate(utils.URL.RECOMMEND.CALENDAR)}
-                        handleScrollToNext={handleScrollToNext}
-                        handleScrollToTop={handleScrollToTop}
-                        last={index === landingLocation.length - 1}
-                    />
-                ))}
+        <S.WholeContainer ref={scrollContainerRef} style={{ overflowY: isScrollEnabled ? 'scroll' : 'hidden' }}>
+            <S.OpeningContainer>
+                <Opening scrollContainerRef={scrollContainerRef} />
+            </S.OpeningContainer>
+            {landingLocation.map((location, index) => (
+                <LocationCard
+                    key={index}
+                    locationData={location}
+                    navigateToCalendar={() => navigate(utils.URL.RECOMMEND.CALENDAR)}
+                    handleScrollToNext={handleScrollToNext}
+                    handleScrollToTop={handleScrollToTop}
+                    last={index === landingLocation.length - 1}
+                />
+            ))}
         </S.WholeContainer>
     );
 };
@@ -61,8 +69,11 @@ const S = {
         overflow-y: scroll; /* 세로 스크롤 가능한 컨테이너로 설정 */
         scroll-snap-type: y mandatory; /* 세로 방향 스크롤 스냅을 활성화하고 필수로 설정 */
         height: 100vh; /* 컨테이너의 높이 설정 (화면 높이에 맞게 조절) */
-        weight: 95vw;
+        width: 100vw;
         overflow-x: hidden;
+    `,
+    OpeningContainer: styled.div`
+        scroll-snap-align: start; /* 스크롤 정렬 설정 */
     `,
 };
 
