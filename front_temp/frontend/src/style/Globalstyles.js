@@ -30,6 +30,11 @@ const GlobalStyles = createGlobalStyle`
         vertical-align: middle;
         image-rendering: -webkit-optimize-contrast !important;
         backface-visibility:hidden !important;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
     }
     ul,li {
         list-style: none;

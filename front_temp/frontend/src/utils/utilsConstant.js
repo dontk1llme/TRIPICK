@@ -3,8 +3,7 @@ export const URL = {
         LOGIN: '/login',
     },
     HOME: {
-        MAIN: '/',
-        LANDING: '/landing',
+        LANDING: '/', //==MAIN
     },
     CART: {
         LIST: '/cart',
