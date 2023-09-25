@@ -54,6 +54,7 @@ for city in city_all.find():
     df = df._append(city_dict, ignore_index=True)
 
 df['temp_Rank'] = df['temp'].rank()
+df['crime_rank'] = df['crime'].rank(ascending=True)
 print(df)
 
 
