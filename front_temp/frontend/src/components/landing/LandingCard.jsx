@@ -30,6 +30,15 @@ const LandingCard = () => {
         }
     };
 
+    const handleScrollToTop = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        }
+    };
+
     return (
         <S.WholeContainer ref={scrollContainerRef}>
             {landingLocation.map((location, index) => (
@@ -38,6 +47,8 @@ const LandingCard = () => {
                     locationData={location}
                     navigateToCalendar={() => navigate(utils.URL.RECOMMEND.CALENDAR)}
                     handleScrollToNext={handleScrollToNext}
+                    handleScrollToTop={handleScrollToTop}
+                    last={index === landingLocation.length - 1}
                 />
             ))}
         </S.WholeContainer>

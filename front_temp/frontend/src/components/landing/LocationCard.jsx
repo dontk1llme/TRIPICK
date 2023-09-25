@@ -7,10 +7,10 @@ import { AiFillSafetyCertificate } from 'react-icons/ai';
 import { BiMoneyWithdraw } from 'react-icons/bi';
 import { TiWeatherPartlySunny } from 'react-icons/ti';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
-import { LiaChevronDownSolid } from 'react-icons/lia';
+import { LiaChevronDownSolid, LiaChevronUpSolid } from 'react-icons/lia';
 import * as hooks from 'hooks';
 
-const LocationCard = ({ locationData, navigateToCalendar, handleScrollToNext }) => {
+const LocationCard = ({ locationData, navigateToCalendar, handleScrollToNext, handleScrollToTop, last }) => {
     const { imageUrl, city, country, estimatedExchangeRate, currency, estimatedClimate, safety } = locationData;
 
     return (
@@ -24,9 +24,9 @@ const LocationCard = ({ locationData, navigateToCalendar, handleScrollToNext }) 
                 <S.ColumnComponent>
                     <br></br>
                     <br></br>
-                    <S.SubTitle2 style={{ color: '#8390FA', cursor: 'pointer' }}>
+                    <S.MoreInformation>
                         더 알아보기 <FaArrowAltCircleRight />
-                    </S.SubTitle2>
+                    </S.MoreInformation>
                     <br></br>
                     <p>
                         <S.Title>{city}</S.Title>
@@ -54,12 +54,21 @@ const LocationCard = ({ locationData, navigateToCalendar, handleScrollToNext }) 
                     <S.Button onClick={navigateToCalendar}>날짜 선택하고 여행지 추천받기</S.Button>
                     <br></br>
                     <br></br>
-                    <S.SubTitle2 style={{ color: '#8390FA', paddingLeft: '170px' }} onClick={handleScrollToNext}>
-                        <span>scroll </span> <br></br>
-                        <span style={{ paddingLeft: '17px' }}>
-                            <LiaChevronDownSolid></LiaChevronDownSolid>
-                        </span>
-                    </S.SubTitle2>
+                    {!last ? (
+                        <S.SubTitle2 onClick={handleScrollToNext}>
+                            <span>scroll </span>
+                            <span>
+                                <LiaChevronDownSolid></LiaChevronDownSolid>
+                            </span>
+                        </S.SubTitle2>
+                    ) : (
+                        <S.SubTitle2 onClick={handleScrollToTop}>
+                            <span>top</span>
+                            <span>
+                                <LiaChevronUpSolid />
+                            </span>
+                        </S.SubTitle2>
+                    )}
                     <br></br>
                     <br></br>
                 </S.ColumnComponent>
@@ -105,6 +114,14 @@ const S = {
         justify-content: center; /* 세로 중앙 정렬 */
         align-items: left; /* 가로 왼쪽 정렬 */
     `,
+    MoreInformation: styled.div`
+        cursor: pointer;
+        font-size: ${({ theme }) => theme.fontSize.subTitle2};
+        color: ${({ theme }) => theme.color.main1};
+        &:hover {
+            opacity: 0.8;
+        }
+    `,
     Title: styled.span`
         font-size: ${({ theme }) => theme.fontSize.title2};
     `,
@@ -114,8 +131,14 @@ const S = {
         margin: 5px;
     `,
     SubTitle2: styled.span`
+        display: flex;
+        flex-direction: column;
+        color: ${({ theme }) => theme.color.main1};
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         font-size: ${({ theme }) => theme.fontSize.subTitle2};
+
         &:hover {
             opacity: 0.8;
         }
