@@ -17,7 +17,8 @@ const App = () => {
                     <styles.GlobalStyles />
                     <Router>
                         <Routes>
-                            <Route path={utils.URL.HOME.MAIN} element={<components.Layout />}>
+                                <Route path={utils.URL.HOME.MAIN} element={<components.Layout />}>
+                                <Route path={utils.URL.OPENING.OPENING} element={<pages.Opening/>}></Route>
                                 <Route path={utils.URL.HOME.LANDING} element={<pages.Landing />}></Route>
                                 <Route path={utils.URL.CART.LIST} element={<pages.Cart />}></Route>
                                 <Route path={utils.URL.MYPAGE.PASSPORT} element={<pages.MyPage />}></Route>
@@ -28,6 +29,7 @@ const App = () => {
                                 <Route path={utils.URL.MBTI.MAIN} element={<pages.Mbti />}></Route>
                                 <Route path={utils.URL.MBTI.TEST} element={<pages.MbtiTest />}></Route>
                                 <Route path={utils.URL.MBTI.RESULT} element={<pages.MbtiResult />}></Route>
+                                
                             </Route>
                         </Routes>
                     </Router>
