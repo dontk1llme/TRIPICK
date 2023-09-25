@@ -15,6 +15,7 @@ const TopTab = () => {
             </S.Logo>
             
             <S.ShortCut>
+                <S.Logo onClick={() => navigate(utils.URL.MBTI.TEST)}>mbti</S.Logo>
                 <components.LoginButton></components.LoginButton>
                
                 <S.Liked onClick={() => navigate(utils.URL.CART.LIST)}>
@@ -72,7 +73,8 @@ const S = {
         justify-content: space-between;
         align-items: center;
         // width: 99px; //두 개만 있었을 때
-        width: 150px;
+        // width: 150px; // 세 개
+        width: 200px;
         height: 100%;
     `,
     Liked: styled.div`
