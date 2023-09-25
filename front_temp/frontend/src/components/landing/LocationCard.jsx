@@ -3,80 +3,72 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 
-import {AiFillSafetyCertificate} from 'react-icons/ai';
-import {BiMoneyWithdraw} from 'react-icons/bi';
-import {TiWeatherPartlySunny} from 'react-icons/ti';
-import {FaArrowAltCircleRight} from 'react-icons/fa';
-import {LiaChevronDownSolid} from 'react-icons/lia';
+import { AiFillSafetyCertificate } from 'react-icons/ai';
+import { BiMoneyWithdraw } from 'react-icons/bi';
+import { TiWeatherPartlySunny } from 'react-icons/ti';
+import { FaArrowAltCircleRight } from 'react-icons/fa';
+import { LiaChevronDownSolid } from 'react-icons/lia';
 import * as hooks from 'hooks';
 
+const LocationCard = ({ locationData, navigateToCalendar, handleScrollToNext }) => {
+    const { imageUrl, city, country, estimatedExchangeRate, currency, estimatedClimate, safety } = locationData;
 
-const LocationCard = ({ locationData, navigateToCalendar }) => {
-    const {
-      imageUrl,
-      city,
-      country,
-      estimatedExchangeRate,
-      currency,
-      estimatedClimate,
-      safety,
-    } = locationData;
-  
     return (
-      <S.LocationContainer>
-        <S.LeftContainer>
-          <div>
-            <S.Image src={imageUrl} alt={city} />
-          </div>
-        </S.LeftContainer>
-        <S.RightContainer>
-          <S.ColumnComponent>
-          <br></br>
-          <br></br>
-            <S.SubTitle2 style={{ color: '#8390FA', cursor: 'pointer' }}>
-              더 알아보기 <FaArrowAltCircleRight />
-            </S.SubTitle2>
-            <br></br>
-            <p>
-              <S.Title>{city}</S.Title>
-              <S.SubTitle1> {country}</S.SubTitle1>
-            </p>
-          </S.ColumnComponent>
-          <S.ColumnComponent>
-            <S.SubTitle1>
-              <BiMoneyWithdraw style={{ color: '#8390FA' }} /> {estimatedExchangeRate} {currency} / 원 <br></br>
-            </S.SubTitle1>
-            <S.SubTitle1>
-              <TiWeatherPartlySunny style={{ color: '#8390FA' }} /> {estimatedClimate}°C <br></br>
-            </S.SubTitle1>
-            <S.SubTitle1>
-              <AiFillSafetyCertificate style={{ color: '#8390FA' }} /> {safety} / 10
-            </S.SubTitle1>
-          </S.ColumnComponent>
-          <S.ColumnComponent>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <S.Button onClick={navigateToCalendar}>
-              날짜 선택하고 여행지 추천받기
-            </S.Button>
-            <br></br>
-            <br></br>
-            <S.SubTitle2 style={{ color: '#8390FA', paddingLeft: '170px' }}>
-              <span>scroll </span> <br></br>
-              <span style={{ paddingLeft: '17px' }}><LiaChevronDownSolid></LiaChevronDownSolid></span>
-            </S.SubTitle2>
-            <br></br>
-            <br></br>
-          </S.ColumnComponent>
-        </S.RightContainer>
-      </S.LocationContainer>
+        <S.LocationContainer>
+            <S.LeftContainer>
+                <div>
+                    <S.Image src={imageUrl} alt={city} />
+                </div>
+            </S.LeftContainer>
+            <S.RightContainer>
+                <S.ColumnComponent>
+                    <br></br>
+                    <br></br>
+                    <S.SubTitle2 style={{ color: '#8390FA', cursor: 'pointer' }}>
+                        더 알아보기 <FaArrowAltCircleRight />
+                    </S.SubTitle2>
+                    <br></br>
+                    <p>
+                        <S.Title>{city}</S.Title>
+                        <S.SubTitle1> {country}</S.SubTitle1>
+                    </p>
+                </S.ColumnComponent>
+                <S.ColumnComponent>
+                    <S.SubTitle1>
+                        <BiMoneyWithdraw style={{ color: '#8390FA' }} /> {estimatedExchangeRate} {currency} / 원{' '}
+                        <br></br>
+                    </S.SubTitle1>
+                    <S.SubTitle1>
+                        <TiWeatherPartlySunny style={{ color: '#8390FA' }} /> {estimatedClimate}°C <br></br>
+                    </S.SubTitle1>
+                    <S.SubTitle1>
+                        <AiFillSafetyCertificate style={{ color: '#8390FA' }} /> {safety} / 10
+                    </S.SubTitle1>
+                </S.ColumnComponent>
+                <S.ColumnComponent>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <S.Button onClick={navigateToCalendar}>날짜 선택하고 여행지 추천받기</S.Button>
+                    <br></br>
+                    <br></br>
+                    <S.SubTitle2 style={{ color: '#8390FA', paddingLeft: '170px' }} onClick={handleScrollToNext}>
+                        <span>scroll </span> <br></br>
+                        <span style={{ paddingLeft: '17px' }}>
+                            <LiaChevronDownSolid></LiaChevronDownSolid>
+                        </span>
+                    </S.SubTitle2>
+                    <br></br>
+                    <br></br>
+                </S.ColumnComponent>
+            </S.RightContainer>
+        </S.LocationContainer>
     );
-  };
+};
 
-  const S = {
+const S = {
     WholeContainer: styled.div`
         overflow-y: scroll; /* 세로 스크롤 가능한 컨테이너로 설정 */
         scroll-snap-type: y mandatory; /* 세로 방향 스크롤 스냅을 활성화하고 필수로 설정 */
@@ -84,16 +76,16 @@ const LocationCard = ({ locationData, navigateToCalendar }) => {
         weight: 95vw;
         overflow-x: hidden;
     `,
-    
+
     LocationContainer: styled.div`
         display: flex;
         // width: 981.6px;
         // height: 757.60px;
         width: 100vw;
-        height: 757.6px;
+        height: 100vh;
         scroll-snap-align: start;
-        `,
-        
+    `,
+
     LeftContainer: styled.div`
         position: relative;
         flex: 60%;
@@ -122,10 +114,11 @@ const LocationCard = ({ locationData, navigateToCalendar }) => {
         margin: 5px;
     `,
     SubTitle2: styled.span`
-    font-size: ${({ theme }) => theme.fontSize.subTitle2};
-    &:hover {
-        opacity: 0.8; 
-      }
+        cursor: pointer;
+        font-size: ${({ theme }) => theme.fontSize.subTitle2};
+        &:hover {
+            opacity: 0.8;
+        }
     `,
 
     Image: styled.img`

@@ -1,36 +1,48 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import { TopTab } from 'components';
 
-import {AiFillSafetyCertificate} from 'react-icons/ai';
-import {BiMoneyWithdraw} from 'react-icons/bi';
-import {TiWeatherPartlySunny} from 'react-icons/ti';
-import {FaArrowAltCircleRight} from 'react-icons/fa';
-import {LiaChevronDownSolid} from 'react-icons/lia';
+import { AiFillSafetyCertificate } from 'react-icons/ai';
+import { BiMoneyWithdraw } from 'react-icons/bi';
+import { TiWeatherPartlySunny } from 'react-icons/ti';
+import { FaArrowAltCircleRight } from 'react-icons/fa';
+import { LiaChevronDownSolid } from 'react-icons/lia';
 
 import LocationCard from './LocationCard';
 
-
 import * as hooks from 'hooks';
-  
-  const LandingCard = () => {
+
+const LandingCard = () => {
     const { landingLocation } = hooks.landingState();
     const navigate = useNavigate();
-  
+
+    const scrollContainerRef = useRef(null);
+
+    const handleScrollToNext = () => {
+        if (scrollContainerRef.current) {
+            const nextScrollPosition = scrollContainerRef.current.scrollTop + window.innerHeight;
+            scrollContainerRef.current.scrollTo({
+                top: nextScrollPosition,
+                behavior: 'smooth',
+            });
+        }
+    };
+
     return (
-      <S.WholeContainer>
-        {landingLocation.map((location, index) => (
-          <LocationCard
-            key={index}
-            locationData={location}
-            navigateToCalendar={() => navigate(utils.URL.RECOMMEND.CALENDAR)}
-          />
-        ))}
-      </S.WholeContainer>
+        <S.WholeContainer ref={scrollContainerRef}>
+            {landingLocation.map((location, index) => (
+                <LocationCard
+                    key={index}
+                    locationData={location}
+                    navigateToCalendar={() => navigate(utils.URL.RECOMMEND.CALENDAR)}
+                    handleScrollToNext={handleScrollToNext}
+                />
+            ))}
+        </S.WholeContainer>
     );
-  };
+};
 
 const S = {
     WholeContainer: styled.div`
