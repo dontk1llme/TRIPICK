@@ -45,26 +45,18 @@ public class RecordServiceImpl implements RecordService {
     private final MemberRepository memberRepository;
 
     @Override
-    public List<TripRecordResponseDto> getTripRecordsByMemberId(int memberId) {
+    public List<String> getTripRecordsByMemberId(int memberId) {
         log.info("RecordServiceImpl_getTripRecordsByMemberId -> 여행 기록 조회 시도");
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(NotExistMemberException::new);
 
         List<TripRecord> tripRecords = tripRecordRepository.findByMember(member);
 
-        return tripRecords.stream().map(tripRecord -> {
-            List<TripRecordImageResponseDto> images = tripRecordImageRepository.findByTripRecordTripRecordId(tripRecord.getTripRecordId())
-                    .stream()
-                    .map(tripRecordImage -> new TripRecordImageResponseDto(tripRecordImage.getTripRecordImageId(), tripRecordImage.getImageUrl()))
-                    .collect(Collectors.toList());
-
-            return new TripRecordResponseDto(
-                    tripRecord.getTripRecordId(),
-                    tripRecord.getNationName(),
-                    tripRecord.getContent(),
-                    images
-            );
-        }).collect(Collectors.toList());
+        // 중복된 나라 이름 제거
+        return tripRecords.stream()
+                .map(TripRecord::getNationName)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -83,10 +75,7 @@ public class RecordServiceImpl implements RecordService {
                     .collect(Collectors.toList());
 
             return new TripRecordResponseDto(
-                    tripRecord.getTripRecordId(),
-                    tripRecord.getNationName(),
-                    tripRecord.getContent(),
-                    images
+                    tripRecord.getNationName()
             );
         }).collect(Collectors.toList());
     }
