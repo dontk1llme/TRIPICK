@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import img1 from '../../asset/images/opening1.gif';
+import logo from '../../asset/images/logo.png';
+import { useNavigate } from 'react-router-dom';
+import * as utils from 'utils';
 
 const Opening = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
@@ -12,11 +16,14 @@ const Opening = () => {
   return (
     <S.Wrap onClick={handleClick}>
       <S.BoxLeft isOpen={isOpen}>
-        {/* 좌측 박스 내용 */}
       </S.BoxLeft>
       <S.Image src={img1} />
+      <S.Logo
+        src={logo}
+        isOpen={isOpen}
+        onClick={() => navigate(utils.URL.HOME.LANDING)}
+      />
       <S.BoxRight isOpen={isOpen}>
-        {/* 우측 박스 내용 */}
       </S.BoxRight>
     </S.Wrap>
   );
@@ -25,37 +32,48 @@ const Opening = () => {
 const S = {
   Wrap: styled.div`
     display: flex;
-    width: 100%;
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
     position: relative;
-    overflow: hidden;
-    transition: all 1s ease-in-out; /* 애니메이션 효과를 부드럽게 적용 */
   `,
   Image: styled.img`
     width: 100%;
     height: 100%;
   `,
+  Logo: styled.img`
+    position: absolute;
+    width: ${(props) => (props.isOpen ? '500px' : '0')}; 
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: ${(props) => (props.isOpen ? '1' : '0')};
+    transition: all 2s ease-in-out;
+    &:hover {
+      cursor: pointer;
+    }
+  `,
   BoxLeft: styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    width: ${(props) => (props.isOpen ? '0' : '50%')}; /* isOpen 상태에 따라 너비 변경 */
+    width: ${(props) => (props.isOpen ? '0' : '50%')};
     height: 100%;
     background-color: #212121;
-    opacity: ${(props) => (props.isOpen ? '0' : '0.8')}; /* isOpen 상태에 따라 투명도 변경 */
+    opacity: ${(props) => (props.isOpen ? '0' : '0.8')};
     z-index: 99999;
-    transition: all 1s ease-in-out; /* 애니메이션 효과를 부드럽게 적용 */
+    transition: all 3s ease-in-out;
   `,
   BoxRight: styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    width: ${(props) => (props.isOpen ? '0' : '50%')}; /* isOpen 상태에 따라 너비 변경 */
+    width: ${(props) => (props.isOpen ? '0' : '50%')};
     height: 100%;
     background-color: #212121;
-    opacity: ${(props) => (props.isOpen ? '0' : '0.8')}; /* isOpen 상태에 따라 투명도 변경 */
+    opacity: ${(props) => (props.isOpen ? '0' : '0.8')};
     z-index: 99999;
-    transition: all 1s ease-in-out; /* 애니메이션 효과를 부드럽게 적용 */
+    transition: all 3s ease-in-out;
   `,
 };
 
