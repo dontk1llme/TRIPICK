@@ -3,7 +3,9 @@ import * as utils from 'utils';
 import * as hooks from 'hooks';
 
 export const instance = axios.create({
-    baseURL: utils.API_BASE_URL,
+    // baseURL: utils.API_BASE_URL,
+    baseURL: 'https://tripick.site',
+    // baseURL: '',
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         Accept: 'application/json',
@@ -23,6 +25,19 @@ export const instance = axios.create({
 // );
 
 export const apis = {
-    
-    getMbtiResult: 
+    getNowRecommendations: () => instance.get('/fastapi/recommendation/now'),
+    getDateRecommendations: (startDate, endDate) => instance.get(`fastapi/recommendation/set-date?startDate=${startDate}&endDate=${endDate}`),
+
+    createRecord: data => instance.post('/api/record/create', data),
+    getNationRecord: (memberId, nationName) => instance.get(`/api/record/${memberId}/nation/${nationName}`),
+    getNations: memberId => instance.get(`/api/record/${memberId}`),
+    saveImages: formData =>
+        instance.post(`api/record/saveImage`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }),
+    deleteAlbum: tripRecordId => instance.delete(`/api/record/delete-record/${tripRecordId}`),
+    editAlbum: data => instance.patch(`/api/record/content`, data),
+    deleteImage: tripRecordImageId => instance.delete(`/api/record/delete-record-image/${tripRecordImageId}`),
 };

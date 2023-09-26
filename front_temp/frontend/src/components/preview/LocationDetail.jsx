@@ -11,6 +11,7 @@ const LocationDetail = () => {
     const { view, setView, message, setMessage, response, setResponse, type: modalType, setType } = hooks.modalState();
     const { cartLocation, setCartLocation } = hooks.cartState();
 
+
     const handleView = () => {
         setDetailLocation({});
         setViewDetail(false);
@@ -58,12 +59,12 @@ const LocationDetail = () => {
 
     return (
         <S.Wrap>
-            <S.ImageContainer image={detailLocation.imageUrl}>
+            <S.ImageContainer image={detailLocation.image_url}>
                 <S.BackContainer onClick={handleView}>
                     <IoChevronBack />
                 </S.BackContainer>
                 <S.CountryName>{detailLocation.country}</S.CountryName>
-                <S.CityName>{detailLocation.city}</S.CityName>
+                <S.CityName>{detailLocation.name}</S.CityName>
                 <S.CartContainer onClick={handleCartLocation}>
                     {cartLocation.indexOf(detailLocation) !== -1 ? <GoHeartFill /> : <GoHeart />}
                 </S.CartContainer>
@@ -71,29 +72,33 @@ const LocationDetail = () => {
             <S.InformationContainer>
                 <S.InformationBox className="type1">
                     <S.InfromationTitle>예상 환율</S.InfromationTitle>
-                    <S.InformationContent>{detailLocation.estimatedExchangeRate}원</S.InformationContent>
-                    <S.SubInformation className="currency">/{detailLocation.currency}</S.SubInformation>
+                    <S.InformationContent>{detailLocation.exchange}원</S.InformationContent>
+                    {/* <S.SubInformation className="currency">/{detailLocation.currency}</S.SubInformation> */}
                 </S.InformationBox>
                 <S.InformationBox className="type2">
                     <S.InfromationTitle>예상 날씨</S.InfromationTitle>
-                    <S.InformationContent>{detailLocation.estimatedClimate}°C</S.InformationContent>
-                    <S.SubInformation className="first">작년 평균 기온 몇도</S.SubInformation>
+                    <S.InformationContent>{detailLocation.climate && detailLocation.climate.temp_avg}°C</S.InformationContent>
+                    {/* <S.SubInformation className="first">작년 평균 기온 몇도</S.SubInformation>
                     <S.SubInformation>일조시간 몇시간</S.SubInformation>
                     <S.SubInformation>뇌우일수 몇일</S.SubInformation>
-                    <S.SubInformation>최대 일강수량 얼마</S.SubInformation>
+                    <S.SubInformation>최대 일강수량 얼마</S.SubInformation> */}
+                    <S.SubInformation>강수량: {detailLocation.climate && detailLocation.climate.rainy_days}</S.SubInformation>
+                    <S.SubInformation>최고 기온: {detailLocation.climate && detailLocation.climate.temp_max}°C</S.SubInformation>
+                    <S.SubInformation>최저 기온: {detailLocation.climate && detailLocation.climate.temp_min}°C</S.SubInformation>
                 </S.InformationBox>
                 <S.InformationBox className="type1">
                     <S.InfromationTitle>안전지수</S.InfromationTitle>
-                    <S.InformationContent>{detailLocation.safety}</S.InformationContent>
+                    <S.InformationContent>{detailLocation.crime}/10</S.InformationContent>
                 </S.InformationBox>
                 <S.InformationBox className="type1">
                     <S.InfromationTitle>여행객 동향</S.InfromationTitle>
-                    <S.InformationContent>{detailLocation.estimated_traveler}</S.InformationContent>
+                    <S.InformationContent>{detailLocation.traveler}명</S.InformationContent>
                 </S.InformationBox>
                 <S.InformationBox className="type2">
                     <S.InfromationTitle>최저가 항공권</S.InfromationTitle>
                     <S.InformationContent>
-                        {parseInt(detailLocation.ticketPrice, 10).toLocaleString()}원
+                        {/* {parseInt(detailLocation.flight, 10).toLocaleString()}원 */}
+                        {detailLocation.flight}원
                     </S.InformationContent>
 
                     <S.SubInformation className="first">
@@ -115,7 +120,7 @@ const S = {
         align-items: center;
         width: 100%;
         height: 100%;
-        margin: 12px 0px;
+        margin: 60px 0px;
     `,
 
     ImageContainer: styled.div`
