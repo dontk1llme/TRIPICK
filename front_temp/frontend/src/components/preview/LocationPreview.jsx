@@ -106,10 +106,10 @@ const LocationPreview = ({ place, type }) => {
 
     return (
         <S.Wrap onClick={() => handleDetails()}>
-            <S.PreviewImage image={place.imageUrl}>
+            <S.PreviewImage image={place.image_url}>
                 <S.CountryName>{place.country}</S.CountryName>
                 <S.CityContainer>
-                    {place.city}
+                    {place.name}
                     <S.HeartContainer
                         onClick={e => {
                             e.stopPropagation();
@@ -122,16 +122,18 @@ const LocationPreview = ({ place, type }) => {
             <S.PreviewInformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>예상 날씨</S.InformationTitle>
-                    <S.InformationContent>{place.estimatedClimate}도</S.InformationContent>
+                    <S.InformationContent>{place.climate && place.climate.temp_avg}도</S.InformationContent> 
+                    {/* 위코드 수정 */}
                 </S.InformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>예상 환율</S.InformationTitle>
-                    <S.InformationContent>{place.estimatedExchangeRate}원 </S.InformationContent>
-                    <S.InformationDescription>/{place.currency}</S.InformationDescription>
+                    <S.InformationContent>{place.exchange}원 </S.InformationContent>
+                    {/* <S.InformationDescription>/{place.estimatedExchangeRate}</S.InformationDescription> */}
+                    {/* 화폐 단위가 없음 */}
                 </S.InformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>안전 지수</S.InformationTitle>
-                    <S.InformationContent>{place.safety} </S.InformationContent>
+                    <S.InformationContent>{place.crime} </S.InformationContent>
                     <S.InformationDescription>/10</S.InformationDescription>
                 </S.InformationContainer>
                 {type === 'cart' && (
