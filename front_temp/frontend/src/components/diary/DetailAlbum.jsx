@@ -2,24 +2,77 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
+import * as api from 'api';
 import { IoAdd, IoClose, IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import WorldMap from './WorldMap';
 
 const DetailAlbum = () => {
-    const { selectedAlbum, albumList } = hooks.albumState();
+    const { selectedAlbum, albumList, setAlbumList, currentCountry } = hooks.albumState();
+    const { memberId } = hooks.loginUserState();
+    const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
     const [selectedAlbumDetail, setSelectedAlbumDetail] = useState({
-        albumId: null,
-        albumName: null,
-        imageUrl: [],
+        tripRecordId: null,
+        content: null,
+        images: [],
     });
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectedImage, setSelectedImage] = useState('');
 
+    const handleRightClick = (e, image) => {
+        e.preventDefault();
+
+        setContextMenu({
+            visible: true,
+            x: e.clientX - 150,
+            y: e.clientY - 50,
+            image,
+        });
+    };
+
+    const ContextMenu = ({ position, image, onClose }) => {
+        return (
+            <S.ContextMenuWrapper style={{ top: position.y, left: position.x }} onClick={e => e.stopPropagation()}>
+                <S.AlbumEdit onClick={() => handleDeleteImage(image.tripRecordImageId)}>삭제</S.AlbumEdit>
+            </S.ContextMenuWrapper>
+        );
+    };
+
+    const handleDeleteImage = imageId => {
+        api.apis
+            .deleteImage(imageId)
+            .then(response => {
+                api.apis
+                    .getNationRecord(memberId, currentCountry)
+                    .then(response => setAlbumList(response.data))
+                    .catch(error => console.log(error));
+                setContextMenu({ ...contextMenu, visible: false });
+            })
+            .then(error => console.log(error));
+    };
+
+    useEffect(() => {
+        const handleOutsideClick = e => {
+            if (contextMenu.visible) {
+                setContextMenu({ ...contextMenu, visible: false });
+            }
+        };
+
+        document.addEventListener('click', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, [contextMenu]);
+
+    useEffect(() => {
+        console.log('selected Image', selectedImage);
+    }, [selectedImage]);
+
     useEffect(() => {
         console.log(selectedAlbum);
-        const findAlbum = albumList.find(album => album.albumId === selectedAlbum);
+        const findAlbum = albumList.find(album => album.tripRecordId === selectedAlbum);
         setSelectedAlbumDetail(findAlbum);
-    }, [selectedAlbum]);
+    }, [selectedAlbum, albumList]);
 
     useEffect(() => {
         console.log(selectedAlbumDetail);
@@ -27,8 +80,24 @@ const DetailAlbum = () => {
 
     const handleFileUpload = event => {
         const files = event.target.files;
-        const fileArray = Array.from(files);
-        setSelectedFile(fileArray);
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            formData.append('images', files[i]);
+        }
+
+        formData.append('tripRecordId', selectedAlbumDetail.tripRecordId);
+
+        api.apis
+            .saveImages(formData)
+            .then(response => {
+                api.apis
+                    .getNationRecord(memberId, currentCountry)
+                    .then(response => setAlbumList(response.data))
+                    .catch(error => console.log(error));
+            })
+            .catch(error => {
+                console.error('Error uploading files:', error);
+            });
     };
 
     const handleSelectedImage = imageId => {
@@ -48,20 +117,20 @@ const DetailAlbum = () => {
     }, [selectedFile]);
 
     const handleNextImage = () => {
-        const index = selectedAlbumDetail.imageUrl.findIndex(image => image.imageId === selectedImage);
-        if (index + 1 < selectedAlbumDetail.imageUrl.length) {
-            setSelectedImage(selectedAlbumDetail.imageUrl[index + 1].imageId);
+        const index = selectedAlbumDetail.images.findIndex(image => image.tripRecordImageId === selectedImage);
+        if (index + 1 < selectedAlbumDetail.images.length) {
+            setSelectedImage(selectedAlbumDetail.images[index + 1].tripRecordImageId);
         } else {
-            setSelectedImage(selectedAlbumDetail.imageUrl[0].imageId);
+            setSelectedImage(selectedAlbumDetail.images[0].tripRecordImageId);
         }
     };
 
     const handlePreviousImage = () => {
-        const index = selectedAlbumDetail.imageUrl.findIndex(image => image.imageId === selectedImage);
+        const index = selectedAlbumDetail.images.findIndex(image => image.tripRecordImageId === selectedImage);
         if (index > 0) {
-            setSelectedImage(selectedAlbumDetail.imageUrl[index - 1].imageId);
+            setSelectedImage(selectedAlbumDetail.images[index - 1].tripRecordImageId);
         } else {
-            setSelectedImage(selectedAlbumDetail.imageUrl[selectedAlbumDetail.imageUrl.length - 1].imageId);
+            setSelectedImage(selectedAlbumDetail.images[selectedAlbumDetail.images.length - 1].tripRecordImageId);
         }
     };
 
@@ -87,13 +156,13 @@ const DetailAlbum = () => {
 
     return (
         <S.Wrap>
-            {selectedAlbum === '0' ? 
-            // 이 부분에 지도
-            <WorldMap></WorldMap>
-            : selectedAlbumDetail ? (
+            {selectedAlbum === '0' ? (
+                // 이 부분에 지도
+                <WorldMap></WorldMap>
+            ) : selectedAlbumDetail ? (
                 <S.Container>
                     <S.AlbumTitle>
-                        {selectedAlbumDetail.albumName} ({selectedAlbumDetail.imageUrl.length})
+                        {selectedAlbumDetail.content} ({selectedAlbumDetail.images.length})
                         <label for="file">
                             <S.AddImageButton>
                                 <IoAdd />
@@ -103,13 +172,23 @@ const DetailAlbum = () => {
                     </S.AlbumTitle>
                     <S.AlbumImages>
                         <S.ImagesContainer>
-                            {selectedAlbumDetail.imageUrl.map((image, index) => {
+                            {selectedAlbumDetail.images.map((image, index) => {
                                 return (
-                                    <S.ImageContainer key={index} onClick={() => handleSelectedImage(image.imageId)}>
-                                        <img src={image.url} alt="이미지" />
+                                    <S.ImageContainer
+                                        key={index}
+                                        onClick={() => handleSelectedImage(image.tripRecordImageId)}
+                                        onContextMenu={e => handleRightClick(e, image)}>
+                                        <img src={image.imageUrl} alt="이미지" />
                                     </S.ImageContainer>
                                 );
                             })}
+                            {contextMenu.visible && (
+                                <ContextMenu
+                                    position={{ x: contextMenu.x, y: contextMenu.y }}
+                                    image={contextMenu.image}
+                                    onClose={() => setContextMenu({ ...contextMenu, visible: false })}
+                                />
+                            )}
                         </S.ImagesContainer>
                     </S.AlbumImages>
                 </S.Container>
@@ -119,9 +198,12 @@ const DetailAlbum = () => {
             {selectedImage && selectedAlbumDetail !== '' ? (
                 <S.ImageDetailContainer>
                     <S.ImageDetail>
-                        {selectedAlbumDetail.imageUrl.find(image => image.imageId === selectedImage) ? (
+                        {selectedAlbumDetail.images.find(image => image.tripRecordImageId === selectedImage) ? (
                             <img
-                                src={selectedAlbumDetail.imageUrl.find(image => image.imageId === selectedImage).url}
+                                src={
+                                    selectedAlbumDetail.images.find(image => image.tripRecordImageId === selectedImage)
+                                        .imageUrl
+                                }
                                 alt="상세 이미지"
                             />
                         ) : null}
@@ -293,6 +375,29 @@ const S = {
             & svg {
                 color: ${({ theme }) => theme.color.main1};
             }
+        }
+    `,
+    ContextMenuWrapper: styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        position: absolute;
+        width: 72px;
+        height: 58px;
+        background-color: ${({ theme }) => theme.color.white};
+        border-radius: 8px;
+        box-shadow: ${({ theme }) => theme.shadow.card};
+        z-index: 100; /* 높은 값으로 설정 */
+    `,
+    AlbumEdit: styled.div`
+        width: auto;
+        height: auto;
+        font-size: ${({ theme }) => theme.fontSize.sub};
+        color: ${({ theme }) => theme.color.black};
+        cursor: pointer;
+        &:hover {
+            color: ${({ theme }) => theme.color.main1};
         }
     `,
 };

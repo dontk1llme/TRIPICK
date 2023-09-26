@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useCountriesData } from './CountryContext';
-import * as hooks from 'hooks'
+import * as hooks from 'hooks';
+import * as api from 'api';
 const krdata = require('./countries.json');
 // countries.json 지도에는 있으나 krdata에 없는 값 추가 완료. 아래는 추가 내용
 // id 1001부터
@@ -9,23 +10,23 @@ const krdata = require('./countries.json');
 // name은 N 해석한 값
 // {"id": , "alpha2": "", "alpha3":"", "name": ""},
 
-
 const CountryList = () => {
     const { countriesCodesArray, setCountriesCodesArray } = useCountriesData();
-    const [countriesNamesArray, setCountriesNamesArray] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchResultInKrData, setIsSearchResultInKrData] = useState(false); // 초기값을 false로 설정
-    const { selectedCountry, setSelectedCountry} = hooks.albumState();
+    const { selectedCountry, setSelectedCountry, currentCountry, setCurrentCountry, setAlbumList } = hooks.albumState();
+    const { memberId } = hooks.loginUserState();
 
     // 필터링된 국가 이름 배열
-    const filteredCountryNames = countriesNamesArray
-    .filter(countryName => countryName.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filteredCountryNames = selectedCountry.filter(countryName =>
+        countryName.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
 
     useEffect(() => {
         // 국가 코드 배열이 변경될 때마다 국가 이름 배열 업데이트
         getCountriesNamesList();
+        setCurrentCountry('');
     }, [countriesCodesArray]);
-
 
     // 국가 코드를 국가 이름으로 변환하는 함수
     const getCountryNameByCode = countryCode => {
@@ -37,24 +38,19 @@ const CountryList = () => {
     // 국가 코드 배열을 국가 이름 배열로 변환하고 정렬 후 상태 업데이트
     const getCountriesNamesList = () => {
         const list = countriesCodesArray.map(code => getCountryNameByCode(code));
-        
+
         // 가나다순으로 정렬
         list.sort((a, b) => a.localeCompare(b));
-        
-        setCountriesNamesArray(list);
+
         setSelectedCountry(list);
     };
-
-    useEffect(() => {
-        console.log('selectedCountry:', selectedCountry);
-    }, [selectedCountry]);
 
     // 검색어 변경 핸들러
     const handleSearchChange = event => {
         const query = event.target.value;
         setSearchQuery(query);
         const lowercaseQuery = query.toLowerCase();
-        
+
         // 검색어와 일치하는 국가를 krdata에서 찾기
         const countryData = krdata.find(data => data.name.toLowerCase() === lowercaseQuery);
 
@@ -84,35 +80,59 @@ const CountryList = () => {
         }
     };
 
+    const handleSelectCountry = countryName => {
+        if (currentCountry === countryName) {
+            setCurrentCountry('');
+        } else {
+            setCurrentCountry(countryName);
+        }
+    };
+
+    useEffect(() => {
+        if (currentCountry) {
+            api.apis
+                .getNationRecord(memberId, currentCountry)
+                .then(response => {
+                    setAlbumList(response.data);
+                    console.log(response.data);
+                })
+                .catch(error => console.log(error));
+        }
+    }, [currentCountry]);
+
+    useEffect(() => {
+        api.apis
+            .getNations(memberId)
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
+    }, []);
+
     return (
         <S.Wrap style={{ width: 264, height: 648 }}>
-                <S.SearchBar
-                    type="text"
-                    placeholder="국가 검색하기"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                    
-                />
-                <div style={{ margin: '10px 0' }}></div> 
-
+            <S.SearchBar type="text" placeholder="국가 검색하기" value={searchQuery} onChange={handleSearchChange} />
+            <div style={{ margin: '10px 0' }}></div>
 
             {/* 검색 결과를 필터링하여 국가 이름 목록을 렌더링 */}
             {filteredCountryNames.map((filteredCountryName, index) => (
-                <div key={index} style={{ marginBottom: '10px' }}>{filteredCountryName}</div>
+                <S.CountryList
+                    key={index}
+                    onClick={() => handleSelectCountry(filteredCountryName)}
+                    selected={filteredCountryName === currentCountry ? 'selected' : 'null'}>
+                    {filteredCountryName}
+                </S.CountryList>
             ))}
 
             {/* 검색 결과가 없는 경우 메시지 출력 또는 검색 결과가 있는데도 검색 결과가 없는 경우 추가 버튼 출력 */}
-            {searchQuery && filteredCountryNames.length === 0 && (
-                !isSearchResultInKrData ? (
+            {searchQuery &&
+                filteredCountryNames.length === 0 &&
+                (!isSearchResultInKrData ? (
                     <div>검색 결과가 없습니다. 국가명을 확인해 주세요.</div>
                 ) : (
                     <div>
                         {searchQuery} 국가를 추가하시겠습니까?
                         <button onClick={handleAddCountry}>추가</button>
                     </div>
-                )
-            )}
-
+                ))}
         </S.Wrap>
     );
 };
@@ -141,9 +161,16 @@ const S = {
         font-size: 16px;
         border: 1px solid #ccc;
         border-radius: 5px;
-
-    
-    `
+    `,
+    CountryList: styled.div`
+        font-size: ${({ theme }) => theme.fontSize.content2};
+        color: ${({ selected, theme }) => (selected === 'selected' ? theme.color.main1 : theme.color.black)};
+        cursor: pointer;
+        margin-bottom: 10px;
+        &:hover {
+            color: ${({ theme }) => theme.color.main2};
+        }
+    `,
 };
 
 export default CountryList;
