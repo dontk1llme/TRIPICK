@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export const loginUserState = create(set => ({
-    id: '',
+    memberId: 2,
     name: '김싸피',
     email: 'traveler@gmail.com',
     profileUrl: require('asset/images/profile.png').default,
@@ -53,9 +53,10 @@ export const albumState = create(set => ({
     albumList: [],
     // albumList: [
     //     {
-    //         albumId: '1',
-    //         albumName: '정말 즐겁습니다',
-    //         imageUrl: [
+    //         tripRecordId: '1',
+    //  nationName: '대한민국',
+    //         content: '정말 즐겁습니다',
+    //         images: [
     //             { imageId: '1', url: require('asset/images/pink-8053329_1280.jpg').default },
     //             { imageId: '2', url: require('asset/images/rainbow-8221835_1280.jpg').default },
     //             { imageId: '3', url: require('asset/images/green-sea-turtle-8199770_1280.jpg').default },

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useCountriesData } from './CountryContext';
 import * as hooks from 'hooks';
+import * as api from 'api';
 const krdata = require('./countries.json');
 // countries.json 지도에는 있으나 krdata에 없는 값 추가 완료. 아래는 추가 내용
 // id 1001부터
@@ -13,7 +14,8 @@ const CountryList = () => {
     const { countriesCodesArray, setCountriesCodesArray } = useCountriesData();
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchResultInKrData, setIsSearchResultInKrData] = useState(false); // 초기값을 false로 설정
-    const { selectedCountry, setSelectedCountry, currentCountry, setCurrentCountry } = hooks.albumState();
+    const { selectedCountry, setSelectedCountry, currentCountry, setCurrentCountry, setAlbumList } = hooks.albumState();
+    const { memberId } = hooks.loginUserState();
 
     // 필터링된 국가 이름 배열
     const filteredCountryNames = selectedCountry.filter(countryName =>
@@ -42,10 +44,6 @@ const CountryList = () => {
 
         setSelectedCountry(list);
     };
-
-    useEffect(() => {
-        console.log('selectedCountry:', selectedCountry);
-    }, [selectedCountry]);
 
     // 검색어 변경 핸들러
     const handleSearchChange = event => {
@@ -89,6 +87,25 @@ const CountryList = () => {
             setCurrentCountry(countryName);
         }
     };
+
+    useEffect(() => {
+        if (currentCountry) {
+            api.apis
+                .getNationRecord(memberId, currentCountry)
+                .then(response => {
+                    setAlbumList(response.data);
+                    console.log(response.data);
+                })
+                .catch(error => console.log(error));
+        }
+    }, [currentCountry]);
+
+    useEffect(() => {
+        api.apis
+            .getNations(memberId)
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
+    }, []);
 
     return (
         <S.Wrap style={{ width: 264, height: 648 }}>
