@@ -8,7 +8,6 @@ import pandas as pd
 import db
 import dummy
 
-
 now = datetime.now()
 # dummy data
 class Recommendation:
@@ -16,48 +15,51 @@ class Recommendation:
         self.data = [...]
 
     def now(self):
-        city_data = db.get_city_data()
-        return dummy.result_dict_now
+        rank_df = db.get_rank_df(now.date())
+        # 가중치 순서: temp, rainy, price, exchange, crime, traveler 
+        w = [1,1,1,1,1,1]
+        result = pd.DataFrame(columns=['city', 'rank'])
+        for index, row in rank_df.iterrows():
+            y = w[0]*row['temp_rank'] +  w[1]*row['rainy_days_rank'] + w[2]*row['price_rank'] 
+            + w[3]*row['exchange_rank'] + w[4]*row['crime_rank'] + w[5]*row['traveler_rank'] 
+            result = result._append({'city': row['city'], 'y': y}, ignore_index=True)
+            result['rank'] = result['y'].rank(ascending=True).astype(int)
+        result_sorted = result.sort_values(by='rank', ascending=True)
+        print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
+        result_dict = {}
+        for i in range(1,6):
+            result_row = result_sorted.loc[result_sorted['rank'] == i, 'city'].iloc[0]
+            print(result_row)
+            result_dict[f'recommendation_{i}'] = db.get_one_city(result_row,now.date())
+        result_dict
+        return result_dict
 
     def set_date(self, start_date: str, end_date: str):
-        recommended_destinations = {'출발 일자':start_date, '도착 일자':end_date}
-        return dummy.result_dict_set_date
-    
-# 도시 컬렉션
-city_all = db.get_city_all()
-# 추천 순위 비교용 데이터 프레임
-df = pd.DataFrame()
-# 도큐먼트 하나씩 조회
-for city in city_all.find():
-    name = city.get('name')
-    country = city.get('country')
-    exchange = city.get('exchange_rate').get(now.date().strftime("%Y-%m-%d"))
-    crime = city.get('crime_rate')
-    climate_dict = next((item for item in city.get('climate') if item['date'] == now.date().strftime("%Y-%m-01")), None)
-    temp = 99999
-    rainy_days = 99999
-    if climate_dict is not None:
-        temp = climate_dict.get('temp_avg') - 21
-        rainy_days = climate_dict.get('rainy_days')
-    price = city.get('price_index').get(now.date().strftime("%Y"))
-    traveler = city.get('traveler').get(now.date().strftime("%Y-%m-01"))
-    city_dict = {
-        'city' : name,
-        'country' : country,
-        'exchange' : exchange,
-        'crime' : crime,
-        'temp' : temp,
-        'rainy_days' : rainy_days,
-        'price' : price,
-        'traveler' : traveler,
-        'total_score' : 0
-    }
-    df = df._append(city_dict, ignore_index=True)
-
-df['temp_Rank'] = df['temp'].rank().astype(int)
-df['crime_rank'] = df['crime'].rank(ascending=True).astype(int)
-print(tabulate(df, headers='keys', tablefmt='psql', showindex=True))
-
-
-
-
+        date_format = "%Y-%m-%d"
+        start_date = datetime.strptime(start_date, date_format)
+        rank_df = db.get_rank_df(start_date)
+        # 가중치 순서: temp, rainy, price, exchange, crime, traveler 
+        total_w = [1,1,1,1,1,1]
+        weather_w = [10,10,1,1,1,1]
+        exchange_w = [1,1,10,10,1,1]
+        traveler_w = [1,1,1,1,10,1]
+        w_list = [total_w,weather_w,exchange_w,traveler_w]
+        rec_list = ['total','weather','exchange','traveler']
+        result_dict = {}
+        for i in range(0,4):
+            w = w_list[i]
+            result = pd.DataFrame(columns=['city', 'rank'])
+            for index, row in rank_df.iterrows():
+                y = w[0]*row['temp_rank'] +  w[1]*row['rainy_days_rank'] + w[2]*row['price_rank'] 
+                + w[3]*row['exchange_rank'] + w[4]*row['crime_rank'] + w[5]*row['traveler_rank'] 
+                result = result._append({'city': row['city'], 'y': y}, ignore_index=True)
+            result['rank'] = result['y'].rank(ascending=True).astype(int)
+            result_sorted = result.sort_values(by='rank', ascending=True)
+            print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
+            inner_dict = {}
+            for j in range(1,4):
+                result_row = result_sorted.loc[result_sorted['rank'] == j, 'city'].iloc[0]
+                print(result_row)
+                inner_dict[f'recommendation_{j}'] = db.get_one_city(result_row,now.date())
+            result_dict[f'recommendation_{rec_list[i]}'] = inner_dict
+        return result_dict
