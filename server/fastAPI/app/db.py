@@ -6,6 +6,8 @@ import pymongo
 import pandas as pd 
 import json
 import warnings
+import math
+from tabulate import tabulate
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
@@ -45,17 +47,20 @@ def get_rank_df(date):
 def get_cities_df(date):
     df = pd.DataFrame()
     for city in cities.find():
+        exchange = 99999
+        temp = 99999
+        rainy_days = 99999
+        price = 99999
+        traveler = 99999
+        crime = 99999
         name = city.get('name')
         country = city.get('country')
         exchange_std = city.get('exchange_rate').get("2023-09-01")
         exchange_now = city.get('exchange_rate').get(date.strftime("%Y-%m-%d"))
-        exchange = 99999
         if exchange_now is not None:
             exchange = exchange_now/exchange_std
         crime = city.get('crime_rate')
         climate_dict = next((item for item in city.get('climate') if item['date'] == date.strftime("%Y-%m-01")), None)
-        temp = 99999
-        rainy_days = 99999
         if climate_dict is not None:
             temp = abs(climate_dict.get('temp_avg') - 21)
             rainy_days = climate_dict.get('rainy_days')
@@ -72,9 +77,11 @@ def get_cities_df(date):
             'traveler' : traveler,
             'total_score' : 0
         }
+        for key, value in city_dict.items():
+            if value is None or isinstance(value, float) and math.isnan(value):
+                city_dict[key] = 99999  
         df = df._append(city_dict, ignore_index=True)
-    df.fillna(99999, inplace=True)
-    # 오름차순 - 기온차, 강우일수, 환율, 물가, 범죄율
+    print(tabulate(df, headers='keys', tablefmt='psql', showindex=True))
     return df
 
 def get_one_city(name, date):
@@ -86,6 +93,7 @@ def get_one_city(name, date):
         exchange = round(exchange, 2)
     price = city.get('price_index').get(date.strftime("%Y"))
     traveler = city.get('traveler').get(date.strftime("%Y-%m-01"))
+    traveler = city.get('image_url')
     climate_dict = next((item for item in city.get('climate') if item['date'] == date.strftime("%Y-%m-01")), None)
     city_dict = {
         'name':name,
