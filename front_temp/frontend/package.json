@@ -24,6 +24,7 @@
         "react-fullpage": "^0.1.19",
         "react-icons": "^4.10.1",
         "react-jvectormap": "^0.0.16",
+        "react-player": "^2.13.0",
         "react-scripts": "5.0.1",
         "react-svg-worldmap": "^2.0.0-alpha.16",
         "styled-components": "^6.0.4",
