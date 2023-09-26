@@ -97,15 +97,18 @@ const LocationPreview = ({ place, type }) => {
         }
     }, [response]);
 
-    const handleDetails = () => {
+    const handleDetails = place => {
+        console.log(place)
         setDetailLocation(place);
         if (detailLocation) {
             setViewDetail(true);
         }
     };
 
+
+
     return (
-        <S.Wrap onClick={() => handleDetails()}>
+        <S.Wrap onClick={() => handleDetails(place)}>
             <S.PreviewImage image={place.image_url}>
                 <S.CountryName>{place.country}</S.CountryName>
                 <S.CityContainer>
@@ -122,8 +125,7 @@ const LocationPreview = ({ place, type }) => {
             <S.PreviewInformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>예상 날씨</S.InformationTitle>
-                    <S.InformationContent>{place.climate && place.climate.temp_avg}도</S.InformationContent> 
-                    {/* 위코드 수정 */}
+                    <S.InformationContent>{place.climate && place.climate.temp_avg}°C</S.InformationContent> 
                 </S.InformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>예상 환율</S.InformationTitle>
