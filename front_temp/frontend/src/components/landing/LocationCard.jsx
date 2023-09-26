@@ -38,7 +38,8 @@ const LocationCard = ({ locationData, navigateToCalendar, handleScrollToNext, ha
                         <BiMoneyWithdraw style={{ color: '#8390FA' }} /> {exchange}/ 원 <br></br>
                     </S.SubTitle1>
                     <S.SubTitle1>
-                        <TiWeatherPartlySunny style={{ color: '#8390FA' }} /> {climate.temp_avg}°C <br></br>
+                        <TiWeatherPartlySunny style={{ color: '#8390FA' }} /> {climate && locationData.climate.temp_avg}
+                        °C <br></br>
                     </S.SubTitle1>
                     <S.SubTitle1>
                         <AiFillSafetyCertificate style={{ color: '#8390FA' }} /> {crime} / 10
@@ -148,7 +149,7 @@ const S = {
         // width: 900px;
         // height: 690px;
         width: 100%; /* 부모 요소인 LeftContainer에 꽉 차도록 설정 */
-        height: 100%;
+        height: 100vh;
         position: absolute; /* absolute 포지션 설정 */
         top: 0;
         left: 0; //toptab으로 못 넘어감. . .
