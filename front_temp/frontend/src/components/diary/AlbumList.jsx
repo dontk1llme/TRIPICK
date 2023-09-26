@@ -8,6 +8,7 @@ import { apis } from 'api';
 
 const AlbumList = () => {
     const { selectedAlbum, setSelectedAlbum, albumList, setAlbumList, currentCountry } = hooks.albumState();
+    const { memberId } = hooks.loginUserState();
     const containerRef = useRef(null);
     const albumNameRef = useRef(null);
     const albumNameRefs = useRef([]);
@@ -18,6 +19,7 @@ const AlbumList = () => {
     const [addAlbumMode, setAddAlbumMode] = useState(false);
     const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
     const [editingAlbumId, setEditingAlbumId] = useState(null);
+    const [editingAlbumName, setEditingAlbumName] = useState('');
 
     const handleSelectedAlbum = albumId => {
         if (selectedAlbum !== albumId) {
@@ -26,6 +28,10 @@ const AlbumList = () => {
             setSelectedAlbum('0');
         }
     };
+
+    useEffect(() => {
+        console.log('selectedAlbum', selectedAlbum);
+    }, [selectedAlbum]);
 
     const animateScroll = (element, targetScroll, duration) => {
         const startScroll = element.scrollLeft;
@@ -67,10 +73,12 @@ const AlbumList = () => {
     };
 
     const handleDeleteAlbum = albumId => {
-        const updatedAlbum = albumList.filter(album => album.albumId !== albumId);
-        if (updatedAlbum) {
-            setAlbumList(updatedAlbum);
-        }
+        api.apis
+            .deleteAlbum(albumId)
+            .then(response => {
+                api.apis.getNationRecord(memberId, currentCountry).then(response => setAlbumList(response.data));
+            })
+            .catch(error => console.log(error));
 
         setContextMenu({ ...contextMenu, visible: false });
     };
@@ -78,26 +86,27 @@ const AlbumList = () => {
     const ContextMenu = ({ position, album, onClose }) => {
         return (
             <S.ContextMenuWrapper style={{ top: position.y, left: position.x }} onClick={e => e.stopPropagation()}>
-                <S.AlbumEdit onClick={() => handleDeleteAlbum(album.albumId)}>삭제</S.AlbumEdit>
+                <S.AlbumEdit onClick={() => handleDeleteAlbum(album.tripRecordId)}>삭제</S.AlbumEdit>
                 <S.Line />
-                <S.AlbumEdit onClick={() => handleEditAlbum(album.albumId)}>수정</S.AlbumEdit>
+                <S.AlbumEdit onClick={() => handleEditAlbum(album.tripRecordId)}>수정</S.AlbumEdit>
             </S.ContextMenuWrapper>
         );
     };
 
-    const handleSaveNewAlbum = () => {
+    const handleSaveNewAlbum = async () => {
         const data = {
-            memberId: 1,
+            memberId: memberId,
             nationName: currentCountry,
             content: albumName,
         };
 
-        api.apis
+        await api.apis
             .createRecord(data)
             .then(response => {
                 console.log(response);
+                console.log(response.data);
                 api.apis
-                    .getNationRecord(1, currentCountry)
+                    .getNationRecord(memberId, currentCountry)
                     .then(response => {
                         setAlbumList(response.data);
                         setAddAlbumMode(false);
@@ -106,17 +115,6 @@ const AlbumList = () => {
                     .catch(error => console.log(error));
             })
             .catch(error => console.log(error));
-        // const updatedAlbumList = [
-        //     ...albumList,
-        //     {
-        //         albumId: (albumList.length + 1).toString(),
-        //         albumName: albumName,
-        //         imageUrl: [],
-        //     },
-        // ];
-        // if (updatedAlbumList) {
-        //     setAlbumList(updatedAlbumList);
-        // }
     };
 
     const handleAlbumNameChange = e => {
@@ -130,16 +128,31 @@ const AlbumList = () => {
     const handleEditKeyDown = (e, albumId) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            handleEditAlbumName(albumId, e.target.value);
+            handleEditAlbumName(albumId);
             setEditingAlbumId(null);
         }
     };
 
-    const handleEditAlbumName = (albumId, newAlbumName) => {
-        const updatedAlbumList = albumList.map(album =>
-            album.albumId === albumId ? { ...album, albumName: newAlbumName } : album,
-        );
-        setAlbumList(updatedAlbumList);
+    const handleEditAlbumName = albumId => {
+        const data = {
+            tripRecordId: editingAlbumId,
+            content: editingAlbumName,
+        };
+        api.apis
+            .editAlbum(data)
+            .then(response => {
+                console.log(response);
+                setEditingAlbumId(null);
+                setEditingAlbumName('');
+                api.apis
+                    .getNationRecord(memberId, currentCountry)
+                    .then(response => {
+                        setAlbumList(response.data);
+                        console.log(response.data);
+                    })
+                    .catch(error => console.log(error));
+            })
+            .catch(error => console.log(error));
     };
 
     const handleEditAlbum = albumId => {
@@ -231,6 +244,12 @@ const AlbumList = () => {
         };
     }, [addAlbumMode]);
 
+    useEffect(() => {
+        if (editingAlbumId) {
+            setEditingAlbumName(albumList.find(album => album.tripRecordId === editingAlbumId).content);
+        }
+    }, [editingAlbumId]);
+
     return (
         <S.Wrap>
             <S.NewAlbumContainer onClick={handleNewAlbum} ref={newAlbumRef}>
@@ -245,18 +264,18 @@ const AlbumList = () => {
                         albumList.map(album => {
                             return (
                                 <S.AlbumPreview
-                                    key={album.albumId}
-                                    selected={album.albumId === selectedAlbum ? 'selected' : null}>
+                                    key={album.tripRecordId}
+                                    selected={album.tripRecordId === selectedAlbum ? 'selected' : null}>
                                     <S.PreviewImg
                                         id="image"
                                         onContextMenu={e => handleRightClick(e, album)}
-                                        onClick={() => handleSelectedAlbum(album.albumId)}>
-                                        {album.imageUrl.length > 0 ? (
-                                            <img src={album.imageUrl[0].url} alt="album preview" />
+                                        onClick={() => handleSelectedAlbum(album.tripRecordId)}>
+                                        {album.images.length > 0 ? (
+                                            <img src={album.images[0].imageUrl} alt="album preview" />
                                         ) : (
                                             <IoFolder />
                                         )}
-                                        {album.albumId === selectedAlbum ? (
+                                        {album.tripRecordId === selectedAlbum ? (
                                             <S.CheckSelectedAlbum>
                                                 <IoCheckmarkCircleOutline />
                                             </S.CheckSelectedAlbum>
@@ -269,14 +288,15 @@ const AlbumList = () => {
                                             onClose={() => setContextMenu({ ...contextMenu, visible: false })}
                                         />
                                     )}
-                                    <S.AlbumName
-                                        ref={el => (albumNameRefs.current[album.albumId] = el)}
-                                        value={album.albumName}
-                                        readOnly={editingAlbumId === album.albumId ? null : 'readOnly'}
-                                        onKeyDown={e => handleEditKeyDown(e, album.albumId)}
-                                        onChange={e =>
-                                            handleEditAlbumName(album.albumId, e.target.value)
-                                        }></S.AlbumName>
+                                    {editingAlbumId === album.tripRecordId ? (
+                                        <S.EditingAlbumName
+                                            ref={el => (albumNameRefs.current[album.tripRecordId] = el)}
+                                            value={editingAlbumName}
+                                            onKeyDown={e => handleEditKeyDown(e, album.tripRecordId)}
+                                            onChange={e => setEditingAlbumName(e.target.value)}></S.EditingAlbumName>
+                                    ) : (
+                                        <S.AlbumName>{album.content}</S.AlbumName>
+                                    )}
                                 </S.AlbumPreview>
                             );
                         })
@@ -408,7 +428,27 @@ const S = {
             }
         }
     `,
-    AlbumName: styled.input`
+    // AlbumName: styled.input`
+    //     border: none;
+    //     outline: none;
+    //     font: inherit;
+    //     font-size: ${({ theme }) => theme.fontSize.content1};
+    //     width: 100%;
+    //     height: auto;
+    //     overflow: hidden;
+    //     white-space: nowrap;
+    //     text-overflow: ellipsis;
+    //     font-size: ${({ theme }) => theme.fontSize.content2};
+    // `,
+    AlbumName: styled.div`
+        font-size: ${({ theme }) => theme.fontSize.content1};
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    `,
+    EditingAlbumName: styled.input`
         border: none;
         outline: none;
         font: inherit;
@@ -417,8 +457,6 @@ const S = {
         height: auto;
         overflow: hidden;
         white-space: nowrap;
-        text-overflow: ellipsis;
-        font-size: ${({ theme }) => theme.fontSize.content2};
     `,
     PreviewImg: styled.div`
         display: flex;
