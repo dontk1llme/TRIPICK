@@ -55,7 +55,6 @@ const WorldMap = () => {
                 data={data} // 업데이트된 data 배열 사용
                 size={445}
                 richInteraction="true"
-                frame
                 styleFunction={getStyle}></MapMap>
         </S.Wrap>
     );
