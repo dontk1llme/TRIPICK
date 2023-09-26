@@ -24,6 +24,11 @@ export const URL = {
         TEST: '/mbti/test',
         RESULT: '/mbti/result',
     },
+
+    COMMON: {
+        LOADING: '/loading',
+        ERROR: '/error',
+    }
 };
 
 export const MAX_WIDTH = '1920px';
