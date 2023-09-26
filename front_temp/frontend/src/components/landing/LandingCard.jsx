@@ -20,7 +20,7 @@ const LandingCard = () => {
     const navigate = useNavigate();
 
     const scrollContainerRef = useRef(null);
-    const [isScrollEnabled, setIsScrollEnabled] = useState(false); 
+    const [isScrollEnabled, setIsScrollEnabled] = useState(false);
 
     const handleScrollToNext = () => {
         if (scrollContainerRef.current) {
@@ -46,10 +46,9 @@ const LandingCard = () => {
     };
 
     return (
-        <S.WholeContainer  ref={scrollContainerRef}
-            style={{ overflowY: isScrollEnabled ? 'scroll' : 'hidden' }}>
-             <S.OpeningContainer>
-                <Opening scrollContainerRef={scrollContainerRef} /> 
+        <S.WholeContainer ref={scrollContainerRef} style={{ overflowY: isScrollEnabled ? 'scroll' : 'hidden' }}>
+            <S.OpeningContainer>
+                <Opening scrollContainerRef={scrollContainerRef} />
             </S.OpeningContainer>
             {landingLocation.map((location, index) => (
                 <LocationCard
@@ -61,7 +60,6 @@ const LandingCard = () => {
                     last={index === landingLocation.length - 1}
                 />
             ))}
-           
         </S.WholeContainer>
     );
 };

@@ -1,13 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
+import moment from 'moment';
 import * as hooks from 'hooks';
 import * as components from 'components';
+import * as api from 'api';
 
 const CityRecommendation = () => {
     const [selectedFilter, setSelectedFilter] = useState(1);
-    const { totalRecommendation, currencyRecommendation, weatherRecommendation, safetyRecommendation } =
+    const { totalRecommendation, currencyRecommendation, weatherRecommendation, safetyRecommendation, 
+        setTotalRecommendation, setCurrencyRecommendation, setWeatherRecommendation, setSafetyRecommendation } =
         hooks.recommendationState();
+
+    // 날짜 받기
+    const { selectedDate } = hooks.dateState();
+    const formatDate = date => {
+        return moment(date).format('YYYY-MM-DD');
+    };
+    const startDate = formatDate(selectedDate[0])
+    const endDate = formatDate(selectedDate[1])
+
+    //추천 데이터 받기
+    useEffect(() => {
+        api.apis
+            .getDateRecommendations(startDate, endDate)
+            .then(response => {
+                console.log(response.data);
+                setTotalRecommendation(Object.values(response.data.recommendation_total));
+                setCurrencyRecommendation(Object.values(response.data.recommendation_exchange));
+                setWeatherRecommendation(Object.values(response.data.recommendation_climate));
+                setSafetyRecommendation(Object.values(response.data.recommendation_crime));
+            })
+            .catch(error => console.log(error));
+    }, []);
+
+
     return (
         <S.Wrap>
             <S.FilterContainer>
