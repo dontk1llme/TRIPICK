@@ -28,6 +28,9 @@ const App = () => {
                                 <Route path={utils.URL.MBTI.MAIN} element={<pages.Mbti />}></Route>
                                 <Route path={utils.URL.MBTI.TEST} element={<pages.MbtiTest />}></Route>
                                 <Route path={utils.URL.MBTI.RESULT} element={<pages.MbtiResult />}></Route>
+
+                                <Route path={utils.URL.COMMON.LOADING} element={<pages.Loading/>}></Route>
+
                                 
                             </Route>
                         </Routes>

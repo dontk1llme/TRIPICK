@@ -21,3 +21,6 @@ export { default as LandingCard } from './landing/LandingCard';
 
 export { default as Calendar } from './recommend/Calendar';
 export { default as CityRecommendation } from './recommend/CityRecommendation';
+
+export {default as LoadingCom} from './common/LoadingCom';
+
