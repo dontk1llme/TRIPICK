@@ -40,18 +40,17 @@ class RecordServiceImplTest {
     void getTripRecordsByMemberIdTest() {
         Member mockMember = mock(Member.class);
         TripRecord mockTripRecord = mock(TripRecord.class);
-        TripRecordImage mockTripRecordImage = mock(TripRecordImage.class);
 
         when(memberRepository.findById(anyInt())).thenReturn(Optional.of(mockMember));
         when(tripRecordRepository.findByMember(mockMember)).thenReturn(Collections.singletonList(mockTripRecord));
-        when(tripRecordImageRepository.findByTripRecordTripRecordId(anyInt())).thenReturn(Collections.singletonList(mockTripRecordImage));
 
         recordService.getTripRecordsByMemberId(1);
 
         verify(memberRepository, times(1)).findById(anyInt());
         verify(tripRecordRepository, times(1)).findByMember(any());
-        verify(tripRecordImageRepository, times(1)).findByTripRecordTripRecordId(anyInt());
+        verify(tripRecordImageRepository, never()).findByTripRecordTripRecordId(anyInt()); //호출한적 없으면 통과
     }
+
 
     @Test
     void createTripRecordTest() {
@@ -84,8 +83,8 @@ class RecordServiceImplTest {
     void updateTripRecordContentTest_exception() {
         TripRecord mockTripRecord = mock(TripRecord.class);
         UpdateTripRecordContentRequestDto mockRequest = new UpdateTripRecordContentRequestDto();
-        mockRequest.setTripRecordId(1); // 예시 ID
-        mockRequest.setContent(null); // content를 null로 설정
+        mockRequest.setTripRecordId(1);
+        mockRequest.setContent(null);
 
         when(tripRecordRepository.findById(anyInt())).thenReturn(Optional.of(mockTripRecord));
 

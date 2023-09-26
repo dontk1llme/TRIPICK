@@ -75,7 +75,10 @@ public class RecordServiceImpl implements RecordService {
                     .collect(Collectors.toList());
 
             return new TripRecordResponseDto(
-                    tripRecord.getNationName()
+                    tripRecord.getTripRecordId(),
+                    tripRecord.getNationName(),
+                    tripRecord.getContent(),
+                    images
             );
         }).collect(Collectors.toList());
     }

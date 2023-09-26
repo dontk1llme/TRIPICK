@@ -17,7 +17,10 @@ spring:
       authentication-database: admin
   config:
     import: env.yml
-
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: ${MARIADB_DATABASE_URL}
