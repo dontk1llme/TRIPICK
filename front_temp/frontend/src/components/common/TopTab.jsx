@@ -10,7 +10,7 @@ const TopTab = () => {
 
     return (
         <S.Wrap>
-            <S.Logo onClick={() => navigate(utils.URL.HOME.MAIN)}>
+            <S.Logo onClick={() => navigate(utils.URL.HOME.LANDING)}>
                 <img src={require('asset/images/logo.png').default} alt="logo" />
             </S.Logo>
             
