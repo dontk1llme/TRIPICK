@@ -8,3 +8,5 @@ export { default as Detail } from './detail/Detail';
 export { default as Mbti } from './mbti/Mbti';
 export { default as MbtiTest } from './mbti/MbtiTest';
 export { default as MbtiResult } from './mbti/MbtiResult';
+export { default as Loading } from './common/Loading';
+export { default as Error } from './common/Error';

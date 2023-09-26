@@ -25,6 +25,7 @@ const Opening = ({ scrollContainerRef })  => {
         src={logo}
         isOpen={isOpen}
       />
+      <S.MBTI isOpen={isOpen} onClick={() => navigate(utils.URL.MBTI.TEST)}> 여행으로 알아보는 MBTI TEST </S.MBTI>
       <S.BoxRight isOpen={isOpen}>
       </S.BoxRight>
     </S.Wrap>
@@ -44,16 +45,37 @@ const S = {
   `,
   Logo: styled.img`
     position: absolute;
-    width: ${(props) => (props.isOpen ? '500px' : '0')}; 
+    width: ${(props) => (props.isOpen ? '500px' : '0')};
     z-index: 1;
     top: 50%;
-    left: 50%;
+    left: ${(props) => (props.isOpen ? '25%' : '50%')}; 
     transform: translate(-50%, -50%);
     opacity: ${(props) => (props.isOpen ? '1' : '0')};
     transition: all 2s ease-in-out;
+  `,
+  MBTI: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 410px;
+    height: 64px;
+    border-radius: 16px;
+    background-color: ${({ theme }) => theme.color.main1};
+    color: ${({ theme }) => theme.color.white};
+    font-size:  ${(props) => (props.isOpen ? '28px' : '0')};;
+    cursor: pointer;
     &:hover {
-      cursor: pointer;
+        background-color: ${({ theme }) => theme.color.main2};
     }
+
+    position: absolute;
+    width: ${(props) => (props.isOpen ? '500px' : '0')}; 
+    z-index: 1;
+    top: 50%;
+    left: ${(props) => (props.isOpen ? '75%' : '50%')};
+    transform: translate(-50%, -50%);
+    opacity: ${(props) => (props.isOpen ? '1' : '0')};
+    transition: all 2s ease-in-out;
   `,
   BoxLeft: styled.div`
     position: absolute;

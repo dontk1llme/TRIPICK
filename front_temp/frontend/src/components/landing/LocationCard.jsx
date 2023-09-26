@@ -11,13 +11,13 @@ import { LiaChevronDownSolid, LiaChevronUpSolid } from 'react-icons/lia';
 import * as hooks from 'hooks';
 
 const LocationCard = ({ locationData, navigateToCalendar, handleScrollToNext, handleScrollToTop, last }) => {
-    const { imageUrl, city, country, estimatedExchangeRate, currency, estimatedClimate, safety } = locationData;
+    const { image_url, name, country, exchange, climate, crime } = locationData;
 
     return (
         <S.LocationContainer>
             <S.LeftContainer>
                 <div>
-                    <S.Image src={imageUrl} alt={city} />
+                    <S.Image src={image_url} alt={name} />
                 </div>
             </S.LeftContainer>
             <S.RightContainer>
@@ -29,20 +29,20 @@ const LocationCard = ({ locationData, navigateToCalendar, handleScrollToNext, ha
                     </S.MoreInformation>
                     <br></br>
                     <p>
-                        <S.Title>{city}</S.Title>
+                        <S.Title>{name}</S.Title>
                         <S.SubTitle1> {country}</S.SubTitle1>
                     </p>
                 </S.ColumnComponent>
                 <S.ColumnComponent>
                     <S.SubTitle1>
-                        <BiMoneyWithdraw style={{ color: '#8390FA' }} /> {estimatedExchangeRate} {currency} / 원{' '}
-                        <br></br>
+                        <BiMoneyWithdraw style={{ color: '#8390FA' }} /> {exchange}/ 원 <br></br>
                     </S.SubTitle1>
                     <S.SubTitle1>
-                        <TiWeatherPartlySunny style={{ color: '#8390FA' }} /> {estimatedClimate}°C <br></br>
+                        <TiWeatherPartlySunny style={{ color: '#8390FA' }} /> {climate && locationData.climate.temp_avg}
+                        °C <br></br>
                     </S.SubTitle1>
                     <S.SubTitle1>
-                        <AiFillSafetyCertificate style={{ color: '#8390FA' }} /> {safety} / 10
+                        <AiFillSafetyCertificate style={{ color: '#8390FA' }} /> {crime} / 10
                     </S.SubTitle1>
                 </S.ColumnComponent>
                 <S.ColumnComponent>
@@ -122,8 +122,9 @@ const S = {
             opacity: 0.8;
         }
     `,
-    Title: styled.span`
+    Title: styled.div`
         font-size: ${({ theme }) => theme.fontSize.title2};
+        margin-bottom: 8px;
     `,
     SubTitle1: styled.span`
         font-size: ${({ theme }) => theme.fontSize.subTitle1};
@@ -148,7 +149,7 @@ const S = {
         // width: 900px;
         // height: 690px;
         width: 100%; /* 부모 요소인 LeftContainer에 꽉 차도록 설정 */
-        height: 100%;
+        height: 100vh;
         position: absolute; /* absolute 포지션 설정 */
         top: 0;
         left: 0; //toptab으로 못 넘어감. . .
