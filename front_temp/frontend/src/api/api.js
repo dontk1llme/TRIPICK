@@ -26,6 +26,7 @@ export const instance = axios.create({
 
 export const apis = {
     getNowRecommendations: () => instance.get('/fastapi/recommendation/now'),
+    getDateRecommendations: (startDate, endDate) => instance.get(`fastapi/recommendation/set-date?startDate=${startDate}&endDate=${endDate}`),
 
     createRecord: data => instance.post('/record/create', data),
     getNationRecord: (memberId, nationName) => instance.get(`/record/${memberId}/nation/${nationName}`),
