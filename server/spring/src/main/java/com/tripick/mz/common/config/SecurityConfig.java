@@ -1,9 +1,9 @@
 package com.tripick.mz.common.config;
 
-import com.tripick.mz.auth.filter.JwtFilter;
+import com.tripick.mz.auth.filter.JwtAuthenticationFilter;
 import com.tripick.mz.auth.handler.OAuth2SuccessHandler;
-import com.tripick.mz.auth.service.OAuthService;
-import com.tripick.mz.auth.service.TokenService;
+import com.tripick.mz.auth.service.KakaoOAuthService;
+import com.tripick.mz.auth.util.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
-    private final OAuthService oAuth2UserService;
-    private final OAuth2SuccessHandler successHandler;
-    private final TokenService tokenService;
+    private final JwtProvider jwtProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,14 +36,10 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login/oauth2/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .oauth2Login()
-                .successHandler(successHandler)
-                .userInfoEndpoint().userService(oAuth2UserService);
+                .antMatchers("/**").permitAll()
+                .anyRequest().authenticated();
 
-        httpSecurity.addFilterBefore(new JwtFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
