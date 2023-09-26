@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import * as components from 'components';
 import * as hooks from 'hooks';
+import * as api from 'api';
 
 const Diary = () => {
-    const { selectedAlbum } = hooks.albumState();
+    const { selectedAlbum, setSelectedCountry } = hooks.albumState();
+    const { memberId } = hooks.loginUserState();
+
+    useEffect(() => {
+        api.apis
+            .getNations(memberId)
+            .then(response => setSelectedCountry(response.data))
+            .catch(error => console.log(error));
+    }, []);
 
     return (
         <S.Wrap>
@@ -13,9 +22,8 @@ const Diary = () => {
                 {/* <components.DetailAlbum /> */}
                 <components.AlbumList />
             </S.AlbumContainer>
-            
-            <components.CountryList /> 
-            
+
+            <components.CountryList />
         </S.Wrap>
     );
 };

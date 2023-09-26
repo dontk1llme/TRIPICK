@@ -28,6 +28,16 @@ export const apis = {
     getNowRecommendations: () => instance.get('/fastapi/recommendation/now'),
     getDateRecommendations: (startDate, endDate) => instance.get(`fastapi/recommendation/set-date?startDate=${startDate}&endDate=${endDate}`),
 
-    createRecord: data => instance.post('/record/create', data),
-    getNationRecord: (memberId, nationName) => instance.get(`/record/${memberId}/nation/${nationName}`),
+    createRecord: data => instance.post('/api/record/create', data),
+    getNationRecord: (memberId, nationName) => instance.get(`/api/record/${memberId}/nation/${nationName}`),
+    getNations: memberId => instance.get(`/api/record/${memberId}`),
+    saveImages: formData =>
+        instance.post(`api/record/saveImage`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }),
+    deleteAlbum: tripRecordId => instance.delete(`/api/record/delete-record/${tripRecordId}`),
+    editAlbum: data => instance.patch(`/api/record/content`, data),
+    deleteImage: tripRecordImageId => instance.delete(`/api/record/delete-record-image/${tripRecordImageId}`),
 };
