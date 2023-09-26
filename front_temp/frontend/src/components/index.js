@@ -23,4 +23,5 @@ export { default as Calendar } from './recommend/Calendar';
 export { default as CityRecommendation } from './recommend/CityRecommendation';
 
 export {default as LoadingCom} from './common/LoadingCom';
+export {default as ErrorCom} from './common/ErrorCom';
 
