@@ -2,24 +2,23 @@ import { create } from 'zustand';
 
 export const loginUserState = create(set => ({
     memberId: 2,
-    name: '김싸피',
-    email: 'traveler@gmail.com',
-    profileUrl: require('asset/images/profile.png').default,
-    date: '2023-09-11',
-    setId: data => set(state => ({ id: data })),
-    setName: data => set(state => ({ name: data })),
+    nickname: '',
+    email: '',
+    profileImage: '',
+    createdAt: '',
+    setMemberId: data => set(state => ({ id: data })),
+    setNickname: data => set(state => ({ nickname: data })),
     setEmail: data => set(state => ({ email: data })),
-    setProfileUrl: data => set(state => ({ profileUrl: data })),
+    setProfileImage: data => set(state => ({ profileImage: data })),
+    setCreatedAt: data => set(state => ({ createdAt: data })),
     setLoginUser: data =>
         set(state => ({
-            id: data.id,
-            name: data.name,
+            memberId: data.memberId,
+            nickname: data.nickname,
             email: data.email,
-            profileUrl: data.profileUrl,
-            date: data.date,
+            profileImage: data.profileImage,
+            createdAt: data.createdAt,
         })),
-    setName: data => set(state => ({ name: data })),
-    setProfileUrl: data => set(state => ({ profileUrl: data })),
 }));
 
 export const detailState = create(set => ({
@@ -51,70 +50,6 @@ export const albumState = create(set => ({
     selectedAlbum: '0',
     selectedImage: { albumId: '0', imageUrl: '' },
     albumList: [],
-    // albumList: [
-    //     {
-    //         tripRecordId: '1',
-    //  nationName: '대한민국',
-    //         content: '정말 즐겁습니다',
-    //         images: [
-    //             { imageId: '1', url: require('asset/images/pink-8053329_1280.jpg').default },
-    //             { imageId: '2', url: require('asset/images/rainbow-8221835_1280.jpg').default },
-    //             { imageId: '3', url: require('asset/images/green-sea-turtle-8199770_1280.jpg').default },
-    //             { imageId: '4', url: require('asset/images/mountain-8207212_1280.jpg').default },
-    //             { imageId: '5', url: require('asset/images/rose-8200460_1280.jpg').default },
-    //             { imageId: '6', url: require('asset/images/squirrel-8219439_1280.jpg').default },
-    //         ],
-    //     },
-    //     {
-    //         albumId: '2',
-    //         albumName: '너무 행복해요',
-    //         imageUrl: [
-    //             { imageId: '1', url: require('asset/images/rose-8200460_1280.jpg').default },
-    //             { imageId: '2', url: require('asset/images/squirrel-8219439_1280.jpg').default },
-    //         ],
-    //     },
-    //     {
-    //         albumId: '3',
-    //         albumName: '짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱짱긴이름',
-    //         imageUrl: [],
-    //     },
-    //     {
-    //         albumId: '4',
-    //         albumName: '정말 즐겁습니다',
-    //         imageUrl: [
-    //             { imageId: '1', url: require('asset/images/pink-8053329_1280.jpg').default },
-    //             { imageId: '2', url: require('asset/images/rainbow-8221835_1280.jpg').default },
-    //             { imageId: '3', url: require('asset/images/green-sea-turtle-8199770_1280.jpg').default },
-    //             { imageId: '4', url: require('asset/images/mountain-8207212_1280.jpg').default },
-    //             { imageId: '5', url: require('asset/images/rose-8200460_1280.jpg').default },
-    //             { imageId: '6', url: require('asset/images/squirrel-8219439_1280.jpg').default },
-    //         ],
-    //     },
-    //     {
-    //         albumId: '5',
-    //         albumName: '정말 즐겁습니다',
-    //         imageUrl: [
-    //             { imageId: '1', url: require('asset/images/pink-8053329_1280.jpg').default },
-    //             { imageId: '2', url: require('asset/images/rainbow-8221835_1280.jpg').default },
-    //             { imageId: '3', url: require('asset/images/green-sea-turtle-8199770_1280.jpg').default },
-    //             { imageId: '4', url: require('asset/images/mountain-8207212_1280.jpg').default },
-    //             { imageId: '5', url: require('asset/images/rose-8200460_1280.jpg').default },
-    //             { imageId: '6', url: require('asset/images/squirrel-8219439_1280.jpg').default },
-    //         ],
-    //     },
-    //     {
-    //         albumId: '6',
-    //         albumName: '정말 즐겁습니다',
-    //         imageUrl: [
-    //             { imageId: '1', url: require('asset/images/pink-8053329_1280.jpg').default },
-    //             { imageId: '2', url: require('asset/images/rainbow-8221835_1280.jpg').default },
-    //             { imageId: '3', url: require('asset/images/green-sea-turtle-8199770_1280.jpg').default },
-    //             { imageId: '4', url: require('asset/images/mountain-8207212_1280.jpg').default },
-    //             { imageId: '5', url: require('asset/images/rose-8200460_1280.jpg').default },
-    //             { imageId: '6', url: require('asset/images/squirrel-8219439_1280.jpg').default },
-    //         ],
-    //     },
-    // ],
     setSelectedAlbum: data => set(state => ({ selectedAlbum: data })),
     setAlbumList: data => set(state => ({ albumList: data })),
     setImageList: data => set(state => ({ imageList: data })),
