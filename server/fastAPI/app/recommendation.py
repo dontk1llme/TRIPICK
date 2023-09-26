@@ -25,13 +25,12 @@ class Recommendation:
             result = result._append({'city': row['city'], 'y': y}, ignore_index=True)
             result['rank'] = result['y'].rank(ascending=True).astype(int)
         result_sorted = result.sort_values(by='rank', ascending=True)
+        result_sorted = result_sorted.head(5)
         print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
         result_dict = {}
-        for i in range(1,6):
-            result_row = result_sorted.loc[result_sorted['rank'] == i, 'city'].iloc[0]
-            print(result_row)
-            result_dict[f'recommendation_{i}'] = db.get_one_city(result_row,now.date())
-        result_dict
+        for i, row in result_sorted.iterrows():
+            city_name = row['city']
+            result_dict[f'recommendation_{i}'] = db.get_one_city(city_name,now.date())
         return result_dict
 
     def set_date(self, start_date: str, end_date: str):
@@ -55,11 +54,12 @@ class Recommendation:
                 result = result._append({'city': row['city'], 'y': y}, ignore_index=True)
             result['rank'] = result['y'].rank(ascending=True).astype(int)
             result_sorted = result.sort_values(by='rank', ascending=True)
-            print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
+            result_sorted = result_sorted.head(3)
+            # print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
             inner_dict = {}
-            for j in range(1,4):
-                result_row = result_sorted.loc[result_sorted['rank'] == j, 'city'].iloc[0]
-                print(result_row)
-                inner_dict[f'recommendation_{j}'] = db.get_one_city(result_row,now.date())
+            for j, row in result_sorted.iterrows():
+                city_name = row['city']
+                inner_dict[f'recommendation_{j}'] = db.get_one_city(city_name,now.date())
+            print(inner_dict)
             result_dict[f'recommendation_{rec_list[i]}'] = inner_dict
         return result_dict
