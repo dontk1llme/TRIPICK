@@ -2,17 +2,45 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import * as hooks from 'hooks';
+import * as api from 'api';
 import { IoPencil } from 'react-icons/io5';
 
 const MyProfile = () => {
-    const { name, email, profileUrl, date, setName, setEmail, setProfileUrl, setLoginUser } = hooks.loginUserState();
+    const {
+        memberId,
+        nickname,
+        email,
+        profileImage,
+        createdAt,
+        setCreatedAt,
+        setNickname,
+        setEmail,
+        setProfileImage,
+        setLoginUser,
+    } = hooks.loginUserState();
     const { mainStampId, stamp } = hooks.stampState();
     const { view, response, setView, setMessage, setResponse, type, setType } = hooks.modalState();
     const [mainStampUrl, setMainStampUrl] = useState('');
     const [onEditMode, setOnEditMode] = useState(false);
+    const [newImageFile, setNewImageFile] = useState(profileImage);
+    const [previewImage, setPreviewImage] = useState(profileImage);
 
     const nameInputRef = useRef(null);
     const wrapRef = useRef(null);
+
+    useEffect(() => {
+        api.apis
+            .getMemberProfile(memberId)
+            .then(response => {
+                console.log('프로필', response.data);
+                console.log('닉네임', response.data.data.nickname);
+                setNickname(response.data.data.nickname);
+                setEmail(response.data.data.email);
+                setCreatedAt(response.data.data.createdAt);
+                setProfileImage(response.data.data.profileImage);
+            })
+            .catch(error => console.log(error));
+    }, [saveProfile, newImageFile, onEditMode, setProfileImage]);
 
     useEffect(() => {
         if (onEditMode) {
@@ -39,14 +67,34 @@ const MyProfile = () => {
     }, [view]);
 
     const saveProfile = () => {
-        if (name.length < 2 || name.length > 10) {
+        if (nickname.length < 2 || nickname.length > 10) {
             setView(true);
             setMessage('닉네임은 두글자 이상 열글자 이하여야 합니다.');
             setType('warning');
             nameInputRef.current.focus();
         } else {
-            const profile = { name, email, profileUrl, date };
-            setLoginUser(profile);
+            // const profile = { nickname, email, profileImage, createdAt };
+            // setLoginUser(profile);
+            const data = {
+                memberId: memberId,
+                nickname: nickname,
+            };
+            api.apis
+                .editMemberNickname(data)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => console.log(error));
+
+            const formData = new FormData();
+            formData.append('files', newImageFile);
+            formData.append('memberId', memberId);
+
+            api.apis
+                .editMemberProfileImage(formData)
+                .then(response => console.log(response))
+                .catch(error => console.log(error));
+
             setOnEditMode(false);
             setView(true);
             setMessage('변경된 프로필이 저장되었습니다. ');
@@ -71,7 +119,12 @@ const MyProfile = () => {
 
     const handleProfileImageUpload = async event => {
         const file = await event.target.files[0];
-        await setProfileUrl(file);
+        if (file) {
+            setNewImageFile(file);
+            const imageUrl = URL.createObjectURL(file);
+            setPreviewImage(imageUrl);
+            setProfileImage(imageUrl);
+        }
     };
 
     // 수정 중일 때 바깥 클릭한 상황
@@ -80,7 +133,7 @@ const MyProfile = () => {
     useEffect(() => {
         const handleOutsideClick = event => {
             if (wrapRef.current && !wrapRef.current.contains(event.target) && onEditMode && type !== 'warning') {
-                console.log(name.length);
+                console.log(nickname.length);
                 event.preventDefault();
                 event.stopPropagation();
                 setView(true);
@@ -134,11 +187,11 @@ const MyProfile = () => {
                     />
                 </svg>
                 <S.ImageOutline>
-                    <img src={profileUrl} alt="profile" />
+                    <img src={profileImage} alt="profile" />
                 </S.ImageOutline>
 
                 {onEditMode ? (
-                    <S.EditProfileImageContainer>
+                    <S.EditProfileImageContainer image={previewImage ? previewImage : null}>
                         <label for="file">
                             <S.EditProfileImage>
                                 <IoPencil />
@@ -158,8 +211,8 @@ const MyProfile = () => {
                     <S.SubTitle>name: </S.SubTitle>
                     <S.InformationContent
                         type="text"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
+                        value={nickname}
+                        onChange={e => setNickname(e.target.value)}
                         readOnly={onEditMode ? null : 'readonly'}
                         edit={onEditMode ? 'edit' : null}
                         ref={nameInputRef}
@@ -177,7 +230,7 @@ const MyProfile = () => {
                 </S.TextContainer>
                 <S.TextContainer>
                     <S.SubTitle>Since: </S.SubTitle>
-                    <S.InformationContent type="text" value={date} readOnly="readonly" />
+                    <S.InformationContent type="text" value={createdAt} readOnly="readonly" />
                 </S.TextContainer>
             </S.InformationContainer>
             <S.EditContainer>
@@ -230,12 +283,17 @@ const S = {
         }
     `,
     EditProfileImageContainer: styled.div`
+        padding: 16px;
         position: absolute;
         width: 182px;
         height: 229px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-image: url(${({ image }) => image});
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
         & > input {
             display: none;
         }
