@@ -7,6 +7,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.tripick.mz.auth.dto.kakao.KakaoAccountDto;
 import com.tripick.mz.auth.dto.kakao.KakaoTokenDto;
 import com.tripick.mz.auth.dto.TokenDto;
+import com.tripick.mz.auth.dto.response.LoginResponseDto;
+import com.tripick.mz.auth.dto.response.MemberResDto;
 import com.tripick.mz.auth.util.JwtProvider;
 import com.tripick.mz.member.entity.Credential;
 import com.tripick.mz.member.entity.Member;
@@ -31,7 +33,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class KakaoOAuthService {
+public class KakaoAuthService {
 
   @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
   private String KAKAO_CLIENT_ID;
@@ -48,6 +50,40 @@ public class KakaoOAuthService {
   private final CredentialRepository credentialRepository;
   private final MemberRepository memberRepository;
 
+  private TokenDto tokenDto;
+
+  @Transactional
+  public LoginResponseDto kakaoLogin(String code) {
+    KakaoTokenDto kakaoTokenDto = getKakaoAccessToken(code);
+    Member member = getKakaoUserInfo(kakaoTokenDto);
+    Member existMember = memberRepository.findById(member.getMemberId()).orElse(null);
+
+    if(existMember == null) {
+      log.info("존재하지 않는 회원정보입니다. 새로 저장합니다.");
+      memberRepository.save(member);
+    }
+
+    log.info("[login] 계정 확인 완료" + member.getNickname() + "로그인 성공!");
+    log.info("grantType = {}", tokenDto.getGrantType());
+    log.info("accessToken = {}", tokenDto.getAccessToken());
+    log.info("refreshToken = {}", tokenDto.getRefreshToken());
+
+    return LoginResponseDto.builder()
+            .tokenDto(tokenDto)
+            .memberResDto(MemberResDto.builder()
+                    .memberId(member.getMemberId())
+                    .email(member.getCredential().getEmail())
+                    .profileImage(member.getProfileImage())
+                    .nickname(member.getNickname())
+                    .role(member.getCredential().getRole())
+                    .memberBadgeList(member.getMemberBadgeList())
+                    .mainBadge(member.getMainBadge())
+                    .createdAt(member.getCreatedAt())
+                    .updatedAt(member.getUpdatedAt())
+                    .build())
+            .build();
+  }
+
   @Transactional
   public KakaoTokenDto getKakaoAccessToken(String code) {
 
@@ -63,9 +99,9 @@ public class KakaoOAuthService {
 
     HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
 
-    RestTemplate rt = new RestTemplate();
+    RestTemplate restTemplatet = new RestTemplate();
     log.info("token-uri = {}", KAKAO_TOKEN_URI);
-    ResponseEntity<String> accessTokenResponse = rt.exchange(
+    ResponseEntity<String> accessTokenResponse = restTemplatet.exchange(
         KAKAO_TOKEN_URI,
         HttpMethod.POST,
         kakaoTokenRequest,
@@ -87,15 +123,15 @@ public class KakaoOAuthService {
   }
 
   @Transactional
-  public Member getKakaoInfo(KakaoTokenDto kakaoTokenDto) {
-    RestTemplate rt = new RestTemplate();
+  public Member getKakaoUserInfo(KakaoTokenDto kakaoTokenDto) {
+    RestTemplate restTemplate = new RestTemplate();
 
     HttpHeaders headers = new HttpHeaders();
     headers.add("Authorization", "Bearer " + kakaoTokenDto.getAccess_token());
 
     HttpEntity<MultiValueMap<String, String>> accountInfoRequest = new HttpEntity<>(headers);
 
-    ResponseEntity<String> accountInfoResponse = rt.exchange(
+    ResponseEntity<String> accountInfoResponse = restTemplate.exchange(
         KAKAO_USER_INFO_URI,
         HttpMethod.POST,
         accountInfoRequest,
@@ -119,18 +155,18 @@ public class KakaoOAuthService {
     String email = (String) kakaoAccount.get("email");
     String nickname = (String) kakaoProfile.get("nickname");
 
+    tokenDto = jwtProvider.generateTokenDto(email);
     Credential credential = credentialRepository.findByEmail(email).orElse(null);
-    String refreshToken = jwtProvider.generateTokenDto(email).getRefreshToken();
 
     if(credential != null) {
-      credential.updateRefreshToken(refreshToken);
       log.info("이미 존재하는 email입니다. 바로 유저 정보를 반환합니다.");
+      credential.updateRefreshToken(tokenDto.getRefreshToken());
       return memberRepository.findByCredential(credential).orElse(null);
     }
 
     credential = Credential.builder()
         .email(email)
-        .refreshToken(refreshToken)
+        .refreshToken(tokenDto.getRefreshToken())
         .credentialId(UUID.randomUUID().toString())
         .role(Role.USER)
         .providerType("kakao")
@@ -143,33 +179,5 @@ public class KakaoOAuthService {
         .nickname(nickname)
         .profileImage("")
         .build();
-  }
-
-  @Transactional
-  public TokenDto kakaoLogin(KakaoTokenDto kakaoTokenDto) {
-    Member member = getKakaoInfo(kakaoTokenDto);
-    Credential credential = member.getCredential();
-
-    Member existMember = memberRepository.findById(member.getMemberId()).orElse(null);
-
-    if(existMember == null) {
-      log.info("존재하지 않는 회원정보입니다. 새로 저장합니다.");
-      memberRepository.save(member);
-    }
-
-    log.info("[login] 계정 확인 완료" + member);
-
-    TokenDto tokenDto = jwtProvider.generateTokenDto(credential.getEmail());
-
-    credential.updateRefreshToken(tokenDto.getRefreshToken());
-
-    return tokenDto;
-  }
-
-  public HttpHeaders setTokenHeaders(TokenDto tokenDto) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.add("Authorization", tokenDto.getAccessToken());
-
-    return headers;
   }
 }

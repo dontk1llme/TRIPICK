@@ -8,5 +8,7 @@ public interface CredentialRepository extends JpaRepository<Credential, Long> {
 
   Optional<Credential> findByEmail(String email);
 
+  Optional<Credential> findByCredentialId(String credentialId);
+
   Optional<Credential> findByEmailAndRefreshToken(String email, String refreshToken);
 }

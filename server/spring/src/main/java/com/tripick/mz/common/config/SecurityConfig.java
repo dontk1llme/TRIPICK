@@ -1,13 +1,14 @@
 package com.tripick.mz.common.config;
 
 import com.tripick.mz.auth.filter.JwtAuthenticationFilter;
-import com.tripick.mz.auth.handler.OAuth2SuccessHandler;
-import com.tripick.mz.auth.service.KakaoOAuthService;
+import com.tripick.mz.auth.handler.CustomAccessDeniedHandler;
+import com.tripick.mz.auth.handler.CustomAuthenticationEntryPoint;
 import com.tripick.mz.auth.util.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,7 +22,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
-    private final JwtProvider jwtProvider;
+
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -33,13 +37,32 @@ public class SecurityConfig {
         httpSecurity
                 .httpBasic().disable()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .formLogin().disable()
+                .headers()
+                .frameOptions()
+                .sameOrigin()
                 .and()
+                .cors();
+
+        httpSecurity
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        httpSecurity
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers("/auth/login/**", "/").permitAll()
+                .antMatchers("/login/**").permitAll()
                 .anyRequest().authenticated();
 
-        httpSecurity.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity
+                .exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .accessDeniedHandler(customAccessDeniedHandler);
+
+        httpSecurity
+                .addFilterBefore(jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
