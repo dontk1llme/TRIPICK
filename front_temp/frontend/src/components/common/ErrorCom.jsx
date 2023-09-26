@@ -14,7 +14,7 @@ const ErrorCom = () => {
         <br></br>
         <br></br>
         <br></br>
-        <S.Title>404 Error</S.Title>
+        <S.Title>Error</S.Title>
         <br></br>
         <S.Title2>페이지를 찾을 수 없습니다.</S.Title2>
         <br></br>
