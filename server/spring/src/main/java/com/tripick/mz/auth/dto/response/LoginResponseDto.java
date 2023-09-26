@@ -1,10 +1,22 @@
 package com.tripick.mz.auth.dto.response;
 
+import com.tripick.mz.auth.dto.TokenDto;
+import com.tripick.mz.member.entity.Badge;
 import com.tripick.mz.member.entity.Member;
-import lombok.Data;
+import com.tripick.mz.member.entity.MemberBadge;
+import com.tripick.mz.member.entity.Role;
+import lombok.*;
+import org.springframework.security.core.token.Token;
 
-@Data
+import java.time.LocalDateTime;
+import java.util.List;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class LoginResponseDto {
-  public boolean loginSuccess;
-  public Member account;
+  private TokenDto tokenDto;
+  private MemberResDto memberResDto;
 }

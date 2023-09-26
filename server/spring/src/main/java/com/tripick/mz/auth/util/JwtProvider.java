@@ -2,6 +2,9 @@ package com.tripick.mz.auth.util;
 
 import com.tripick.mz.auth.dto.TokenDto;
 import com.tripick.mz.auth.dto.UserDto;
+import com.tripick.mz.auth.exception.ExpiredTokenException;
+import com.tripick.mz.auth.exception.UnAuthorizedAccessException;
+import com.tripick.mz.auth.exception.WrongTokenException;
 import com.tripick.mz.member.entity.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -31,15 +34,15 @@ import org.springframework.stereotype.Component;
 public class JwtProvider {
 
   private final Key key;
-  private static final String AUTHORITIES_KEY = "auth";
+  private final String AUTHORITIES_KEY = "auth";
   @Value("${jwt.bearer.type}")
-  private static String BEARER_TYPE;
+  private String BEARER_TYPE;
   @Value("${jwt.bearer.prefix}")
-  private static String BEARER_PREFIX;
+  private String BEARER_PREFIX;
   @Value("${jwt.access-token-expire-time}")
-  private static long ACCESS_TOKEN_EXPIRE_TIME;
+  private long ACCESS_TOKEN_EXPIRE_TIME;
   @Value("${jwt.refresh-token-expire-time}")
-  private static long REFRESH_TOKEN_EXPIRE_TIME;
+  private long REFRESH_TOKEN_EXPIRE_TIME;
 
 
   public JwtProvider(@Value("${jwt.secret}") String secretKey) {
@@ -65,7 +68,7 @@ public class JwtProvider {
 
     return TokenDto.builder()
         .grantType(BEARER_TYPE)
-        .accessToken(accessToken)
+        .accessToken(BEARER_PREFIX + accessToken)
         .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
         .refreshToken(refreshToken)
         .build();
@@ -104,13 +107,13 @@ public class JwtProvider {
 
       return true;
     } catch (SecurityException | MalformedJwtException e) {
-      log.error("에러");
+      throw new WrongTokenException("잘못된 토큰입니다.");
     } catch (ExpiredJwtException e) {
-      log.error("만료된 토큰입니다.");
+      throw new ExpiredTokenException("만료된 토큰입니다.");
     } catch (UnsupportedJwtException e) {
-      log.error("지원되지 않는 어쩌구");
+      throw new WrongTokenException("잘못된 토큰입니다.");
     } catch (IllegalArgumentException e) {
-      log.error("에러납니다");
+      log.error("잘못된 Argument를 입력했습니다.");
     }
     return false;
   }

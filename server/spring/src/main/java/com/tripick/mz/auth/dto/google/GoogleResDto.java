@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class GoogleResponse {
+public class GoogleResDto {
   private String access_token;
   private String expires_in;
   private String refresh_token;
