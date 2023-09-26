@@ -1,12 +1,15 @@
 package com.tripick.mz.auth.service;
 
-import com.tripick.mz.auth.dto.OAuth2Attribute;
-import com.tripick.mz.member.entity.Credential;
-import com.tripick.mz.member.entity.Member;
-import com.tripick.mz.member.repository.CredentialRepository;
-import com.tripick.mz.member.repository.MemberRepository;
+
+import com.tripick.mz.auth.dto.google.GoogleInfoResponse;
+import com.tripick.mz.auth.dto.google.GoogleRequest;
+import com.tripick.mz.auth.dto.google.GoogleResponse;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -18,49 +21,49 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-  private final MemberRepository memberRepository;
-  private final CredentialRepository credentialRepository;
+public class OAuthService {
 
-  @Override
+  @Value("${spring.security.oauth2.client.registration.google.client-id}")
+  private String CLIENT_ID;
+  @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+  private String CLIENT_SECRET;
+
   @Transactional
-  public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+  @RequestMapping(value="/api/v1/oauth2/google", method = RequestMethod.GET)
+  public String getGoogleInfo(@RequestParam(value = "code") String authCode) {
 
-    OAuth2UserService oAuth2UserService = new DefaultOAuth2UserService();
-    OAuth2User oAuth2User = oAuth2UserService.loadUser(userRequest);
+    RestTemplate restTemplate = new RestTemplate();
 
-    String registrationId = userRequest.getClientRegistration().getRegistrationId();
-    String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-            .getUserInfoEndpoint().getUserNameAttributeName();
+    GoogleRequest googleOAuthRequestParam = GoogleRequest.builder()
+        .clientId(CLIENT_ID)
+        .clientSecret(CLIENT_SECRET)
+        .code(authCode)
+        .redirectUri("http://localhost:8080/login/oauth/code/googel")
+        .grantType("authorization_code").build();
 
-    log.info("registrationId = {}", registrationId);
-    log.info("userNameAttributeName = {}", userNameAttributeName);
+    ResponseEntity<GoogleResponse> response = restTemplate.postForEntity("https://oauth2.googleapis.com/token",
+         googleOAuthRequestParam, GoogleResponse.class);
 
-    OAuth2Attribute attribute =
-            OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+    String jwtToken = response.getBody().getId_token();
 
-    Member member = saveOrUpdate(attribute);
+    Map<String, String> map = new HashMap<>();
 
-    return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(member.getCredential().getRoleKey())),
-            attribute.getAttributes(), attribute.getNameAttributeKey());
+    map.put("id_token", jwtToken);
+
+    ResponseEntity<GoogleInfoResponse> infoResponse = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
+        map, GoogleInfoResponse.class);
+
+    String email = infoResponse.getBody().getEmail();
+    log.info("이메일 {}", email);
+
+    return email;
   }
-
-  private Member saveOrUpdate(OAuth2Attribute attribute) {
-    Credential credential = credentialRepository.findByEmail(attribute.getEmail())
-            .orElse(attribute.toCredentialEntity());
-
-    log.info("credentialId = {}", credential.getCredentialId());
-    credentialRepository.save(credential);
-
-    Member member = memberRepository.findByCredential(credential)
-            .orElse(attribute.toMemberEntity(credential));
-
-    return memberRepository.save(member);
-  }
-
-
 }
