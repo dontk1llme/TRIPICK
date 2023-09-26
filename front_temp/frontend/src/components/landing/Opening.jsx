@@ -5,6 +5,9 @@ import logo from '../../asset/images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 
+import ReactPlayer from 'react-player';
+
+
 const Opening = ({ scrollContainerRef })  => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -16,11 +19,29 @@ const Opening = ({ scrollContainerRef })  => {
     }
   };
 
+  // const youtubeVideoUrl = 'https://www.youtube.com/watch?v=bGs4zSqJvYI'
+
   return (
     <S.Wrap onClick={handleClick}>
+        <ReactPlayer url='/video/aurora.mp4'
+        playing={true} // 자동 재생
+        muted={true}  // 소리 끄기
+        width="120vw"
+        height="100vh"
+        ></ReactPlayer>
+       {/* <S.Video muted autoPlay loop>
+
+      </S.Video> */}
+       {/* <ReactPlayer
+          url={youtubeVideoUrl}
+          playing={true} // 자동 재생
+          muted={true}  // 소리 끄기
+          width="100vw"
+          height="100vh"
+        /> */}
+
       <S.BoxLeft isOpen={isOpen}>
       </S.BoxLeft>
-      <S.Image src={img1} />
       <S.Logo
         src={logo}
         isOpen={isOpen}
@@ -43,6 +64,10 @@ const S = {
     width: 100%;
     height: 100%;
   `,
+  Video: styled.video`
+    width: 100%;
+    height: 100%;
+  `,
   Logo: styled.img`
     position: absolute;
     width: ${(props) => (props.isOpen ? '500px' : '0')};
@@ -51,7 +76,7 @@ const S = {
     left: ${(props) => (props.isOpen ? '25%' : '50%')}; 
     transform: translate(-50%, -50%);
     opacity: ${(props) => (props.isOpen ? '1' : '0')};
-    transition: all 2s ease-in-out;
+    transition: all 2.5s ease-in-out;
   `,
   MBTI: styled.div`
     display: flex;
@@ -75,7 +100,7 @@ const S = {
     left: ${(props) => (props.isOpen ? '75%' : '50%')};
     transform: translate(-50%, -50%);
     opacity: ${(props) => (props.isOpen ? '1' : '0')};
-    transition: all 2s ease-in-out;
+    transition: all 2.5s ease-in-out;
   `,
   BoxLeft: styled.div`
     position: absolute;
