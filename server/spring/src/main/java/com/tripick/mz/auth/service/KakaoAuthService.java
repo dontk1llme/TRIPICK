@@ -45,6 +45,8 @@ public class KakaoAuthService {
   private String KAKAO_TOKEN_URI;
   @Value("${spring.security.oauth2.client.provider.kakao.user-info-uri}")
   private String KAKAO_USER_INFO_URI;
+  @Value("${spring.security.oauth2.client.registration.kakao.authorization-grant-type}")
+  private String KAKAO_GRANT_TYPE;
 
   private final JwtProvider jwtProvider;
   private final CredentialRepository credentialRepository;
@@ -91,7 +93,7 @@ public class KakaoAuthService {
     headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    params.add("grant_type", "authorization_code");
+    params.add("grant_type", KAKAO_GRANT_TYPE);
     params.add("client_id", KAKAO_CLIENT_ID);
     params.add("redirect_uri", KAKAO_REDIRECT_URI);
     params.add("code", code);
