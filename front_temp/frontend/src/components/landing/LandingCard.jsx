@@ -47,8 +47,8 @@ const LandingCard = () => {
 
     return (
         <S.WholeContainer ref={scrollContainerRef} style={{ overflowY: isScrollEnabled ? 'scroll' : 'hidden' }}>
-            <S.OpeningContainer>
-                <Opening scrollContainerRef={scrollContainerRef} />
+            <S.OpeningContainer >
+                <Opening scrollContainerRef={scrollContainerRef} handleScrollToNext={handleScrollToNext} />
             </S.OpeningContainer>
             {landingLocation.map((location, index) => (
                 <LocationCard
