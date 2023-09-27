@@ -50,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
         List<BadgeResponseDto> badgeResponses = memberBadges.stream()
                 .map(memberBadge -> {
                     Badge badge = memberBadge.getBadge();
-                    return new BadgeResponseDto(badge.getBadgeId(),memberBadge.isAchieved()
+                    return new BadgeResponseDto(badge.getBadgeId(), memberBadge.isAchieved(),badge.getName(),badge.getDetail(),badge.getImage()
                     );
                 })
                 .collect(Collectors.toList());
@@ -81,7 +81,7 @@ public class MemberServiceImpl implements MemberService {
         List<BadgeResponseDto> badgeResponses = memberBadges.stream()
                 .map(memberBadge -> {
                     Badge badge = memberBadge.getBadge();
-                    return new BadgeResponseDto(badge.getBadgeId(), memberBadge.isAchieved());
+                    return new BadgeResponseDto(badge.getBadgeId(), memberBadge.isAchieved(),badge.getName(),badge.getDetail(),badge.getImage());
                 })
                 .collect(Collectors.toList());
 
