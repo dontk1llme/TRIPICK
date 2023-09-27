@@ -38,5 +38,3 @@ out/
 
 ### 설정파일 ###
 src/main/resources/env.yml
-*oauth.yml
-*jwt.yml
