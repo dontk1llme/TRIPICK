@@ -28,20 +28,7 @@ const LoginModal = ({ setModalOpen }) => {
     const handleGoogleClick = useGoogleLogin({
         onSuccess: codeResponse => console.log(codeResponse),
         flow: 'auth-code',
-        
     });
-
-    useEffect(()=>{
-        
-        if (codeResponse){
-            
-            api.apis.createGoogleLoginRequest(codeResponse).then(response => {
-                console.log(response);
-            })
-            .catch(error => console.error(error));
-        }
-    }, [codeResponse])
-
 
     return (
         <S.modalWrapper>
