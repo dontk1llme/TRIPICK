@@ -1,117 +1,126 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
-import SignKaKao from '../../asset/images/SignKaKao.png'
-import SignGoogle from '../../asset/images/SignGoogle.png'
-import { useGoogleLogin } from '@react-oauth/google'
-import Coala from '../../asset/images/coala.png'
+import SignKaKao from '../../asset/images/SignKaKao.png';
+import SignGoogle from '../../asset/images/SignGoogle.png';
+import { useGoogleLogin } from '@react-oauth/google';
+import Coala from '../../asset/images/coala.png';
+
+import * as api from 'api';
 
 const LoginModal = ({ setModalOpen }) => {
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+    const closeModal = () => {
+        setModalOpen(false);
+    };
 
-  ///////////// kakao ////////////////
-  const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY //REST API KEY
-  const redirect_uri = 'http://localhost:3000/auth' //Redirect URI
-  // oauth 요청 URL
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
+    ///////////// kakao ////////////////
+    const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY; //REST API KEY
+    const redirect_uri = 'http://localhost:3000/auth'; //Redirect URI
+    // oauth 요청 URL
+    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
-  const handleKakaoClick = () => {
-    console.log("카카오 클릭"); 
-    window.location.href = kakaoURL
-  };
-  //back에 전달할 인가코드
-  const code = new URL(window.location.href).searchParams.get("code");
+    const handleKakaoClick = async () => {
+        console.log('카카오 클릭');
+        window.location.href = kakaoURL;
+    };
 
+    ///////////// google ////////////////
+    const handleGoogleClick = useGoogleLogin({
+        onSuccess: codeResponse => console.log(codeResponse),
+        flow: 'auth-code',
+    });
 
-  ///////////// google ////////////////
-  const handleGoogleClick = useGoogleLogin({
-    onSuccess: (codeResponse) => console.log(codeResponse),
-    flow: 'auth-code',
-  })
+    return (
+        <S.modalWrapper>
+            <S.modalOverlay onClick={closeModal} />
+            <S.modalContent>
+                <IoClose
+                    style={{ position: 'absolute', right: '15px', top: '15px', cursor: 'pointer', fontSize: '24px' }}
+                    onClick={closeModal}></IoClose>
+                <img src={Coala} style={{ width: '50px', height: '50px' }} alt="Coala"></img>
 
-  return (
-    <S.modalWrapper>
-      <S.modalOverlay onClick={closeModal} />
-      <S.modalContent>
-        <IoClose style={{ position: 'absolute', right: '15px', top: '15px', cursor: 'pointer',  fontSize: '24px' }} onClick={closeModal}></IoClose>
-        <img src={Coala} style={{ width: '50px', height: '50px' }} alt="Coala"></img> 
+                <S.textContainer>
+                    <br />
+                    <p style={{ fontSize: '24px', fontWeight: 'bold' }}>로그인해서</p>
+                    <p style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                        <span style={{ color: '#8390FA', fontSize: '24px', fontWeight: 'bold' }}>트리픽</span>과 함께
+                        떠나 봐요.
+                    </p>
+                </S.textContainer>
 
-        <S.textContainer>
-          <br />
-          <p style={{ fontSize: '24px', fontWeight: 'bold' }}>로그인해서</p>
-          <p style={{ fontSize: '24px', fontWeight: 'bold' }}><span style={{ color: '#8390FA', fontSize: '24px', fontWeight: 'bold' }}>트리픽</span>과 함께 떠나 봐요.</p>
-        </S.textContainer>
-
-        <S.buttonContainer>
-          <S.googleButton onClick={handleGoogleClick}><img src={SignGoogle} alt="Sign with Google" style={{ width: '280px', height: '46px' }} /></S.googleButton>
-          <S.kakaoButton onClick={handleKakaoClick}> <img src={SignKaKao} alt="Sign with Kakao" style={{ width: '280px', height: '46px' }} /></S.kakaoButton>
-        </S.buttonContainer>
-      </S.modalContent>
-    </S.modalWrapper>
-  );  
+                <S.buttonContainer>
+                    <S.googleButton onClick={handleGoogleClick}>
+                        <img src={SignGoogle} alt="Sign with Google" style={{ width: '280px', height: '46px' }} />
+                    </S.googleButton>
+                    <S.kakaoButton onClick={handleKakaoClick}>
+                        {' '}
+                        <img src={SignKaKao} alt="Sign with Kakao" style={{ width: '280px', height: '46px' }} />
+                    </S.kakaoButton>
+                </S.buttonContainer>
+            </S.modalContent>
+        </S.modalWrapper>
+    );
 };
 
 const S = {
-  modalWrapper: styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-  `,
-  modalOverlay: styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* 어두운 오버레이 스타일 */
-  `,
-  modalContent: styled.div`
-    width: 400px;
-    height: 560px;
-    background-color: #fafafa;
-    border-radius: 30px;
-    box-shadow: ${({ theme }) => theme.shadow.card};
-    padding: 30px;
-    position: relative;
-  `,
-  buttonContainer: styled.div`
-    position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  `,
-  kakaoButton: styled.button`
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-  `,
-  googleButton: styled.button`
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-  `,
-  textContainer: styled.div`
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  `,
+    modalWrapper: styled.div`
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+    `,
+    modalOverlay: styled.div`
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* 어두운 오버레이 스타일 */
+    `,
+    modalContent: styled.div`
+        width: 400px;
+        height: 560px;
+        background-color: #fafafa;
+        border-radius: 30px;
+        box-shadow: ${({ theme }) => theme.shadow.card};
+        padding: 30px;
+        position: relative;
+    `,
+    buttonContainer: styled.div`
+        position: absolute;
+        bottom: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    `,
+    kakaoButton: styled.button`
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    `,
+    googleButton: styled.button`
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    `,
+    textContainer: styled.div`
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    `,
 };
 
 export default LoginModal;
