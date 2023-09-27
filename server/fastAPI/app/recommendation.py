@@ -25,13 +25,15 @@ class Recommendation:
             result = result._append({'city': row['city'], 'y': y}, ignore_index=True)
             result['rank'] = result['y'].rank(ascending=True).astype(int)
         result_sorted = result.sort_values(by='rank', ascending=True)
-        print(result_sorted)
+        # print(result_sorted)
         result_sorted = result_sorted.head(5)
-        print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
+        # print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
         result_dict = {}
+        idx = 1
         for i, row in result_sorted.iterrows():
             city_name = row['city']
-            result_dict[f'recommendation_{i}'] = db.get_one_city(city_name,now.date())
+            result_dict[f'recommendation_{idx}'] = db.get_one_city(city_name,now.date())
+            idx+=1
         return result_dict
 
     def set_date(self, start_date: str, end_date: str):
@@ -58,8 +60,13 @@ class Recommendation:
             result_sorted = result_sorted.head(3)
             # print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
             inner_dict = {}
+            idx = 1;
             for j, row in result_sorted.iterrows():
                 city_name = row['city']
-                inner_dict[f'recommendation_{j}'] = db.get_one_city(city_name,start_date)
+                city_data = db.get_one_city(city_name,start_date)
+                inner_dict[f'recommendation_{idx}'] = city_data
+                idx += 1
+            # print('\n')
+            # print(inner_dict)
             result_dict[f'recommendation_{rec_list[i]}'] = inner_dict
         return result_dict

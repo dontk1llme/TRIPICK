@@ -8,6 +8,7 @@ import json
 import warnings
 import math
 from tabulate import tabulate
+from datetime import datetime
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
@@ -81,7 +82,7 @@ def get_cities_df(date):
             if value is None or isinstance(value, float) and math.isnan(value):
                 city_dict[key] = 99999  
         df = df._append(city_dict, ignore_index=True)
-    print(tabulate(df, headers='keys', tablefmt='psql', showindex=True))
+    # print(tabulate(df, headers='keys', tablefmt='psql', showindex=True))
     return df
 
 def get_one_city(name, date):
@@ -93,17 +94,24 @@ def get_one_city(name, date):
         exchange = round(exchange, 2)
     price = city.get('price_index').get(date.strftime("%Y"))
     traveler = city.get('traveler').get(date.strftime("%Y-%m-01"))
-    traveler = city.get('image_url')
+    image_url = city.get('image_url')
     climate_dict = next((item for item in city.get('climate') if item['date'] == date.strftime("%Y-%m-01")), None)
+    print('\n')
+    print(climate_dict)
     city_dict = {
         'name':name,
         'country':country,
         'traveler': traveler,
-        'exchange': exchange,
+        'price' : price,
         'crime' : crime,
-        'flight' : '245,000',
-        'climate' : climate_dict,
-        'image_url' : 'https://tripickbucket.s3.ap-northeast-2.amazonaws.com/Tripick/countries/taipei.jpg'
+        'exchange': exchange,
+        'climate' : {
+              'month':  datetime.strptime(climate_dict['date'], "%Y-%m-%d").strftime("%Y-%m"), 
+              'temp_avg': climate_dict['temp_avg'], 
+              'temp_max': climate_dict['temp_max'], 
+              'temp_min': climate_dict['temp_min']
+              },
+        'image_url' : image_url
     }
     # 오름차순 - 기온차, 강우일수, 환율, 물가, 범죄율
     return city_dict
