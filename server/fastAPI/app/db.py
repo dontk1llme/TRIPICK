@@ -33,6 +33,7 @@ def get_city_data():
 
 def get_rank_df(date):
     df = get_cities_df(date)
+    # 오름차순 - 기온 절대값, 범죄율, 환율, 가격, 강우일수 
     df['temp_rank'] = df['temp'].rank(ascending=True).astype(int)
     df['crime_rank'] = df['crime'].rank(ascending=True).astype(int)
     df['exchange_rank'] = df['exchange'].rank(ascending=True).astype(int)
@@ -40,8 +41,6 @@ def get_rank_df(date):
     df['rainy_days_rank'] = df['rainy_days'].rank(ascending=True).astype(int)
     # 내림차순 - 여행객 동향
     df['traveler_rank'] = df['traveler'].rank(ascending=False).astype(int)
-    # df1 = df[['city','country','crime','crime_rank','temp','temp_Rank','rainy_days','rainy_days_Rank']]
-    # df2 = df[['city','country','exchange','exchange_rank','price','price_rank']]
     rank_df =  df[['city','country','temp_rank','rainy_days_rank','crime_rank','exchange_rank','price_rank','traveler_rank']]
     print(tabulate(rank_df, headers='keys', tablefmt='psql', showindex=True))
     return rank_df
@@ -59,6 +58,10 @@ def get_cities_df(date):
         country = city.get('country')
         exchange_std = city.get('exchange_rate').get("2023-09-01")
         exchange_now = city.get('exchange_rate').get(date.strftime("%Y-%m-%d"))
+        if exchange_now > exchange_std:
+            exchange_trends = '강세'
+        else:
+            exchange_trends = '약세'
         if exchange_now is not None:
             exchange = exchange_now/exchange_std
         crime = city.get('crime_rate')
@@ -72,6 +75,7 @@ def get_cities_df(date):
             'city' : name,
             'country' : country,
             'exchange' : exchange,
+            'exchange_trends' : exchange_trends,
             'crime' : crime,
             'temp' : temp,
             'rainy_days' : rainy_days,
@@ -90,9 +94,12 @@ def get_one_city(name, date):
     city =  cities.find_one({'name':name},{'_id':False})
     country = city['country']
     crime = city.get('crime_rate')
-    exchange = city.get('exchange_rate').get(date.strftime("%Y-%m-%d"))
-    if exchange is not None:
-        exchange = round(exchange, 2)
+    exchange_std = city.get('exchange_rate').get("2023-09-01")
+    exchange_now = city.get('exchange_rate').get(date.strftime("%Y-%m-%d"))
+    if exchange_now > exchange_std:
+        exchange_trends = '강세'
+    else:
+        exchange_trends = '약세'
     price = city.get('price_index').get(date.strftime("%Y"))
     traveler = city.get('traveler').get(date.strftime("%Y-%m-01"))
     image_url = city.get('image_url')
@@ -105,7 +112,8 @@ def get_one_city(name, date):
         'traveler': traveler,
         'price' : price,
         'crime' : crime,
-        'exchange': exchange,
+        'exchange': exchange_now,
+        'exchange_trends' : exchange_trends,
         'climate' : {
               'month':  datetime.strptime(climate_dict['date'], "%Y-%m-%d").strftime("%Y-%m"), 
               'temp_avg': climate_dict['temp_avg'], 
