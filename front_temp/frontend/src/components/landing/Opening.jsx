@@ -44,7 +44,7 @@ const Opening = ({ scrollContainerRef,handleScrollToNext })  => {
       />
       <S.MBTI isOpen={isOpen} onClick={() => navigate(utils.URL.MBTI.TEST)}> 여행으로 알아보는 MBTI TEST </S.MBTI>
       <S.SubTitle2 onClick={handleScrollToNext}>
-        <span>scroll </span>
+        <span>scroll</span>
         <span>
             <LiaChevronDownSolid></LiaChevronDownSolid>
         </span>
@@ -131,21 +131,22 @@ const S = {
     transition: all 3s ease-in-out;
   `,
   SubTitle2: styled.span`
-      bottom: '10px', // 원하는 위치로 조절
-      left: '50%', // 화면 중앙으로 조절
-      transform: 'translateX(-50%)', // 가운데 정렬
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      color: ${({ theme }) => theme.color.main1};
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: ${({ theme }) => theme.fontSize.subTitle2};
-      &:hover {
-          opacity: 0.8;
-      }
-  `,
+    position: absolute;
+    bottom: 10px;
+    left: 48%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    color: ${({ theme }) => theme.color.main1};
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: ${({ theme }) => theme.fontSize.subTitle2};
+    &:hover {
+        opacity: 0.8;
+    }
+    
+`,
 };
 
 export default Opening;

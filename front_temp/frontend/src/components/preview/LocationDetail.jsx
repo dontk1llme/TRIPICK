@@ -78,11 +78,7 @@ const LocationDetail = () => {
                 <S.InformationBox className="type2">
                     <S.InfromationTitle>예상 날씨</S.InfromationTitle>
                     <S.InformationContent>{detailLocation.climate && detailLocation.climate.temp_avg}°C</S.InformationContent>
-                    {/* <S.SubInformation className="first">작년 평균 기온 몇도</S.SubInformation>
-                    <S.SubInformation>일조시간 몇시간</S.SubInformation>
-                    <S.SubInformation>뇌우일수 몇일</S.SubInformation>
-                    <S.SubInformation>최대 일강수량 얼마</S.SubInformation> */}
-                    <S.SubInformation>강수량: {detailLocation.climate && detailLocation.climate.rainy_days}</S.SubInformation>
+                    {/* <S.SubInformation>강수량: {detailLocation.climate && detailLocation.climate.rainy_days}</S.SubInformation> */}
                     <S.SubInformation>최고 기온: {detailLocation.climate && detailLocation.climate.temp_max}°C</S.SubInformation>
                     <S.SubInformation>최저 기온: {detailLocation.climate && detailLocation.climate.temp_min}°C</S.SubInformation>
                 </S.InformationBox>
@@ -94,10 +90,9 @@ const LocationDetail = () => {
                     <S.InfromationTitle>여행객 동향</S.InfromationTitle>
                     <S.InformationContent>{detailLocation.traveler}명</S.InformationContent>
                 </S.InformationBox>
-                <S.InformationBox className="type2">
+                {/* <S.InformationBox className="type2">
                     <S.InfromationTitle>최저가 항공권</S.InfromationTitle>
                     <S.InformationContent>
-                        {/* {parseInt(detailLocation.flight, 10).toLocaleString()}원 */}
                         {detailLocation.flight}원
                     </S.InformationContent>
 
@@ -106,7 +101,7 @@ const LocationDetail = () => {
                             스카이스캐너 바로가기
                         </a>
                     </S.SubInformation>
-                </S.InformationBox>
+                </S.InformationBox> */}
             </S.InformationContainer>
         </S.Wrap>
     );
