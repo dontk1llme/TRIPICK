@@ -14,12 +14,7 @@ const LoginSuccess = () => {
                 })
                 .catch(error => console.error(error));
         }
-        if (codeResponse){
-            api.apis.createGoogleLoginRequest(codeResponse).then(response => {
-                console.log(response);
-            })
-            .catch(error => console.error(error));
-        }
+        
     }, []);
     return <div></div>;
 };

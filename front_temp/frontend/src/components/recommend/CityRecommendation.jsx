@@ -27,8 +27,8 @@ const CityRecommendation = () => {
                 console.log(response.data);
                 setTotalRecommendation(Object.values(response.data.recommendation_total));
                 setCurrencyRecommendation(Object.values(response.data.recommendation_exchange));
-                setWeatherRecommendation(Object.values(response.data.recommendation_climate));
-                setSafetyRecommendation(Object.values(response.data.recommendation_crime));
+                setWeatherRecommendation(Object.values(response.data.recommendation_weather));
+                setSafetyRecommendation(Object.values(response.data.recommendation_traveler));
             })
             .catch(error => console.log(error));
     }, []);

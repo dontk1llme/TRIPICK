@@ -30,8 +30,7 @@ const Opening = ({ scrollContainerRef,handleScrollToNext })  => {
           muted={true}  // 소리 끄기
           width="100%"  // 전체 너비를 채움
           height="125.5%" // 전체 높이를 채움
-          // style={{ width: 'calc(100% + 20px)', height: 'calc(100% + 20px)', margin: '-10px' }}
-          style={{   overflow:'hidden'}}
+          style={{ overflow:'hidden' }}
           controls={false} // 컨트롤 바 숨김
           loop={true} // 무한 재생 활성화
         ></ReactPlayer>
@@ -44,7 +43,6 @@ const Opening = ({ scrollContainerRef,handleScrollToNext })  => {
         isOpen={isOpen}
       />
       <S.MBTI isOpen={isOpen} onClick={() => navigate(utils.URL.MBTI.TEST)}> 여행으로 알아보는 MBTI TEST </S.MBTI>
-      <span>test</span>
       <S.SubTitle2 onClick={handleScrollToNext}>
         <span>scroll </span>
         <span>
@@ -133,19 +131,21 @@ const S = {
     transition: all 3s ease-in-out;
   `,
   SubTitle2: styled.span`
-        z-index: 1;
-        top: 0px;
-        display: flex;
-        flex-direction: column;
-        color: ${({ theme }) => theme.color.main1};
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: ${({ theme }) => theme.fontSize.subTitle2};
-        &:hover {
-            opacity: 0.8;
-        }
-    `,
+      bottom: '10px', // 원하는 위치로 조절
+      left: '50%', // 화면 중앙으로 조절
+      transform: 'translateX(-50%)', // 가운데 정렬
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      color: ${({ theme }) => theme.color.main1};
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: ${({ theme }) => theme.fontSize.subTitle2};
+      &:hover {
+          opacity: 0.8;
+      }
+  `,
 };
 
 export default Opening;
