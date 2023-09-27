@@ -61,10 +61,10 @@ const Compare = () => {
                         </S.HoverContainer>
                         <S.CityImage image={firstCity.imageUrl} direction="left">
                             <S.WeatherInformationContainer direction="left">
-                                <S.WeatherInformation>작년 평균 기온 몇도</S.WeatherInformation>
+                                {/* <S.WeatherInformation>작년 평균 기온 몇도</S.WeatherInformation>
                                 <S.WeatherInformation>일조시간 몇시간</S.WeatherInformation>
                                 <S.WeatherInformation>뇌우일수 몇일</S.WeatherInformation>
-                                <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation>
+                                <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation> */}
                             </S.WeatherInformationContainer>
                             <S.DatePeriod>
                                 {firstCity.start_date} ~ {firstCity.end_date}
@@ -80,10 +80,10 @@ const Compare = () => {
                             <S.DataItemContainer>{firstCity.estimatedClimate}°C</S.DataItemContainer>
                             <S.DataItemContainer>{firstCity.safety}</S.DataItemContainer>
                             <S.DataItemContainer>{firstCity.estimated_traveler}명</S.DataItemContainer>
-                            <S.DataItemContainer className="ticket">
+                            {/* <S.DataItemContainer className="ticket">
                                 {' '}
                                 {parseInt(firstCity.ticketPrice, 10).toLocaleString()}원
-                            </S.DataItemContainer>
+                            </S.DataItemContainer> */}
                         </S.DataContainer>
                     </S.CityContainer>
                 )}
@@ -92,7 +92,7 @@ const Compare = () => {
                     <S.CompareItem>예상 날씨</S.CompareItem>
                     <S.CompareItem>안전지수</S.CompareItem>
                     <S.CompareItem>여행객 동향</S.CompareItem>
-                    <S.CompareItem>최저가 항공권</S.CompareItem>
+                    {/* <S.CompareItem>최저가 항공권</S.CompareItem> */}
                 </S.CompareItemContainer>
                 {compareLocation[1] === -1 ? (
                     <S.EmptyCityContainer direction="right" onClick={() => navigate(utils.URL.CART.LIST)}>
@@ -112,18 +112,18 @@ const Compare = () => {
                             <S.DataItemContainer>{secondCity.estimatedClimate}°C</S.DataItemContainer>
                             <S.DataItemContainer>{secondCity.safety}</S.DataItemContainer>
                             <S.DataItemContainer>{secondCity.estimated_traveler}명</S.DataItemContainer>
-                            <S.DataItemContainer className="ticket">
+                            {/* <S.DataItemContainer className="ticket">
                                 {' '}
                                 {parseInt(secondCity.ticketPrice, 10).toLocaleString()}원
-                            </S.DataItemContainer>
+                            </S.DataItemContainer> */}
                         </S.DataContainer>
                         <S.CityImage image={secondCity.imageUrl} direction="right">
-                            <S.WeatherInformationContainer direction="right">
+                            {/* <S.WeatherInformationContainer direction="right">
                                 <S.WeatherInformation>작년 평균 기온 몇도</S.WeatherInformation>
                                 <S.WeatherInformation>일조시간 몇시간</S.WeatherInformation>
                                 <S.WeatherInformation>뇌우일수 몇일</S.WeatherInformation>
                                 <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation>
-                            </S.WeatherInformationContainer>
+                            </S.WeatherInformationContainer> */}
                             <S.DatePeriod>
                                 {secondCity.start_date} ~ {secondCity.end_date}
                             </S.DatePeriod>
