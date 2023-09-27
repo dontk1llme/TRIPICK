@@ -50,4 +50,6 @@ export const apis = {
                 'Content-Type': 'multipart/form-data',
             },
         }),
+
+    createLoginRequest: code => instance.get(`api/auth/login/kakao?code=${code}`),
 };
