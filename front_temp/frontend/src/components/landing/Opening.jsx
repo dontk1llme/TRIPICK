@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 
 import ReactPlayer from 'react-player';
+import { LiaChevronDownSolid } from 'react-icons/lia';
 
 
-const Opening = ({ scrollContainerRef })  => {
+const Opening = ({ scrollContainerRef,handleScrollToNext })  => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,32 +24,38 @@ const Opening = ({ scrollContainerRef })  => {
 
   return (
     <S.Wrap onClick={handleClick}>
+      <div style={{ position: 'absolute', top: '-150px', left: '0', width: '100%', height: '100%' }}>
         <ReactPlayer url='/video/aurora.mp4'
-        playing={true} // 자동 재생
-        muted={true}  // 소리 끄기
-        width="120vw"
-        height="100vh"
-        ></ReactPlayer>
-       {/* <S.Video muted autoPlay loop>
-
-      </S.Video> */}
-       {/* <ReactPlayer
-          url={youtubeVideoUrl}
           playing={true} // 자동 재생
           muted={true}  // 소리 끄기
-          width="100vw"
-          height="100vh"
-        /> */}
+          width="100%"  // 전체 너비를 채움
+          height="125.5%" // 전체 높이를 채움
+          // style={{ width: 'calc(100% + 20px)', height: 'calc(100% + 20px)', margin: '-10px' }}
+          style={{   overflow:'hidden'}}
+          controls={false} // 컨트롤 바 숨김
+        ></ReactPlayer>
 
-      <S.BoxLeft isOpen={isOpen}>
-      </S.BoxLeft>
+      </div>
+
+      
       <S.Logo
         src={logo}
         isOpen={isOpen}
       />
       <S.MBTI isOpen={isOpen} onClick={() => navigate(utils.URL.MBTI.TEST)}> 여행으로 알아보는 MBTI TEST </S.MBTI>
+      <span>test</span>
+      <S.SubTitle2 onClick={handleScrollToNext}>
+        <span>scroll </span>
+        <span>
+            <LiaChevronDownSolid></LiaChevronDownSolid>
+        </span>
+      </S.SubTitle2>
+
+
       <S.BoxRight isOpen={isOpen}>
       </S.BoxRight>
+      <S.BoxLeft isOpen={isOpen}>
+      </S.BoxLeft>
     </S.Wrap>
   );
 };
@@ -65,8 +72,8 @@ const S = {
     height: 100%;
   `,
   Video: styled.video`
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100;
   `,
   Logo: styled.img`
     position: absolute;
@@ -124,6 +131,19 @@ const S = {
     z-index: 99999;
     transition: all 3s ease-in-out;
   `,
+  SubTitle2: styled.span`
+        top: 0px;
+        display: flex;
+        flex-direction: column;
+        color: ${({ theme }) => theme.color.main1};
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: ${({ theme }) => theme.fontSize.subTitle2};
+        &:hover {
+            opacity: 0.8;
+        }
+    `,
 };
 
 export default Opening;
