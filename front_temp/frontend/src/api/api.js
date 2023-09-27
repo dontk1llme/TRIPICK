@@ -52,4 +52,5 @@ export const apis = {
         }),
 
     createLoginRequest: code => instance.get(`api/auth/login/kakao?code=${code}`),
+    createGoogleLoginRequest: (code)=> instance.get(`api/auth/login/google?code=${code}`),
 };

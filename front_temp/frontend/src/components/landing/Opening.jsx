@@ -33,6 +33,7 @@ const Opening = ({ scrollContainerRef,handleScrollToNext })  => {
           // style={{ width: 'calc(100% + 20px)', height: 'calc(100% + 20px)', margin: '-10px' }}
           style={{   overflow:'hidden'}}
           controls={false} // 컨트롤 바 숨김
+          loop={true} // 무한 재생 활성화
         ></ReactPlayer>
 
       </div>
@@ -132,6 +133,7 @@ const S = {
     transition: all 3s ease-in-out;
   `,
   SubTitle2: styled.span`
+        z-index: 1;
         top: 0px;
         display: flex;
         flex-direction: column;
