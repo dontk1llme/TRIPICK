@@ -17,8 +17,11 @@ const App = () => {
                     <styles.GlobalStyles />
                     <Router>
                         <Routes>
-                                <Route path={utils.URL.HOME.MAIN} element={<components.Layout />}>
+                            <Route path={utils.URL.HOME.MAIN} element={<components.Layout />}>
                                 <Route path={utils.URL.HOME.LANDING} element={<pages.Landing />}></Route>
+                                <Route
+                                    path={utils.URL.LOGIN.LOGINSUCCESS}
+                                    element={<components.LoginSuccess />}></Route>
                                 <Route path={utils.URL.CART.LIST} element={<pages.Cart />}></Route>
                                 <Route path={utils.URL.MYPAGE.PASSPORT} element={<pages.MyPage />}></Route>
                                 <Route path={utils.URL.MYPAGE.DIARY} element={<pages.Diary />}></Route>
@@ -29,11 +32,9 @@ const App = () => {
                                 <Route path={utils.URL.MBTI.TEST} element={<pages.MbtiTest />}></Route>
                                 <Route path={utils.URL.MBTI.RESULT} element={<pages.MbtiResult />}></Route>
 
-                                <Route path={utils.URL.COMMON.LOADING} element={<pages.Loading/>}></Route>
+                                <Route path={utils.URL.COMMON.LOADING} element={<pages.Loading />}></Route>
                                 {/* <Route path={utils.URL.COMMON.ERROR} element={<pages.Error/>}></Route> */}
                                 <Route path="*" element={<pages.Error />} />
-
-                                
                             </Route>
                         </Routes>
                     </Router>

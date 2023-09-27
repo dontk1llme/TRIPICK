@@ -1,6 +1,7 @@
 export const URL = {
     LOGIN: {
         LOGIN: '/login',
+        LOGINSUCCESS: '/auth',
     },
     HOME: {
         LANDING: '/', //==MAIN
@@ -28,7 +29,7 @@ export const URL = {
     COMMON: {
         LOADING: '/loading',
         ERROR: '/error',
-    }
+    },
 };
 
 export const MAX_WIDTH = '1920px';
