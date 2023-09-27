@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 @Builder
 public class BadgeResponseDto {
     private int badgeId;
-    private boolean achieved; //획득 여부
+    private boolean achieved;
+    private String name;
+    private String content;
+    private String image;
 }
 
