@@ -43,6 +43,7 @@ def get_rank_df(date):
     # df1 = df[['city','country','crime','crime_rank','temp','temp_Rank','rainy_days','rainy_days_Rank']]
     # df2 = df[['city','country','exchange','exchange_rank','price','price_rank']]
     rank_df =  df[['city','country','temp_rank','rainy_days_rank','crime_rank','exchange_rank','price_rank','traveler_rank']]
+    print(tabulate(rank_df, headers='keys', tablefmt='psql', showindex=True))
     return rank_df
 
 def get_cities_df(date):
