@@ -51,7 +51,7 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeRequests()
                 .antMatchers("/auth/login/**").permitAll()
-                .antMatchers("/mbit").permitAll()
+                .antMatchers("/mbti").permitAll()
                 .anyRequest().authenticated();
 
         httpSecurity
