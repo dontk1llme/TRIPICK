@@ -24,6 +24,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -127,6 +128,7 @@ public class KakaoAuthService {
   @Transactional
   public Member getKakaoUserInfo(KakaoTokenDto kakaoTokenDto) {
     RestTemplate restTemplate = new RestTemplate();
+    restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
     HttpHeaders headers = new HttpHeaders();
     headers.add("Authorization", "Bearer " + kakaoTokenDto.getAccess_token());

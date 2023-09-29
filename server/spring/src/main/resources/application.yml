@@ -97,4 +97,9 @@ jwt:
     prefix: "Bearer "
   filter:
     skip:
-      paths: api/auth/login/google, api/auth/login/kakao
+      paths: auth/login/google, auth/login/kakao
+
+logging:
+  level:
+    org.apache.http: DEBUG
+    httpclient.wire: DEBUG
