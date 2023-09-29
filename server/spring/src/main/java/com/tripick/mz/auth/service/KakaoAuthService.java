@@ -91,7 +91,7 @@ public class KakaoAuthService {
     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
     headers.add("Accept", "application/json");
 //    headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-g
+
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     params.add("grant_type", KAKAO_GRANT_TYPE);
     params.add("client_id", KAKAO_CLIENT_ID);
