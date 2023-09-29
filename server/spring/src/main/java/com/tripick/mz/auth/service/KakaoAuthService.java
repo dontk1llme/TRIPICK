@@ -20,10 +20,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,8 +88,10 @@ public class KakaoAuthService {
   public KakaoTokenDto getKakaoAccessToken(String code) {
 
     HttpHeaders headers = new HttpHeaders();
-    headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
+    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    headers.add("Accept", "application/json");
+//    headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+g
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     params.add("grant_type", KAKAO_GRANT_TYPE);
     params.add("client_id", KAKAO_CLIENT_ID);
