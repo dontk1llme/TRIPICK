@@ -101,11 +101,12 @@ public class KakaoAuthService {
 
     HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
 
-    RestTemplate restTemplatet = new RestTemplate();
+    RestTemplate restTemplate = new RestTemplate();
+    restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
     log.info("token-uri = {}", KAKAO_TOKEN_URI);
 
     ResponseEntity<String> accessTokenResponse =
-            restTemplatet.postForEntity(KAKAO_TOKEN_URI, kakaoTokenRequest, String.class);
+            restTemplate.postForEntity(KAKAO_TOKEN_URI, kakaoTokenRequest, String.class);
 
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(new JavaTimeModule());
@@ -124,7 +125,6 @@ public class KakaoAuthService {
   @Transactional
   public Member getKakaoUserInfo(KakaoTokenDto kakaoTokenDto) {
     RestTemplate restTemplate = new RestTemplate();
-    restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
     HttpHeaders headers = new HttpHeaders();
     headers.add("Authorization", "Bearer " + kakaoTokenDto.getAccess_token());
