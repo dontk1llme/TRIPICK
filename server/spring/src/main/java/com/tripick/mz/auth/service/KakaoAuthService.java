@@ -104,12 +104,9 @@ public class KakaoAuthService {
 
     RestTemplate restTemplatet = new RestTemplate();
     log.info("token-uri = {}", KAKAO_TOKEN_URI);
-    ResponseEntity<String> accessTokenResponse = restTemplatet.exchange(
-        KAKAO_TOKEN_URI,
-        HttpMethod.POST,
-        kakaoTokenRequest,
-        String.class
-    );
+
+    ResponseEntity<String> accessTokenResponse =
+            restTemplatet.postForEntity(KAKAO_TOKEN_URI, kakaoTokenRequest, String.class);
 
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(new JavaTimeModule());
