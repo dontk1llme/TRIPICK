@@ -1,7 +1,7 @@
 export const URL = {
     LOGIN: {
         LOGIN: '/login',
-        LOGINSUCCESS: '/auth',
+        LOGINSUCCESS: '/login/oauth2/code/kakao',
     },
     HOME: {
         LANDING: '/', //==MAIN
