@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepository extends JpaRepository<Member, Integer> {
   Optional<Member> findByCredential(Credential credential);
   Optional<Member> findByMemberId(int memberId);
+  Optional<Member> deleteMemberByMemberId(int memberId);
 }
