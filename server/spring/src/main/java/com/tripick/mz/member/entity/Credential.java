@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -21,7 +23,6 @@ public class Credential {
     @Column(length = 128)
     private String credentialId;
 
-    @NotNull
     @Column(length = 512)
     private String refreshToken;
 
