@@ -9,7 +9,7 @@ import ReactPlayer from 'react-player';
 import { LiaChevronDownSolid } from 'react-icons/lia';
 
 
-const Opening = ({ scrollContainerRef,handleScrollToNext })  => {
+const Opening = ({ scrollContainerRef, })  => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,7 +43,7 @@ const Opening = ({ scrollContainerRef,handleScrollToNext })  => {
         isOpen={isOpen}
       />
       <S.MBTI isOpen={isOpen} onClick={() => navigate(utils.URL.MBTI.TEST)}> 여행으로 알아보는 MBTI TEST </S.MBTI>
-      <S.SubTitle2 onClick={handleScrollToNext}>
+      <S.SubTitle2 >
         <span>scroll</span>
         <span>
             <LiaChevronDownSolid></LiaChevronDownSolid>
@@ -140,12 +140,7 @@ const S = {
     color: ${({ theme }) => theme.color.main1};
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     font-size: ${({ theme }) => theme.fontSize.subTitle2};
-    &:hover {
-        opacity: 0.8;
-    }
-    
 `,
 };
 
