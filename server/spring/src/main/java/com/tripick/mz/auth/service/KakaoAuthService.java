@@ -213,7 +213,7 @@ public class KakaoAuthService {
       MemberBadge memberBadge = MemberBadge.builder()
               .badge(badgeRepository.findById(i).orElseThrow(BadgeNotFoundException::new))
               .member(member)
-              .achieved(true)
+              .achieved(i>1? false:true)
               .achievedDate(member.getCreatedAt())
               .build();
       memberBadges.add(memberBadge);
