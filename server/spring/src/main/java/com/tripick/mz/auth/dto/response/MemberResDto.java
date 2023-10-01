@@ -18,7 +18,7 @@ public class MemberResDto {
     private String profileImage;
     private String nickname;
     private Role role;
-    private List<MemberBadge> memberBadgeList;
+    private List<MemberBadgeResDto> memberBadgeList;
     private int mainBadge;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
