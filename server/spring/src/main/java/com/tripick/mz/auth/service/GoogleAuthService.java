@@ -5,17 +5,21 @@ import com.tripick.mz.auth.dto.TokenDto;
 import com.tripick.mz.auth.dto.google.GoogleInfoResDto;
 import com.tripick.mz.auth.dto.google.GoogleReqDto;
 import com.tripick.mz.auth.dto.google.GoogleResDto;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+
+import java.util.*;
 
 import com.tripick.mz.auth.dto.response.LoginResponseDto;
 import com.tripick.mz.auth.dto.response.MemberResDto;
 import com.tripick.mz.auth.util.JwtProvider;
 import com.tripick.mz.member.entity.Credential;
 import com.tripick.mz.member.entity.Member;
+import com.tripick.mz.member.entity.MemberBadge;
 import com.tripick.mz.member.entity.Role;
+import com.tripick.mz.member.exception.BadgeNotFoundException;
+import com.tripick.mz.member.exception.MemberNotFoundException;
+import com.tripick.mz.member.repository.BadgeRepository;
 import com.tripick.mz.member.repository.CredentialRepository;
+import com.tripick.mz.member.repository.MemberBadgeRepository;
 import com.tripick.mz.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +48,8 @@ public class GoogleAuthService {
   private final JwtProvider jwtProvider;
   private final CredentialRepository credentialRepository;
   private final MemberRepository memberRepository;
+  private final MemberBadgeRepository memberBadgeRepository;
+  private final BadgeRepository badgeRepository;
 
   private TokenDto tokenDto;
 
@@ -56,9 +62,19 @@ public class GoogleAuthService {
     if(existMember == null) {
       log.info("존재하지 않는 회원정보입니다. 새로 저장합니다.");
       memberRepository.save(member);
+      log.info("member_id = {}", member.getMemberId());
+      setDefaultBadges(member);
     }
 
-    log.info("[login] 계정 확인 완료 " + member.getNickname() + " 로그인 성공!");
+    int memberId = member.getMemberId();
+    member = memberRepository.findByMemberId(memberId).orElseThrow(MemberNotFoundException::new);
+
+
+
+    log.info("[login] 계정 확인 완료" + member.getNickname() + "로그인 성공!");
+    log.info("grantType = {}", tokenDto.getGrantType());
+    log.info("accessToken = {}", tokenDto.getAccessToken());
+    log.info("refreshToken = {}", tokenDto.getRefreshToken());
 
     return LoginResponseDto.builder()
             .tokenDto(tokenDto)
@@ -68,7 +84,7 @@ public class GoogleAuthService {
                     .profileImage(member.getProfileImage())
                     .nickname(member.getNickname())
                     .role(member.getCredential().getRole())
-                    .memberBadgeList(member.getMemberBadgeList())
+                    .memberBadgeList(memberBadgeRepository.findByMemberWithoutMemberInfo(member))
                     .mainBadge(member.getMainBadge())
                     .createdAt(member.getCreatedAt())
                     .updatedAt(member.getUpdatedAt())
@@ -136,5 +152,21 @@ public class GoogleAuthService {
             .nickname(nickname)
             .profileImage(profileImage)
             .build();
+  }
+  @Transactional
+  public void setDefaultBadges(Member member){
+    List<MemberBadge> memberBadges = new ArrayList<>();
+
+    for(int i=1; i<=5; i++){
+      MemberBadge memberBadge = MemberBadge.builder()
+              .badge(badgeRepository.findById(i).orElseThrow(BadgeNotFoundException::new))
+              .member(member)
+              .achieved(true)
+              .achievedDate(member.getCreatedAt())
+              .build();
+      memberBadges.add(memberBadge);
+    }
+
+    memberBadgeRepository.saveAll(memberBadges);
   }
 }
