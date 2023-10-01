@@ -42,7 +42,7 @@ const Opening = ({ scrollContainerRef, })  => {
         src={logo}
         isOpen={isOpen}
       />
-      <S.MBTI isOpen={isOpen} onClick={() => navigate(utils.URL.MBTI.TEST)}> 여행으로 알아보는 MBTI TEST </S.MBTI>
+      <S.MBTI isOpen={isOpen} onClick={() => navigate(utils.URL.MBTI.MAIN)}> 여행으로 알아보는 MBTI TEST </S.MBTI>
       <S.SubTitle2 >
         <span>scroll</span>
         <span>
