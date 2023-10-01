@@ -12,9 +12,17 @@ import com.tripick.mz.auth.dto.response.MemberResDto;
 import com.tripick.mz.auth.util.JwtProvider;
 import com.tripick.mz.member.entity.Credential;
 import com.tripick.mz.member.entity.Member;
+import com.tripick.mz.member.entity.MemberBadge;
 import com.tripick.mz.member.entity.Role;
+import com.tripick.mz.member.exception.BadgeNotFoundException;
+import com.tripick.mz.member.exception.MemberNotFoundException;
+import com.tripick.mz.member.repository.BadgeRepository;
 import com.tripick.mz.member.repository.CredentialRepository;
+import com.tripick.mz.member.repository.MemberBadgeRepository;
 import com.tripick.mz.member.repository.MemberRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -45,10 +53,14 @@ public class KakaoAuthService {
   private String KAKAO_USER_INFO_URI;
   @Value("${spring.security.oauth2.client.registration.kakao.authorization-grant-type}")
   private String KAKAO_GRANT_TYPE;
+  @Value("${spring.security.oauth2.client.registration.kakao.default-image-url}")
+  private String KAKAO_DEFAULT_IMAGE;
 
   private final JwtProvider jwtProvider;
   private final CredentialRepository credentialRepository;
   private final MemberRepository memberRepository;
+  private final BadgeRepository badgeRepository;
+  private final MemberBadgeRepository memberBadgeRepository;
 
   private TokenDto tokenDto;
 
@@ -61,7 +73,14 @@ public class KakaoAuthService {
     if(existMember == null) {
       log.info("존재하지 않는 회원정보입니다. 새로 저장합니다.");
       memberRepository.save(member);
+      log.info("member_id = {}", member.getMemberId());
+      setDefaultBadges(member);
     }
+
+    int memberId = member.getMemberId();
+    member = memberRepository.findByMemberId(memberId).orElseThrow(MemberNotFoundException::new);
+
+
 
     log.info("[login] 계정 확인 완료" + member.getNickname() + "로그인 성공!");
     log.info("grantType = {}", tokenDto.getGrantType());
@@ -76,7 +95,7 @@ public class KakaoAuthService {
                     .profileImage(member.getProfileImage())
                     .nickname(member.getNickname())
                     .role(member.getCredential().getRole())
-                    .memberBadgeList(member.getMemberBadgeList())
+                    .memberBadgeList(memberBadgeRepository.findByMemberWithoutMemberInfo(member))
                     .mainBadge(member.getMainBadge())
                     .createdAt(member.getCreatedAt())
                     .updatedAt(member.getUpdatedAt())
@@ -154,6 +173,11 @@ public class KakaoAuthService {
 
     String email = (String) kakaoAccount.get("email");
     String nickname = (String) kakaoProfile.get("nickname");
+    String picture = (String) kakaoProfile.get("prifile_image_url");
+
+    if(picture == null){
+      picture = KAKAO_DEFAULT_IMAGE;
+    }
 
     tokenDto = jwtProvider.generateTokenDto(email);
     Credential credential = credentialRepository.findByEmail(email).orElse(null);
@@ -177,7 +201,24 @@ public class KakaoAuthService {
     return Member.builder()
         .credential(credential)
         .nickname(nickname)
-        .profileImage("")
+        .profileImage(picture)
         .build();
+  }
+
+  @Transactional
+  public void setDefaultBadges(Member member){
+    List<MemberBadge> memberBadges = new ArrayList<>();
+
+    for(int i=1; i<=5; i++){
+      MemberBadge memberBadge = MemberBadge.builder()
+              .badge(badgeRepository.findById(i).orElseThrow(BadgeNotFoundException::new))
+              .member(member)
+              .achieved(true)
+              .achievedDate(member.getCreatedAt())
+              .build();
+      memberBadges.add(memberBadge);
+    }
+
+    memberBadgeRepository.saveAll(memberBadges);
   }
 }
