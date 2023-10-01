@@ -202,6 +202,7 @@ public class KakaoAuthService {
         .credential(credential)
         .nickname(nickname)
         .profileImage(picture)
+        .mainBadge(1)
         .build();
   }
 
