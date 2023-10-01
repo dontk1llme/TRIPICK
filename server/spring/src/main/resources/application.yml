@@ -54,6 +54,7 @@ spring:
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao
+            default-image-url: ${KAKAO_DEFAULT_IMAGE}
             scope:
               - profile_nickname
               - account_email
@@ -98,8 +99,3 @@ jwt:
   filter:
     skip:
       paths: auth/login/google, auth/login/kakao
-
-logging:
-  level:
-    org.apache.http: DEBUG
-    httpclient.wire: DEBUG
