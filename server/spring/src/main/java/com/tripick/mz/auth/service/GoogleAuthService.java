@@ -151,6 +151,7 @@ public class GoogleAuthService {
             .credential(credential)
             .nickname(nickname)
             .profileImage(profileImage)
+            .mainBadge(1)
             .build();
   }
   @Transactional
