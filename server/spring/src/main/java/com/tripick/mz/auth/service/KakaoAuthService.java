@@ -173,7 +173,7 @@ public class KakaoAuthService {
 
     String email = (String) kakaoAccount.get("email");
     String nickname = (String) kakaoProfile.get("nickname");
-    String picture = (String) kakaoProfile.get("prifile_image_url");
+    String picture = (String) kakaoProfile.get("profile_image_url");
 
     if(picture == null){
       picture = KAKAO_DEFAULT_IMAGE;
