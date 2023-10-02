@@ -19,7 +19,7 @@ const Mbti = () => {
             <S.ImageContainer>
                 <img src={require('asset/images/mbti-main.png').default} alt="panda" />
             </S.ImageContainer>
-            <S.Button onClick={() => navigate(utils.URL.MBTI.MAIN)}>테스트 시작하기</S.Button>
+            <S.Button onClick={() => navigate(utils.URL.MBTI.TEST)}>테스트 시작하기</S.Button>
         </S.Wrap>
     );
 };
