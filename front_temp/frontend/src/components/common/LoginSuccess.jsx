@@ -14,8 +14,8 @@ const LoginSuccess = () => {
     // const [ profileImage, setProfileImage] = useState('');
     // const [ createdAt, setCreatedAt] = useState('');
 
-    // const [ memberId, setMemberId, nickname, setNickname, email, setEmail, 
-    //     profileImage, setProfileImage, createdAt, setCreatedAt ] = hooks.loginUserState();
+    const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
+        profileImage, setProfileImage, createdAt, setCreatedAt } = hooks.loginUserState();
 
     const { setLoginUser } = hooks.loginUserState();
 
@@ -29,7 +29,7 @@ const LoginSuccess = () => {
                 .then(response => {
                     console.log(response);
                     //초기값 출력
-                    // console.log(memberId, nickname, email, profileImage, createdAt);
+                    console.log(memberId, nickname, email, profileImage, createdAt);
                     console.log(response.data.data.memberId);
                     console.log(response.data.data.nickname);
 
@@ -42,7 +42,7 @@ const LoginSuccess = () => {
                     // setCreatedAt(response.data.data.createdAt);
                     setLoginUser(response.data.data);
                     console.log('어앵');
-                    // console.log(memberId, nickname, email, profileImage, createdAt);
+                    console.log(memberId, nickname, email, profileImage, createdAt);
 
                     // navigate(utils.URL.HOME.LANDING);
                 })
