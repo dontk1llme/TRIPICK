@@ -33,7 +33,7 @@ const LoginSuccess = () => {
                 .catch(error => console.error(error));
         }
         
-    }, [response]);
+    }, []);
 
     return <div></div>;
 };
