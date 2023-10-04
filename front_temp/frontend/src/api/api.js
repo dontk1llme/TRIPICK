@@ -9,6 +9,7 @@ export const instance = axios.create({
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         Accept: 'application/json',
+        // Authorization:   //response에 잇는 header 에서 뽑아서 여기에 넣기.
     },
 });
 
