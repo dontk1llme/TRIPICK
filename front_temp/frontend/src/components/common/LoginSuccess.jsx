@@ -17,7 +17,8 @@ const LoginSuccess = () => {
     // const [ memberId, setMemberId, nickname, setNickname, email, setEmail, 
     //     profileImage, setProfileImage, createdAt, setCreatedAt ] = hooks.loginUserState();
 
-    const [setLoginUser] = hooks.loginUserState();
+    const { setLoginUser } = hooks.loginUserState();
+
 
 
     useEffect(() => {
