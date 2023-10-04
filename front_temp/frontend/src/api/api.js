@@ -15,18 +15,18 @@ export const instance = axios.create({
 
 
 // 요청을 보내기 전에 인증 토큰을 Authorization 헤더에 추가
-instance.interceptors.request.use(
-    async (config) => {
-        const { accessToken } = hooks.loginUserState(); // hooks에서 인증 토큰 가져오기
-        if (accessToken) {
-            config.headers.Authorization = accessToken;
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
+// instance.interceptors.request.use(
+//     async (config) => {
+//         const { accessToken } = hooks.loginUserState(); // hooks에서 인증 토큰 가져오기
+//         if (accessToken) {
+//             config.headers.Authorization = accessToken;
+//         }
+//         return config;
+//     },
+//     (error) => {
+//         return Promise.reject(error);
+//     }
+// );
 
 // // 로그인
 // instance.interceptors.request.use(
