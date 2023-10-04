@@ -42,8 +42,8 @@ def get_rank_df(date):
     # 내림차순 - 여행객 동향, 안전 지수
     df['traveler_rank'] = df['traveler'].rank(ascending=False).astype(int)
     df['crime_rank'] = df['crime'].rank(ascending=False).astype(int)
-    rank_df =  df[['city','country','temp_rank','rainy_days_rank','crime_rank','exchange_rank','price_rank','traveler_rank']]
-    print(tabulate(rank_df, headers='keys', tablefmt='psql', showindex=True))
+    rank_df =  df[['city','country','temp_rank','rainy_days_rank','price_rank','exchange_rank','crime_rank','traveler_rank']]
+    # print(tabulate(rank_df, headers='keys', tablefmt='psql', showindex=True))
     return rank_df
 
 def get_cities_df(date):
@@ -107,8 +107,6 @@ def get_one_city(name, date):
     traveler = city.get('traveler').get(date.strftime("%Y-%m-01"))
     image_url = city.get('image_url')
     climate_dict = next((item for item in city.get('climate') if item['date'] == date.strftime("%Y-%m-01")), None)
-    print('\n')
-    print(climate_dict)
     city_dict = {
         'name':name,
         'country':country,
