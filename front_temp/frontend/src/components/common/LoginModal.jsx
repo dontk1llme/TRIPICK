@@ -44,8 +44,6 @@ const LoginModal = ({ setModalOpen }) => {
                     setEmail(response.data.data.email);
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
-                    closeModal;
-
                 })
                 .catch(error => {
                     console.error('Error making API request:', error);
@@ -53,6 +51,10 @@ const LoginModal = ({ setModalOpen }) => {
         },
         flow: 'auth-code',
     });
+    useEffect(()=>{
+        console.log(memberId, nickname, email, profileImage, createdAt);
+        closeModal;
+    },[memberId, nickname, email, profileImage, createdAt])
 
     return (
         <S.modalWrapper>
