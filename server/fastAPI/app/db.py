@@ -63,8 +63,6 @@ def get_cities_df(date):
             exchange_trends = '강세'
         else:
             exchange_trends = '약세'
-        if exchange_now is not None:
-            exchange = exchange_now/exchange_std
         crime = city.get('crime_rate')
         climate_dict = next((item for item in city.get('climate') if item['date'] == date.strftime("%Y-%m-01")), None)
         if climate_dict is not None:
@@ -101,6 +99,8 @@ def get_one_city(name, date):
         exchange_trends = '강세'
     else:
         exchange_trends = '약세'
+    if exchange_now is not None:
+        exchange_now = round(exchange_now, 2)
     price = city.get('price_index').get(date.strftime("%Y"))
     traveler = city.get('traveler').get(date.strftime("%Y-%m-01"))
     image_url = city.get('image_url')
