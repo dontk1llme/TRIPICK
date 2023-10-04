@@ -1,11 +1,12 @@
-import React, { useEffect, useNavigate, useState } from 'react';
+import React, { useEffect,  useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import * as api from 'api';
 import { useGoogleLogin } from '@react-oauth/google';
 import { create } from 'lodash';
 
 const LoginSuccess = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [ memberId, setMemberId,] = useState('');
     const [ nickname, setNickname,] = useState('');
     const [ email, setEmail,] = useState('');
@@ -25,8 +26,8 @@ const LoginSuccess = () => {
                     setEmail(response.email);
                     setProfileImage(response.profileImage);
                     setCreatedAt(response.createdAt);
-                    
-                    navigate(utils.URL.HOME.LANDING);
+
+                    // navigate(utils.URL.HOME.LANDING);
                 })
                 .catch(error => console.error(error));
         }
