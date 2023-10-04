@@ -54,7 +54,9 @@ const LoginModal = ({ setModalOpen }) => {
 
     useEffect(()=>{
         console.log(memberId, nickname, email, profileImage, createdAt);
-        setModalOpen(false);
+        if (memberId != -1){
+            setModalOpen(false);
+        }
     },[memberId, nickname, email, profileImage, createdAt])
 
     return (
