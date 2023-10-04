@@ -56,6 +56,8 @@ def get_cities_df(date):
         traveler = 99999
         crime = 99999
         name = city.get('name')
+        if name == '멕시코시티':
+            continue
         country = city.get('country')
         exchange_std = city.get('exchange_rate').get("2023-09-01")
         exchange_now = city.get('exchange_rate').get(date.strftime("%Y-%m-%d"))
