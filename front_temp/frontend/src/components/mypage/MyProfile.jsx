@@ -30,6 +30,13 @@ const MyProfile = () => {
 
     useEffect(() => {
         api.apis
+            .getBadges(memberId)
+            .then(response => console.log(response.data))
+            .catch(error => console.log(error))
+    }, [])
+
+    useEffect(() => {
+        api.apis
             .getMemberProfile(memberId)
             .then(response => {
                 console.log('프로필', response.data);
