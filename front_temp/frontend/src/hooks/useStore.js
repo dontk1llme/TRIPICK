@@ -6,7 +6,7 @@ export const loginUserState = create(set => ({
     email: '',
     profileImage: '',
     createdAt: '',
-    setMemberId: data => set(state => ({ id: data })),
+    setMemberId: data => set(state => ({ memberId: data })),
     setNickname: data => set(state => ({ nickname: data })),
     setEmail: data => set(state => ({ email: data })),
     setProfileImage: data => set(state => ({ profileImage: data })),
