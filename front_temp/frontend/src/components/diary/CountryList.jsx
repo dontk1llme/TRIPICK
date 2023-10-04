@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useCountriesData } from './CountryContext';
+import { IoAdd,  } from 'react-icons/io5';
 import * as hooks from 'hooks';
 import * as api from 'api';
 const krdata = require('./countries.json');
@@ -129,8 +130,7 @@ const CountryList = () => {
                     <div>검색 결과가 없습니다. 국가명을 확인해 주세요.</div>
                 ) : (
                     <div>
-                        {searchQuery} 국가를 추가하시겠습니까?
-                        <button onClick={handleAddCountry}>추가</button>
+                        <S.Button onClick={handleAddCountry}> 리스트에 {searchQuery}  추가<IoAdd /> </S.Button>
                     </div>
                 ))}
         </S.Wrap>
@@ -171,6 +171,14 @@ const S = {
             color: ${({ theme }) => theme.color.main2};
         }
     `,
+    Button: styled.button`
+        font-size: ${({ theme }) => theme.fontSize.content2};
+        color: ${({ theme }) => theme.color.main1};
+        cursor: pointer;
+        &:hover {
+            color: ${({ theme }) => theme.color.main2};
+        }
+    `
 };
 
 export default CountryList;
