@@ -18,6 +18,7 @@ import com.tripick.mz.record.dto.request.CreateTripRecordRequestDto;
 import com.tripick.mz.record.dto.request.UpdateTripRecordContentRequestDto;
 import com.tripick.mz.record.dto.response.TripRecordImageResponseDto;
 import com.tripick.mz.record.dto.response.TripRecordResponseDto;
+import com.tripick.mz.record.entity.QTripRecordImage;
 import com.tripick.mz.record.entity.TripRecord;
 import com.tripick.mz.record.entity.TripRecordImage;
 import com.tripick.mz.record.repository.TripRecordImageRepository;
@@ -50,6 +51,7 @@ public class RecordServiceImpl implements RecordService {
     private final NationRepository nationRepository;
     private final JPAQueryFactory queryFactory;
     private final QMemberBadge memberBadge = QMemberBadge.memberBadge;
+    private final QTripRecordImage tripRecordImage = QTripRecordImage.tripRecordImage;
 
     @Override
     public List<String> getTripRecordsByMemberId(int memberId) {
@@ -121,6 +123,7 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
+    @Transactional
     public void saveTripRecordImage(CreateTripRecordImageRequestDto createTripRecordImageRequestDto) {
         log.info("RecordServiceImpl_saveTripRecordImage -> 여행 기록 사진 등록 시도");
         TripRecord tripRecord = tripRecordRepository.findById(createTripRecordImageRequestDto.getTripRecordId()).orElseThrow(NotExistRecordException::new);
@@ -132,6 +135,27 @@ public class RecordServiceImpl implements RecordService {
             image.setImageUrl(uploadedFile.getUploadFileUrl());
             tripRecordImageRepository.save(image);
         }
+
+        MemberBadge mb = queryFactory.selectFrom(memberBadge)
+                .where(memberBadge.member.eq(tripRecord.getMember()),
+                        memberBadge.badge.badgeId.eq(2))
+                .fetchOne();
+
+        if(!mb.isAchieved()) {
+            List<TripRecord> tripRecords = tripRecordRepository.findByMember(tripRecord.getMember());
+            int imageCount = 0;
+
+            for (TripRecord tr : tripRecords) {
+                imageCount += tr.getTripRecordImages().size();
+
+                if (imageCount >= 10) {
+                    mb.updateAchieved();
+                    break;
+                }
+            }
+        }
+
+        System.out.println(mb.isAchieved());
     }
 
     @Override
