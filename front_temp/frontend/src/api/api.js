@@ -2,9 +2,6 @@ import axios from 'axios';
 import * as utils from 'utils';
 import * as hooks from 'hooks';
 
-import React, {useEffect} from 'react';
-
-
 export const instance = axios.create({
     // baseURL: utils.API_BASE_URL,
     baseURL: 'https://tripick.site',
@@ -12,9 +9,24 @@ export const instance = axios.create({
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         Accept: 'application/json',
-        // Authorization:   //response에 잇는 header 에서 뽑아서 여기에 넣기.
+        // Authorization: `${accessToken}`  //response에 잇는 header 에서 뽑아서 여기에 넣기.
     },
 });
+
+
+// 요청을 보내기 전에 인증 토큰을 Authorization 헤더에 추가
+instance.interceptors.request.use(
+    async (config) => {
+        const { accessToken } = hooks.loginUserState(); // hooks에서 인증 토큰 가져오기
+        if (accessToken) {
+            config.headers['Authorization'] = accessToken;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 // // 로그인
 // instance.interceptors.request.use(
@@ -57,4 +69,5 @@ export const apis = {
 
     createLoginRequest: code => instance.get(`api/auth/login/kakao?code=${code}`),
     createGoogleLoginRequest: (code)=> instance.get(`api/auth/login/google?code=${code}`),
+
 };

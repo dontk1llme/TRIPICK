@@ -17,7 +17,8 @@ const LoginModal = ({ setModalOpen }) => {
     };
 
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
-        profileImage, setProfileImage, createdAt, setCreatedAt } = hooks.loginUserState();
+        profileImage, setProfileImage, createdAt, setCreatedAt, authorization, setAuthorization,
+        accessToken, setAccessToken } = hooks.loginUserState();
 
     ///////////// kakao ////////////////
     const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY; //REST API KEY
@@ -44,6 +45,8 @@ const LoginModal = ({ setModalOpen }) => {
                     setEmail(response.data.data.email);
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
+
+                    setAccessToken(response.data.headers.access-token);
                 })
                 .catch(error => {
                     console.error('Error making API request:', error);
