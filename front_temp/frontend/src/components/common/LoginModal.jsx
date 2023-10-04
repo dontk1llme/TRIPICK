@@ -19,6 +19,7 @@ const LoginModal = ({ setModalOpen }) => {
     // oauth 요청 URL
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
+
     const handleKakaoClick = async () => {
         console.log('카카오 클릭');
         window.location.href = kakaoURL;
@@ -26,7 +27,10 @@ const LoginModal = ({ setModalOpen }) => {
 
     ///////////// google ////////////////
     const handleGoogleClick = useGoogleLogin({
-        onSuccess: codeResponse => console.log(codeResponse),
+        onSuccess: codeResponse => {
+            console.log(codeResponse)
+            closeModal
+        },
         flow: 'auth-code',
     });
 

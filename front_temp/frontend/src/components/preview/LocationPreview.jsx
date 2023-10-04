@@ -16,7 +16,10 @@ const LocationPreview = ({ place, type }) => {
     const navigate = useNavigate();
 
     const handleCompareLocation = id => {
+        // id가 없는데 id를 대체할 값을 무엇으로 정해서 
         const placeIndex = compareLocation.indexOf(id);
+        console.log(placeIndex) //=> 0 -1만 반복됨
+        console.log(place.id) //=>undefined
 
         if (placeIndex === -1) {
             const indexOfMinusOne = compareLocation.indexOf(-1);
