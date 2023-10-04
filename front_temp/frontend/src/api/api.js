@@ -2,38 +2,38 @@ import axios from 'axios';
 import * as utils from 'utils';
 import * as hooks from 'hooks';
 
-function createAxiosInstance() {
-    const { accessToken } = hooks.loginUserState();
+// function createAxiosInstance() {
+//     const { accessToken } = hooks.loginUserState();
 
-    // axios 인스턴스 생성
-    const instance = axios.create({
-        // baseURL: utils.API_BASE_URL,
-        baseURL: 'https://tripick.site',
-        // baseURL: '',
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            Accept: 'application/json',
-        },
-    });
+//     // axios 인스턴스 생성
+//     const instance = axios.create({
+//         // baseURL: utils.API_BASE_URL,
+//         baseURL: 'https://tripick.site',
+//         // baseURL: '',
+//         headers: {
+//             'Content-Type': 'application/json;charset=UTF-8',
+//             Accept: 'application/json',
+//         },
+//     });
 
-    // 인증 토큰을 Authorization 헤더에 추가
-    instance.defaults.headers.common['Authorization'] = accessToken;
+//     // 인증 토큰을 Authorization 헤더에 추가
+//     instance.defaults.headers.common['Authorization'] = accessToken;
 
-    return instance;
-}
+//     return instance;
+// }
 
-export const instance = createAxiosInstance();
+// export const instance = createAxiosInstance();
 
-// export const instance = axios.create({
-//     // baseURL: utils.API_BASE_URL,
-//     baseURL: 'https://tripick.site',
-//     // baseURL: '',
-//     headers: {
-//         'Content-Type': 'application/json;charset=UTF-8',
-//         Accept: 'application/json',
-//         // Authorization: `${accessToken}`,  //response에 잇는 header 에서 뽑아서 여기에 넣기.
-//     },
-// });
+export const instance = axios.create({
+    // baseURL: utils.API_BASE_URL,
+    baseURL: 'https://tripick.site',
+    // baseURL: '',
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        Accept: 'application/json',
+        // Authorization: `${accessToken}`,  //response에 잇는 header 에서 뽑아서 여기에 넣기.
+    },
+});
 
 // instance.interceptors.request.use(
 //     async (config) => {
