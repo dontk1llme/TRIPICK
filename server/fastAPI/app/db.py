@@ -34,14 +34,14 @@ def get_city_data():
 
 def get_rank_df(date):
     df = get_cities_df(date)
-    # 오름차순 - 기온 절대값, 범죄율, 환율, 가격, 강우일수 
+    # 오름차순 - 기온 절대값, 환율, 가격, 강우일수 
     df['temp_rank'] = df['temp'].rank(ascending=True).astype(int)
-    df['crime_rank'] = df['crime'].rank(ascending=True).astype(int)
     df['exchange_rank'] = df['exchange'].rank(ascending=True).astype(int)
     df['price_rank'] = df['price'].rank(ascending=True).astype(int)
     df['rainy_days_rank'] = df['rainy_days'].rank(ascending=True).astype(int)
-    # 내림차순 - 여행객 동향
+    # 내림차순 - 여행객 동향, 안전 지수
     df['traveler_rank'] = df['traveler'].rank(ascending=False).astype(int)
+    df['crime_rank'] = df['crime'].rank(ascending=False).astype(int)
     rank_df =  df[['city','country','temp_rank','rainy_days_rank','crime_rank','exchange_rank','price_rank','traveler_rank']]
     print(tabulate(rank_df, headers='keys', tablefmt='psql', showindex=True))
     return rank_df
