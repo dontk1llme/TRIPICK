@@ -12,10 +12,6 @@ const LoginSuccess = () => {
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
         profileImage, setProfileImage, createdAt, setCreatedAt } = hooks.loginUserState();
 
-    const { setLoginUser } = hooks.loginUserState();
-
-
-
     useEffect(() => {
         const code = new URL(window.location.href).searchParams.get('code');
         if (code) {
@@ -37,7 +33,7 @@ const LoginSuccess = () => {
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
 
-                    // navigate(utils.URL.HOME.LANDING);
+                    navigate(utils.URL.HOME.LANDING);
                 })
                 .catch(error => console.error(error));
         }
