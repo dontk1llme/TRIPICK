@@ -21,11 +21,11 @@ const LoginSuccess = () => {
                 .then(response => {
                     console.log(response);
                     // response를 state에 저장
-                    setMemberId(response.memberId);
-                    setNickname(response.nickname);
-                    setEmail(response.email);
-                    setProfileImage(response.profileImage);
-                    setCreatedAt(response.createdAt);
+                    setMemberId(response.data.data.memberId);
+                    setNickname(response.data.data.nickname);
+                    setEmail(response.data.data.email);
+                    setProfileImage(response.data.data.profileImage);
+                    setCreatedAt(response.data.data.createdAt);
                     console.log('어앵');
                     console.log(memberId, nickname, email, profileImage, createdAt);
 
