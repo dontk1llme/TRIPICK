@@ -1,28 +1,7 @@
 import axios from 'axios';
 import * as utils from 'utils';
 import * as hooks from 'hooks';
-
-// function createAxiosInstance() {
-//     const { accessToken } = hooks.loginUserState();
-
-//     // axios 인스턴스 생성
-//     const instance = axios.create({
-//         // baseURL: utils.API_BASE_URL,
-//         baseURL: 'https://tripick.site',
-//         // baseURL: '',
-//         headers: {
-//             'Content-Type': 'application/json;charset=UTF-8',
-//             Accept: 'application/json',
-//         },
-//     });
-
-//     // 인증 토큰을 Authorization 헤더에 추가
-//     instance.defaults.headers.common['Authorization'] = accessToken;
-
-//     return instance;
-// }
-
-// export const instance = createAxiosInstance();
+import React from 'react';
 
 export const instance = axios.create({
     // baseURL: utils.API_BASE_URL,
@@ -35,36 +14,22 @@ export const instance = axios.create({
     },
 });
 
-// instance.interceptors.request.use(
-//     async (config) => {
-//         try {
-//             const { accessToken } = await hooks.loginUserState();
-//             if (accessToken) {
-//                 config.headers.Authorization = accessToken;
-//             }
-//             return config;
-//         } catch (error) {
-//             return Promise.reject(error);
-//         }
-//     },
-//     (error) => {
-//         return Promise.reject(error);
-//     }
-// );
-
-// 요청을 보내기 전에 인증 토큰을 Authorization 헤더에 추가
-// instance.interceptors.request.use(
-//     async (config) => {
-//         const { accessToken } = hooks.loginUserState(); // hooks에서 인증 토큰 가져오기
-//         if (accessToken) {
-//             config.headers.Authorization = accessToken;
-//         }
-//         return config;
-//     },
-//     (error) => {
-//         return Promise.reject(error);
-//     }
-// );
+instance.interceptors.request.use(
+    async (config) => {
+        try {
+            const { accessToken } = await hooks.loginUserState();
+            if (accessToken) {
+                config.headers.Authorization = accessToken;
+            }
+            return config;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 // // 로그인
 // instance.interceptors.request.use(
