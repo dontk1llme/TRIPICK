@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export const loginUserState = create(set => ({
-    memberId: 2,
+    memberId: -1,
     nickname: '',
     email: '',
     profileImage: '',

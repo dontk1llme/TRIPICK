@@ -29,7 +29,6 @@ const LoginModal = ({ setModalOpen }) => {
     const handleGoogleClick = useGoogleLogin({
         onSuccess: codeResponse => {
             console.log(codeResponse)
-            closeModal
         },
         flow: 'auth-code',
     });
