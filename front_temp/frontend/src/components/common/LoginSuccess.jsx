@@ -20,6 +20,8 @@ const LoginSuccess = () => {
                 .createLoginRequest(code)
                 .then(response => {
                     console.log(response);
+                    console.log(response.data.data.memberId);
+                    console.log(response.data.data.nickname);
                     // response를 state에 저장
                     setMemberId(response.data.data.memberId);
                     setNickname(response.data.data.nickname);
