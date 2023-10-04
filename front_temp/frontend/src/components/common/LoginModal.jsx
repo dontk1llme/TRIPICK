@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
+
 import SignKaKao from '../../asset/images/SignKaKao.png';
 import SignGoogle from '../../asset/images/SignGoogle.png';
 import { useGoogleLogin } from '@react-oauth/google';
+import * as hooks from 'hooks';
+
 import Coala from '../../asset/images/coala.png';
 
 import * as api from 'api';
@@ -12,6 +15,9 @@ const LoginModal = ({ setModalOpen }) => {
     const closeModal = () => {
         setModalOpen(false);
     };
+
+    const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
+        profileImage, setProfileImage, createdAt, setCreatedAt } = hooks.loginUserState();
 
     ///////////// kakao ////////////////
     const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY; //REST API KEY
@@ -33,6 +39,13 @@ const LoginModal = ({ setModalOpen }) => {
                 .createGoogleLoginRequest(codeResponse.code)
                 .then(response => {
                     console.log(response);
+                    setMemberId(response.data.data.memberId);
+                    setNickname(response.data.data.nickname);
+                    setEmail(response.data.data.email);
+                    setProfileImage(response.data.data.profileImage);
+                    setCreatedAt(response.data.data.createdAt);
+                    closeModal;
+
                 })
                 .catch(error => {
                     console.error('Error making API request:', error);
