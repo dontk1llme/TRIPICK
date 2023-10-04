@@ -23,6 +23,7 @@ export const loginUserState = create(set => ({
             email: data.email,
             profileImage: data.profileImage,
             createdAt: data.createdAt,
+            accessToken: data.accessToken,
         })),
 }));
 
