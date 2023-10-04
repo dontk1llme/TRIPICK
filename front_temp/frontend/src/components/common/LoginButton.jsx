@@ -1,4 +1,4 @@
-import React, { Component, useState, useRef } from "react";
+import React, { Component, useState, useRef, useEffect} from "react";
 import LoginModal from "./LoginModal";
 import styled from 'styled-components';
 import * as hooks from 'hooks';
@@ -21,6 +21,10 @@ const LoginButton = () => {
       setProfileImage('');
       setCreatedAt('');
     }
+
+    useEffect(()=>{
+      console.log(memberId, nickname, email, profileImage, createdAt);
+  },[])
 
     return (
       <>
