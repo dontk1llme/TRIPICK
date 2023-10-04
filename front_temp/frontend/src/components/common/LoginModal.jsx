@@ -17,7 +17,7 @@ const LoginModal = ({ setModalOpen }) => {
     };
 
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
-        profileImage, setProfileImage, createdAt, setCreatedAt, authorization, setAuthorization,
+        profileImage, setProfileImage, createdAt, setCreatedAt, 
         accessToken, setAccessToken } = hooks.loginUserState();
 
     ///////////// kakao ////////////////
@@ -57,6 +57,7 @@ const LoginModal = ({ setModalOpen }) => {
 
     useEffect(()=>{
         console.log(memberId, nickname, email, profileImage, createdAt);
+        console.log(accessToken);
         if (memberId != -1){
             setModalOpen(false);
         }

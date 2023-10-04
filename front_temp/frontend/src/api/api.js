@@ -9,7 +9,7 @@ export const instance = axios.create({
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         Accept: 'application/json',
-        // Authorization: `${accessToken}`  //response에 잇는 header 에서 뽑아서 여기에 넣기.
+        Authorization: '',  //response에 잇는 header 에서 뽑아서 여기에 넣기.
     },
 });
 
@@ -19,7 +19,7 @@ instance.interceptors.request.use(
     async (config) => {
         const { accessToken } = hooks.loginUserState(); // hooks에서 인증 토큰 가져오기
         if (accessToken) {
-            config.headers['Authorization'] = accessToken;
+            config.headers.Authorization = accessToken;
         }
         return config;
     },
