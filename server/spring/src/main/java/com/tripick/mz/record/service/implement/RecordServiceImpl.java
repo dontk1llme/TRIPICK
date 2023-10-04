@@ -3,12 +3,15 @@ package com.tripick.mz.record.service.implement;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tripick.mz.common.S3.dto.S3FileDto;
 import com.tripick.mz.common.error.NotExistContentException;
 import com.tripick.mz.common.error.NotExistMemberException;
 import com.tripick.mz.common.error.NotExistRecordException;
 import com.tripick.mz.common.error.NotExistRecordImageException;
 import com.tripick.mz.member.entity.Member;
+import com.tripick.mz.member.entity.MemberBadge;
+import com.tripick.mz.member.entity.QMemberBadge;
 import com.tripick.mz.member.repository.MemberRepository;
 import com.tripick.mz.record.dto.request.CreateTripRecordImageRequestDto;
 import com.tripick.mz.record.dto.request.CreateTripRecordRequestDto;
@@ -20,6 +23,7 @@ import com.tripick.mz.record.entity.TripRecordImage;
 import com.tripick.mz.record.repository.TripRecordImageRepository;
 import com.tripick.mz.record.repository.TripRecordRepository;
 import com.tripick.mz.record.service.RecordService;
+import com.tripick.mz.trip.repository.NationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -43,6 +47,9 @@ public class RecordServiceImpl implements RecordService {
     private final TripRecordRepository tripRecordRepository;
     private final TripRecordImageRepository tripRecordImageRepository;
     private final MemberRepository memberRepository;
+    private final NationRepository nationRepository;
+    private final JPAQueryFactory queryFactory;
+    private final QMemberBadge memberBadge = QMemberBadge.memberBadge;
 
     @Override
     public List<String> getTripRecordsByMemberId(int memberId) {
@@ -90,6 +97,19 @@ public class RecordServiceImpl implements RecordService {
         log.info("RecordServiceImpl_createTripRecord -> 여행 기록 작성 시도");
         Member member = memberRepository.findById(createTripRecordRequestDto.getMemberId())
                 .orElseThrow(NotExistMemberException::new);
+
+        int badgeId = nationRepository.findByName(createTripRecordRequestDto.getNationName()).getBadgeId();
+
+        MemberBadge mb = queryFactory.selectFrom(memberBadge)
+                .where(memberBadge.badge.badgeId.eq(badgeId),
+                        memberBadge.member.memberId.eq(member.getMemberId()))
+                .fetchOne();
+
+        mb.updateVisitCount();
+
+        if(mb.getVisitCount() >= 3) {
+            mb.updateAchieved();
+        }
 
         TripRecord tripRecord = TripRecord.builder()
                 .member(member)
