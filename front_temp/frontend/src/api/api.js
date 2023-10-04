@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as utils from 'utils';
 import * as hooks from 'hooks';
-import React from 'react';
 
 export const instance = axios.create({
     // baseURL: utils.API_BASE_URL,
@@ -14,22 +13,22 @@ export const instance = axios.create({
     },
 });
 
-instance.interceptors.request.use(
-    async (config) => {
-        try {
-            const { accessToken } = await hooks.loginUserState();
-            if (accessToken) {
-                config.headers.Authorization = accessToken;
-            }
-            return config;
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
+// instance.interceptors.request.use(
+//     async (config) => {
+//         try {
+//             const { accessToken } = await hooks.loginUserState();
+//             if (accessToken) {
+//                 config.headers.Authorization = accessToken;
+//             }
+//             return config;
+//         } catch (error) {
+//             return Promise.reject(error);
+//         }
+//     },
+//     (error) => {
+//         return Promise.reject(error);
+//     }
+// );
 
 // // 로그인
 // instance.interceptors.request.use(
