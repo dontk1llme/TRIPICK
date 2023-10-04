@@ -7,7 +7,6 @@ export const loginUserState = create(set => ({
     profileImage: '초기프로필',
     createdAt: '초기생성일자',
 
-    authorization: '',
     accessToken:'',
 
     setMemberId: data => set(state => ({ memberId: data })),
@@ -15,7 +14,6 @@ export const loginUserState = create(set => ({
     setEmail: data => set(state => ({ email: data })),
     setProfileImage: data => set(state => ({ profileImage: data })),
     setCreatedAt: data => set(state => ({ createdAt: data })),
-    setAuthorization: data => set(state => ({authorization: data})),
     setAccessToken: data => set(state => ({accessToken: data})),
 
     setLoginUser: data =>
