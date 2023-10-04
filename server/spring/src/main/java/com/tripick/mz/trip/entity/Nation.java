@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 @Table(name="nation")
 public class Nation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int nationId;
 
     @NotNull
@@ -24,8 +23,5 @@ public class Nation {
     private String name;
 
     @NotNull
-    private float crimeRate;
-
-    @NotNull
-    private float relativePriceIndex;
+    private int badgeId;
 }
