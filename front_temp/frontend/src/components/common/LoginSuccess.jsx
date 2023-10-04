@@ -8,11 +8,6 @@ import { create } from 'lodash';
 
 const LoginSuccess = () => {
     const navigate = useNavigate();
-    // const [ memberId, setMemberId] = useState('');
-    // const [ nickname, setNickname] = useState('');
-    // const [ email, setEmail] = useState('');
-    // const [ profileImage, setProfileImage] = useState('');
-    // const [ createdAt, setCreatedAt] = useState('');
 
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
         profileImage, setProfileImage, createdAt, setCreatedAt } = hooks.loginUserState();
@@ -41,8 +36,6 @@ const LoginSuccess = () => {
                     setEmail(response.data.data.email);
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
-                    // setLoginUser(response.data.data);
-                    console.log(memberId, nickname, email, profileImage, createdAt);
 
                     // navigate(utils.URL.HOME.LANDING);
                 })
@@ -50,6 +43,10 @@ const LoginSuccess = () => {
         }
         
     }, []);
+
+    useEffect(()=>{
+        console.log(memberId, nickname, email, profileImage, createdAt);
+    },[memberId, nickname, email, profileImage, createdAt])
 
     return <div></div>;
 };
