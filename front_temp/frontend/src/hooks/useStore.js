@@ -2,10 +2,10 @@ import { create } from 'zustand';
 
 export const loginUserState = create(set => ({
     memberId: -1,
-    nickname: '',
-    email: '',
-    profileImage: '',
-    createdAt: '',
+    nickname: '초기닉네임',
+    email: '초기이메일',
+    profileImage: '초기프로필',
+    createdAt: '초기생성일자',
     setMemberId: data => set(state => ({ memberId: data })),
     setNickname: data => set(state => ({ nickname: data })),
     setEmail: data => set(state => ({ email: data })),
