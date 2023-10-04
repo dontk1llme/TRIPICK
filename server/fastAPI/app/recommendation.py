@@ -17,7 +17,7 @@ class Recommendation:
     def now(self, member_id):
         rank_df = db.get_rank_df(now.date())
         # 가중치 순서: temp, rainy, price, exchange, crime, traveler 
-        w = [1,1,1,1,1,1]
+        w = [3,3,1,1,1,1]
         # 로그인 상태라면 찜 목록을 바탕으로 가중치 업데이트 
         if member_id is not None:
             total_w, weather_w, exchange_w, crime_w = Recommendation.update_weight(member_id)
@@ -43,7 +43,7 @@ class Recommendation:
         start_date = datetime.strptime(start_date, date_format)
         rank_df = db.get_rank_df(start_date)
         # 가중치 순서: temp, rainy, price, exchange, crime, traveler 
-        total_w = [1,1,1,1,1,1]
+        total_w = [3,3,1,1,1,1]
         weather_w = [5,5,1,1,1,1]
         exchange_w = [1,1,5,5,1,1]
         crime_w = [1,1,1,1,5,1]
@@ -63,10 +63,10 @@ class Recommendation:
                 result = result._append({'city': row['city'], 'y': y}, ignore_index=True)
             result['rank'] = result['y'].rank(ascending=True).astype(int)
             result_sorted = result.sort_values(by='rank', ascending=True)
-            print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
+            # print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
             result_sorted = result_sorted.head(3)
             inner_dict = {}
-            idx = 1;
+            idx = 1
             for j, row in result_sorted.iterrows():
                 city_name = row['city']
                 city_data = db.get_one_city(city_name,start_date)
@@ -78,16 +78,34 @@ class Recommendation:
         return result_dict
     
     def update_weight(member_id):
+        # 가중치 초기값
         total_w = [1, 1, 1, 1, 1, 1]
         weather_w = [5, 5, 1, 1, 1, 1]
         exchange_w = [1, 1, 5, 5, 1, 1]
         crime_w = [1, 1, 1, 1, 5, 1]
         # 현재 로그인한 사용자의 여행지 찜 목록
-        picked_trip_dict = db.get_picked_trip(member_id)
-        # 결과 출력
-        for document in picked_trip_dict:
-            print(document)
-        # 네 개의 리스트를 포함한 튜플을 반환
+        picked_trip = db.get_picked_trip(member_id)
+        for picked_trip_dict in picked_trip:
+            city = picked_trip_dict['city']
+            date = picked_trip_dict['start_date']
+            date_format = "%Y-%m-%d"
+            start_date = datetime.strptime(date, date_format)
+            rank_df = db.get_rank_df(start_date)
+            city_rank = rank_df[rank_df['city']==city]
+            city_rank = city_rank[['temp_rank','rainy_days_rank','price_rank','exchange_rank','crime_rank','traveler_rank']].iloc[0]
+            # 가중치 학습률
+            learning_rate = 0.5
+            update_weight = (city_rank.rank(ascending=False)* learning_rate).tolist()
+            # 가중치 업데이트
+            total_w = [x + y for x, y in zip(total_w, update_weight)]
+            weather_w = [x + y for x, y in zip(weather_w, update_weight)]
+            exchange_w = [x + y for x, y in zip(exchange_w, update_weight)]
+            crime_w = [x + y for x, y in zip(crime_w, update_weight)]
+        print('updated weight')
+        print('total: ',total_w)
+        print('weather: ',weather_w)
+        print('exchange: ',exchange_w)
+        print('crime: ',crime_w)
         return total_w, weather_w, exchange_w, crime_w
 
-            
+Recommendation.update_weight(32)
