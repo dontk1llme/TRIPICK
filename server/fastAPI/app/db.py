@@ -18,6 +18,7 @@ client = pymongo.MongoClient("mongodb://j9a305.p.ssafy.io/",
 db = client.tripickDB
 cities = db.cities
 counties = db.countries
+picked_trip = db.picked_trip
 
 # db의 전체 데이터 불러오기
 # all = list(cities.find({}, {'_id':False}))
@@ -124,3 +125,7 @@ def get_one_city(name, date):
     }
     # 오름차순 - 기온차, 강우일수, 환율, 물가, 범죄율
     return city_dict
+
+def get_picked_trip(member_id):
+    picked_trip_dict = picked_trip.find({"member_id": member_id})
+    return picked_trip_dict
