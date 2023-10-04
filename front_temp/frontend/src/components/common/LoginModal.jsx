@@ -51,6 +51,7 @@ const LoginModal = ({ setModalOpen }) => {
         },
         flow: 'auth-code',
     });
+    
     useEffect(()=>{
         console.log(memberId, nickname, email, profileImage, createdAt);
         closeModal;
