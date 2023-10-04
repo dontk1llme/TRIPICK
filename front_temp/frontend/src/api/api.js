@@ -13,6 +13,22 @@ export const instance = axios.create({
     },
 });
 
+instance.interceptors.request.use(
+    async (config) => {
+        try {
+            const { accessToken } = await hooks.loginUserState();
+            if (accessToken) {
+                config.headers.Authorization = accessToken;
+            }
+            return config;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 // 요청을 보내기 전에 인증 토큰을 Authorization 헤더에 추가
 // instance.interceptors.request.use(
