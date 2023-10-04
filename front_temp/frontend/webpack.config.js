@@ -61,7 +61,7 @@ module.exports = (env, options) => {
             hot: true,
             // host: 'j9a305.p.ssafy.io',
             allowedHosts: 'all',
-            port: 3000,
+            // port: 3000,
             historyApiFallback: true,
         },
     };

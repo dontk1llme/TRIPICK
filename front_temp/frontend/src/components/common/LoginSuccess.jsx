@@ -26,6 +26,7 @@ const LoginSuccess = () => {
                     setEmail(response.email);
                     setProfileImage(response.profileImage);
                     setCreatedAt(response.createdAt);
+                    console.log(memberId, nickname, email, profileImage, createdAt);
 
                     // navigate(utils.URL.HOME.LANDING);
                 })
