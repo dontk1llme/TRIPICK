@@ -21,12 +21,10 @@ const LoginSuccess = () => {
                     console.log(response);
                     //초기값 출력 -> 됨
                     console.log(memberId, nickname, email, profileImage, createdAt);
-                    console.log(response.data.data.memberId);
-                    console.log(response.data.data.nickname);
                     console.log(response.data.data);
+                    console.log(response.data);
 
                     // response를 state에 저장
-                    // set 안 되는 중. .. 
                     setMemberId(response.data.data.memberId);
                     setNickname(response.data.data.nickname);
                     setEmail(response.data.data.email);
