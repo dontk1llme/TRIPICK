@@ -36,4 +36,17 @@ public class MemberBadge {
 
     @NotNull
     private LocalDateTime achievedDate;
+
+    public void updateVisitCount() {
+        this.visitCount++;
+    }
+
+    public void updateAchieved() {
+        if(!this.achieved) {
+            this.achievedDate = LocalDateTime.now();
+        }
+
+        this.achieved = true;
+    }
+
 }
