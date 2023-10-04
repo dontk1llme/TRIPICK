@@ -35,12 +35,12 @@ const LoginSuccess = () => {
 
                     // response를 state에 저장
                     // set 안 되는 중. .. .
-                    // setMemberId(response.data.data.memberId);
-                    // setNickname(response.data.data.nickname);
-                    // setEmail(response.data.data.email);
-                    // setProfileImage(response.data.data.profileImage);
-                    // setCreatedAt(response.data.data.createdAt);
-                    setLoginUser(response.data.data);
+                    setMemberId(response.data.data.memberId);
+                    setNickname(response.data.data.nickname);
+                    setEmail(response.data.data.email);
+                    setProfileImage(response.data.data.profileImage);
+                    setCreatedAt(response.data.data.createdAt);
+                    // setLoginUser(response.data.data);
                     console.log('어앵');
                     console.log(memberId, nickname, email, profileImage, createdAt);
 
