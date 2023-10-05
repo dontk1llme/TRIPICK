@@ -46,8 +46,8 @@ class Recommendation:
         # 가중치 순서: temp, rainy, price, exchange, crime, traveler 
         total_w = [3,3,1,1,1,1]
         weather_w = [5,5,1,1,1,1]
-        exchange_w = [1,1,5,5,1,1]
-        crime_w = [1,1,1,1,5,1]
+        exchange_w = [1,1,3,3,1,1]
+        crime_w = [1,1,1,1,3,1]
         # 로그인 상태라면 찜 목록을 바탕으로 가중치 업데이트 
         if member_id is not None:
             total_w, weather_w, exchange_w, crime_w = Recommendation.update_weight(member_id)
@@ -83,10 +83,10 @@ class Recommendation:
     
     def update_weight(member_id):
         # 가중치 초기값
-        total_w = [1, 1, 1, 1, 1, 1]
+        total_w = [3, 3, 1, 1, 1, 1]
         weather_w = [5, 5, 1, 1, 1, 1]
-        exchange_w = [1, 1, 5, 5, 1, 1]
-        crime_w = [1, 1, 1, 1, 5, 1]
+        exchange_w = [1, 1, 3, 3, 1, 1]
+        crime_w = [1, 1, 1, 1, 3, 1]
         # 현재 로그인한 사용자의 여행지 찜 목록
         picked_trip = db.get_picked_trip(member_id)
         for picked_trip_dict in picked_trip:
