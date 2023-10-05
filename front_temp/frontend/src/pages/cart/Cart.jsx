@@ -23,8 +23,8 @@ const Cart = () => {
     useEffect(() => {
         api.apis.getPickedTripRequest(memberId)
             .then(response => {
-                console.log(response);
-                setCartLocation([...cartLocation, response.data]);
+                console.log(response.data.data);
+                setCartLocation([...cartLocation, response.data.data]);
             })
     })
 
