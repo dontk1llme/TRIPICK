@@ -50,7 +50,6 @@ def get_rank_df(date):
     df['traveler_rank'] = df['traveler'].rank(ascending=False).astype(int)
     df['crime_rank'] = df['crime'].rank(ascending=False).astype(int)
     rank_df =  df[['city','country','temp_rank','rainy_days_rank','price_rank','exchange_rank','crime_rank','traveler_rank']]
-    # print(tabulate(rank_df, headers='keys', tablefmt='psql', showindex=True))
     # 'city'와 'country' 열은 문자열이므로 제외하고 나머지 열 정규화
     columns_to_normalize = ['temp_rank', 'rainy_days_rank', 'price_rank', 'exchange_rank', 'crime_rank', 'traveler_rank']
     rank_df[columns_to_normalize] = rank_df[columns_to_normalize].apply(normalize_column)
@@ -142,3 +141,7 @@ def get_one_city(name, date):
 def get_picked_trip(member_id):
     picked_trip_dict = picked_trip.find({"member_id": member_id})
     return picked_trip_dict
+
+def get_country_name(city_name):
+    city =  cities.find_one({'name':city_name},{'_id':False})
+    return city['country']
