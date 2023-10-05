@@ -63,6 +63,6 @@ module.exports = (env, options) => {
             allowedHosts: 'all',
             port: 3000,
             historyApiFallback: true,
-        },
+        }
     };
 };

@@ -17,7 +17,7 @@ const MyProfile = () => {
         setEmail,
         setProfileImage,
     } = hooks.loginUserState();
-    const { mainStampId, stamp } = hooks.stampState();
+    const { mainStampId, stamp, setMainStampId, setStamp } = hooks.stampState();
     const { view, response, setView, setMessage, setResponse, type, setType } = hooks.modalState();
     const [mainStampUrl, setMainStampUrl] = useState('');
     const [onEditMode, setOnEditMode] = useState(false);
@@ -39,7 +39,6 @@ const MyProfile = () => {
             .getMemberProfile(memberId)
             .then(response => {
                 console.log('프로필', response.data);
-                console.log('닉네임', response.data.data.nickname);
                 setNickname(response.data.data.nickname);
                 setEmail(response.data.data.email);
                 setCreatedAt(response.data.data.createdAt);
@@ -58,9 +57,9 @@ const MyProfile = () => {
 
     useEffect(() => {
         if (mainStampId !== 0) {
-            const mainStamp = stamp.find(s => s.id === mainStampId);
-            if (mainStamp && mainStamp.obtained) {
-                setMainStampUrl(mainStamp.imageUrl);
+            const mainStamp = stamp.find(s => s.badge.badgeId === mainStampId);
+            if (mainStamp && mainStamp.achieved) {
+                setMainStampUrl(mainStamp.badge.image);
             }
         } else {
             setMainStampUrl('');
