@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import * as components from 'components';
 import * as hooks from 'hooks';
 import * as api from 'api';
+import { useCountriesData } from '/src/components/diary/CountryContext';
+
+const krdata = require('world_countries_lists/data/countries/ko/countries.json');
 
 const Diary = () => {
     const { selectedAlbum, setSelectedCountry } = hooks.albumState();
@@ -11,9 +14,11 @@ const Diary = () => {
     useEffect(() => {
         api.apis
             .getNations(memberId)
-            .then(response => setSelectedCountry(response.data))
+            .then(response => {
+                setSelectedCountry(response.data);
+            })
             .catch(error => console.log(error));
-    }, []);
+    },[]);
 
     return (
         <S.Wrap>

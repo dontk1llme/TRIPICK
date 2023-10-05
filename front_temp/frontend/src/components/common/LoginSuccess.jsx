@@ -20,8 +20,6 @@ const LoginSuccess = () => {
             api.apis
                 .createLoginRequest(code)
                 .then(response => {
-                    console.log(response);
-
                     // response를 state에 저장
                     setMemberId(response.data.data.memberId);
                     setNickname(response.data.data.nickname);
@@ -32,7 +30,6 @@ const LoginSuccess = () => {
                     setStamp(response.data.data.memberBadgeList);
 
                     setAccessToken(response.headers[`access-token`]);
-                    console.log("흐음", response.headers);
                     localStorage.setItem('token', response.headers[`access-token`]);
 
                     navigate(utils.URL.HOME.LANDING);
@@ -43,7 +40,6 @@ const LoginSuccess = () => {
     }, []);
 
     useEffect(()=>{
-        console.log(memberId, nickname, email, profileImage, createdAt, stamp, mainStampId);
     },[memberId, nickname, email, profileImage, createdAt, stamp, mainStampId])
 
     return <div></div>;
