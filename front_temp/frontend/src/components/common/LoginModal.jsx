@@ -47,6 +47,7 @@ const LoginModal = ({ setModalOpen }) => {
                     setCreatedAt(response.data.data.createdAt);
 
                     setAccessToken(response.data.headers.access-token);
+                    localStorage.setItem('token', response.data.headers.access-token);
                 })
                 .catch(error => {
                     console.error('Error making API request:', error);
