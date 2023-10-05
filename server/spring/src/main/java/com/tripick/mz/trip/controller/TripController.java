@@ -1,5 +1,6 @@
 package com.tripick.mz.trip.controller;
 
+import com.tripick.mz.common.response.ListResponseResult;
 import com.tripick.mz.common.response.ResponseResult;
 import com.tripick.mz.trip.dto.request.PickTripRequestDto;
 import com.tripick.mz.trip.dto.response.PickedTripResponseDto;
@@ -33,8 +34,8 @@ public class TripController {
     }
 
     @GetMapping("/list/picked/{memberId}")
-    public List<PickedTripResponseDto> getPickedTripList(@PathVariable int memberId){
+    public ListResponseResult getPickedTripList(@PathVariable int memberId){
         log.info("TripController_getPickedTripList -> 찜한 여행 일정 리스트 조회");
-        return tripService.getPickedTripList(memberId);
+        return new ListResponseResult<>(tripService.getPickedTripList(memberId));
     }
 }
