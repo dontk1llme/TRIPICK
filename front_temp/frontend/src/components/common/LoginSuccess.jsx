@@ -33,7 +33,7 @@ const LoginSuccess = () => {
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
 
-                    setAccessToken(response.headers.access-token);
+                    setAccessToken(response.headers[`access-token`]);
 
                     navigate(utils.URL.HOME.LANDING);
                 })
