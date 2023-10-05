@@ -76,11 +76,11 @@ const Compare = () => {
                         </S.CityImage>
                         <S.DataContainer>
                             <S.DataItemContainer>
-                                {firstCity.exchange}원
+                                {firstCity.exchangeRate}원
                                 {/* <S.SubDataContainer>/{firstCity.currency}</S.SubDataContainer> */}
                             </S.DataItemContainer>
                             <S.DataItemContainer>{firstCity.climate&&firstCity.climate.temp_avg}°C</S.DataItemContainer>
-                            <S.DataItemContainer>{firstCity.crime}/10</S.DataItemContainer>
+                            <S.DataItemContainer>{firstCity.crimeRate}/10</S.DataItemContainer>
                             <S.DataItemContainer>{firstCity.traveler}명</S.DataItemContainer>
                             {/* <S.DataItemContainer className="ticket">
                                 {' '}
@@ -108,11 +108,11 @@ const Compare = () => {
                         </S.HoverContainer>
                         <S.DataContainer>
                             <S.DataItemContainer>
-                                {secondCity.exchange}원
+                                {secondCity.exchangeRate}원
                                 {/* <S.SubDataContainer>/{firstCity.currency}</S.SubDataContainer> */}
                             </S.DataItemContainer>
                             <S.DataItemContainer>{secondCity.climate&&secondCity.climate.temp_avg}°C</S.DataItemContainer>
-                            <S.DataItemContainer>{secondCity.crime}/10</S.DataItemContainer>
+                            <S.DataItemContainer>{secondCity.crimeRate}/10</S.DataItemContainer>
                             <S.DataItemContainer>{secondCity.traveler}명</S.DataItemContainer>
                             {/* <S.DataItemContainer className="ticket">
                                 {' '}
@@ -131,7 +131,7 @@ const Compare = () => {
                                 {/* {secondCity.climate&&secondCity.climate.month} */}
                             </S.DatePeriod>
                             <S.CountryInformation>{secondCity.country}</S.CountryInformation>
-                            <S.CityInformation>{secondCity.name}</S.CityInformation>
+                            <S.CityInformation>{secondCity.city}</S.CityInformation>
                         </S.CityImage>
                     </S.CityContainer>
                 )}

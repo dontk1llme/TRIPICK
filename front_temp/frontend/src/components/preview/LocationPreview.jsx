@@ -24,7 +24,7 @@ const LocationPreview = ({ place, type }) => {
         // id가 없는데 id를 대체할 값을 무엇으로 정해서 
         const placeIndex = compareLocation.indexOf(id);
         console.log(placeIndex) //=> 0 -1만 반복됨
-        console.log(place.id) //=>undefined
+        console.log(place.uuid) //=>undefined
 
         if (placeIndex === -1) {
             const indexOfMinusOne = compareLocation.indexOf(-1);
@@ -134,7 +134,8 @@ const LocationPreview = ({ place, type }) => {
     }, [response]);
 
     const handleDetails = place => {
-        console.log(place)
+        console.log('플레이스');
+        console.log(place);
         setDetailLocation(place);
         if (detailLocation) {
             setViewDetail(true);
@@ -148,7 +149,7 @@ const LocationPreview = ({ place, type }) => {
             <S.PreviewImage image={place.image_url}>
                 <S.CountryName>{place.country}</S.CountryName>
                 <S.CityContainer>
-                    {place.name}
+                    {place.city}
                     <S.HeartContainer
                         onClick={e => {
                             e.stopPropagation();
@@ -161,27 +162,28 @@ const LocationPreview = ({ place, type }) => {
             <S.PreviewInformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>예상 날씨</S.InformationTitle>
+                    {/* 지금 없음. */}
                     <S.InformationContent>{place.climate && place.climate.temp_avg}°C</S.InformationContent> 
                 </S.InformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>예상 환율</S.InformationTitle>
-                    <S.InformationContent>{place.exchange}원 </S.InformationContent>
+                    <S.InformationContent>{place.exchangeRate}원 </S.InformationContent>
                     {/* <S.InformationDescription>/{place.estimatedExchangeRate}</S.InformationDescription> */}
                     {/* 화폐 단위가 없음 */}
                 </S.InformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>안전 지수</S.InformationTitle>
-                    <S.InformationContent>{place.crime} </S.InformationContent>
+                    <S.InformationContent>{place.crimeRate} </S.InformationContent>
                     <S.InformationDescription>/10</S.InformationDescription>
                 </S.InformationContainer>
                 {type === 'cart' && (
                     <S.CompareContainer
                         onClick={e => {
                             e.stopPropagation();
-                            handleCompareLocation(place.id);
+                            handleCompareLocation(place.uuid);
                         }}>
-                        {compareLocation.indexOf(place.id) === -1 ? <AiOutlineStar /> : <AiFillStar />}
-                        <S.ExplanatoryContainer className={compareLocation.indexOf(place.id) === -1 ? 'compare' : null}>
+                        {compareLocation.indexOf(place.uuid) === -1 ? <AiOutlineStar /> : <AiFillStar />}
+                        <S.ExplanatoryContainer className={compareLocation.indexOf(place.uuid) === -1 ? 'compare' : null}>
                             비교함 담기
                         </S.ExplanatoryContainer>
                     </S.CompareContainer>

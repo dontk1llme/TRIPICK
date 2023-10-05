@@ -64,7 +64,7 @@ const LocationDetail = () => {
                     <IoChevronBack />
                 </S.BackContainer>
                 <S.CountryName>{detailLocation.country}</S.CountryName>
-                <S.CityName>{detailLocation.name}</S.CityName>
+                <S.CityName>{detailLocation.city}</S.CityName>
                 <S.CartContainer onClick={handleCartLocation}>
                     {cartLocation.indexOf(detailLocation) !== -1 ? <GoHeartFill /> : <GoHeart />}
                 </S.CartContainer>
@@ -72,7 +72,7 @@ const LocationDetail = () => {
             <S.InformationContainer>
                 <S.InformationBox className="type1">
                     <S.InfromationTitle>예상 환율</S.InfromationTitle>
-                    <S.InformationContent>{detailLocation.exchange}원</S.InformationContent>
+                    <S.InformationContent>{detailLocation.exchangeRate}원</S.InformationContent>
                     {/* <S.SubInformation className="currency">/{detailLocation.currency}</S.SubInformation> */}
                 </S.InformationBox>
                 <S.InformationBox className="type2">
@@ -84,7 +84,7 @@ const LocationDetail = () => {
                 </S.InformationBox>
                 <S.InformationBox className="type1">
                     <S.InfromationTitle>안전지수</S.InfromationTitle>
-                    <S.InformationContent>{detailLocation.crime}/10</S.InformationContent>
+                    <S.InformationContent>{detailLocation.crimeRate}/10</S.InformationContent>
                 </S.InformationBox>
                 <S.InformationBox className="type1">
                     <S.InfromationTitle>여행객 동향</S.InfromationTitle>
