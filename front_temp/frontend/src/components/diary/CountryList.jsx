@@ -19,38 +19,31 @@ const CountryList = () => {
     const { memberId } = hooks.loginUserState();
 
     // 필터링된 국가 이름 배열
-    // const filteredCountryNames = selectedCountry.filter(countryName =>
-    //     countryName.toLowerCase().includes(searchQuery.toLowerCase()),
-    // );
     const filteredCountryNames = Array.isArray(selectedCountry)
     ? selectedCountry.filter(countryName =>
           countryName.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : [];
 
-
     useEffect(() => {
         // 국가 코드 배열이 변경될 때마다 국가 이름 배열 업데이트
-        getCountriesNamesList();
+        getCountryCodeList();
         setCurrentCountry('');
-    }, [countriesCodesArray]);
+    }, [selectedCountry]);
 
-    // 국가 코드를 국가 이름으로 변환하는 함수
-    const getCountryNameByCode = countryCode => {
-        const lowercaseCountryCode = countryCode.toLowerCase();
-        const countryData = krdata.find(data => data.alpha2 === lowercaseCountryCode);
-        return countryData ? countryData.name : '';
-    };
+    // 국가 이름을 국가 코드로 변환하는 함수
+    const getCountryCodeByName = countryName => {
+        const countryData = krdata.find(data => data.name === countryName);
+        return countryData ? countryData.alpha2.toUpperCase() : '';
+    }
 
-    // 국가 코드 배열을 국가 이름 배열로 변환하고 정렬 후 상태 업데이트
-    const getCountriesNamesList = () => {
-        const list = countriesCodesArray.map(code => getCountryNameByCode(code));
-
-        // 가나다순으로 정렬
-        list.sort((a, b) => a.localeCompare(b));
-
-        setSelectedCountry(list);
-    };
+    // 국가 이름 배열을 국가 코드 배열로 변환하고 상태 업데이트
+    const getCountryCodeList = () => {
+        const list = selectedCountry.map(name => getCountryCodeByName(name));
+        if(list.lenght !== 0){
+            setCountriesCodesArray(list);
+        }
+    }
 
     // 검색어 변경 핸들러
     const handleSearchChange = event => {
@@ -79,12 +72,14 @@ const CountryList = () => {
             console.log(countryData);
             console.log(countriesCodesArray);
             console.log(selectedCountry);
-            setCountriesCodesArray([...countriesCodesArray, countryData.alpha2.toUpperCase()]);
+            // setCountriesCodesArray([...countriesCodesArray, countryData.alpha2.toUpperCase()]);
+            setSelectedCountry([...selectedCountry, countryData.name])
         
             // 검색어 초기화
             setSearchQuery('');
             setIsSearchResultInKrData(true); // 추가 성공 시 초기화
             console.log('krdata에 잇음');
+            console.log(countriesCodesArray);
         } else {
             setIsSearchResultInKrData(false); // 검색 결과가 없을 때 설정
             console.log('krdata에 없음');

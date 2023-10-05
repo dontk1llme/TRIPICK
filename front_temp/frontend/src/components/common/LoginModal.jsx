@@ -24,13 +24,12 @@ const LoginModal = ({ setModalOpen }) => {
 
     ///////////// kakao ////////////////
     const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY; //REST API KEY
-    const redirect_uri = 'https://tripick.site/auth'; //Redirect URI
+    const redirect_uri = 'https://tripic.site/auth'; //Redirect URI
     // oauth 요청 URL
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
 
     const handleKakaoClick = async () => {
-        console.log('카카오 클릭');
         window.location.href = kakaoURL;
     };
 
@@ -41,7 +40,6 @@ const LoginModal = ({ setModalOpen }) => {
             api.apis
                 .createGoogleLoginRequest(codeResponse.code)
                 .then(response => {
-                    console.log(response);
                     setMemberId(response.data.data.memberId);
                     setNickname(response.data.data.nickname);
                     setEmail(response.data.data.email);
@@ -51,7 +49,6 @@ const LoginModal = ({ setModalOpen }) => {
                     setMainStampId(response.data.data.mainBadge);
                     setStamp(response.data.data.memberBadgeList);
 
-                    console.log(response.headers['access-token']);
                     setAccessToken(response.headers[`access-token`]);
                     localStorage.setItem('token', response.headers[`access-token`]);
                 })
@@ -63,8 +60,6 @@ const LoginModal = ({ setModalOpen }) => {
     });
 
     useEffect(()=>{
-        console.log(memberId, nickname, email, profileImage, createdAt, stamp, mainStampId);
-        console.log(accessToken);
         if (memberId != -1){
             setModalOpen(false);
         }
