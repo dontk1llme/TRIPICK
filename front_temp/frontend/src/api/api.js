@@ -2,11 +2,6 @@ import axios from 'axios';
 import * as utils from 'utils';
 import * as hooks from 'hooks';
 
-const accessToken = () => {
-    const { accessToken } = hooks.loginUserState();
-    return accessToken;
-}
-
 export const instance = axios.create({
 
     // baseURL: utils.API_BASE_URL,
@@ -15,18 +10,9 @@ export const instance = axios.create({
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         Accept: 'application/json',
-        Authorization: `${accessToken}`,  //response에 잇는 header 에서 뽑아서 여기에 넣기.
+        // Authorization: `${accessToken}`,  //response에 잇는 header 에서 뽑아서 여기에 넣기.
     },
 });
-
-axios.interceptors.request.use(
-    config => {
-        config.headers['Authorization'] = `${accessToken}`;
-        return config;
-    }, error => {
-        return Promise.reject(error);
-    }
-)
 
 // instance.interceptors.request.use(
 //     async (config) => {
