@@ -2,9 +2,10 @@ import axios from 'axios';
 import * as utils from 'utils';
 import * as hooks from 'hooks';
 
-import { accessToken } from hooks.loginUserState();
+const { accessToken } = hooks.loginUserState();
 
 export const instance = axios.create({
+
     // baseURL: utils.API_BASE_URL,
     baseURL: 'https://tripick.site',
     // baseURL: '',
