@@ -68,8 +68,8 @@ const Compare = () => {
                                 <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation> */}
                             </S.WeatherInformationContainer>
                             <S.DatePeriod>
-                                {/* {firstCity.startDate} ~ {firstCity.endDate} */}
-                                {firstCity.climate&&firstCity.climate.month}
+                                {firstCity.start_date} ~ {firstCity.end_date}
+                                {/* {firstCity.climate&&firstCity.climate.month} */}
                             </S.DatePeriod>
                             <S.CountryInformation>{firstCity.country}</S.CountryInformation>
                             <S.CityInformation>{firstCity.name}</S.CityInformation>
@@ -127,8 +127,8 @@ const Compare = () => {
                                 <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation> */}
                             </S.WeatherInformationContainer>
                             <S.DatePeriod>
-                                {/* {firstCity.startDate} ~ {firstCity.endDate} */}
-                                {secondCity.climate&&secondCity.climate.month}
+                                {firstCity.start_date} ~ {firstCity.end_date}
+                                {/* {secondCity.climate&&secondCity.climate.month} */}
                             </S.DatePeriod>
                             <S.CountryInformation>{secondCity.country}</S.CountryInformation>
                             <S.CityInformation>{secondCity.name}</S.CityInformation>

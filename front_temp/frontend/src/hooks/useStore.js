@@ -13,7 +13,15 @@ export const loginUserState = create(set => ({
     setNickname: data => set(state => ({ nickname: data })),
     setEmail: data => set(state => ({ email: data })),
     setProfileImage: data => set(state => ({ profileImage: data })),
-    setCreatedAt: data => set(state => ({ createdAt: data })),
+    // setCreatedAt: data => set(state => ({ createdAt: data })),
+    setCreatedAt: data => {
+        const indexOfT = data.indexOf('T');
+        if (indexOfT !== -1) {
+          const valueBeforeT = data.substring(0, indexOfT);
+          set(state => ({ createdAt: valueBeforeT }));
+        }
+      },
+      
     setAccessToken: data => set(state => ({accessToken: data})),
 
     setLoginUser: data =>

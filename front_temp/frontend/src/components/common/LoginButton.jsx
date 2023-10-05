@@ -1,4 +1,5 @@
 import React, { Component, useState, useRef, useEffect} from "react";
+import { useNavigate } from 'react-router-dom';
 import LoginModal from "./LoginModal";
 import styled from 'styled-components';
 import * as hooks from 'hooks';
@@ -21,6 +22,7 @@ const LoginButton = () => {
       setProfileImage('');
       setCreatedAt('');
       localStorage.clear()
+      navigate(utils.URL.HOME.LANDING);
     }
 
     useEffect(()=>{
