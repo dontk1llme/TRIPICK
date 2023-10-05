@@ -19,9 +19,15 @@ const CountryList = () => {
     const { memberId } = hooks.loginUserState();
 
     // 필터링된 국가 이름 배열
-    const filteredCountryNames = selectedCountry.filter(countryName =>
-        countryName.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
+    // const filteredCountryNames = selectedCountry.filter(countryName =>
+    //     countryName.toLowerCase().includes(searchQuery.toLowerCase()),
+    // );
+    const filteredCountryNames = Array.isArray(selectedCountry)
+    ? selectedCountry.filter(countryName =>
+          countryName.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
+
 
     useEffect(() => {
         // 국가 코드 배열이 변경될 때마다 국가 이름 배열 업데이트
