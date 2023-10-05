@@ -20,6 +20,8 @@ const LoginModal = ({ setModalOpen }) => {
         profileImage, setProfileImage, createdAt, setCreatedAt, 
         accessToken, setAccessToken } = hooks.loginUserState();
 
+    const { mainStampId, stamp, setMainStampId, setStamp } = hooks.stampState();
+
     ///////////// kakao ////////////////
     const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY; //REST API KEY
     const redirect_uri = 'https://tripick.site/auth'; //Redirect URI
@@ -45,6 +47,9 @@ const LoginModal = ({ setModalOpen }) => {
                     setEmail(response.data.data.email);
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
+                
+                    setMainStampId(response.data.data.mainBadge);
+                    setStamp(response.data.data.memberBadgeList);
 
                     setAccessToken(response.headers[`access-token`]);
                     localStorage.setItem('token', response.headers[`access-token`]);
@@ -57,12 +62,12 @@ const LoginModal = ({ setModalOpen }) => {
     });
 
     useEffect(()=>{
-        console.log(memberId, nickname, email, profileImage, createdAt);
+        console.log(memberId, nickname, email, profileImage, createdAt, stamp, mainStampId);
         console.log(accessToken);
         if (memberId != -1){
             setModalOpen(false);
         }
-    },[memberId, nickname, email, profileImage, createdAt])
+    },[memberId, nickname, email, profileImage, createdAt, stamp, mainStampId])
 
     return (
         <S.modalWrapper>
