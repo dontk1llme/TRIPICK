@@ -7,6 +7,7 @@ from tabulate import tabulate
 import pandas as pd
 import db
 import dummy
+import uuid
 
 now = datetime.now()
 # dummy data
@@ -71,6 +72,9 @@ class Recommendation:
                 city_name = row['city']
                 city_data = db.get_one_city(city_name,start_date)
                 city_data['id'] = result_id
+                city_data['uuid'] = uuid.uuid1()
+                city_data['start_date'] = start_date.strftime("%Y-%m-%d")
+                city_data['end_date'] = end_date
                 inner_dict[f'recommendation_{idx}'] = city_data
                 idx += 1
                 result_id += 1
