@@ -19,6 +19,5 @@ public class PickedTripResponseDto {
     private float exchangeRate;
     private float priceIndex;
     private float crimeRate;
-    private int flightFee;
     private boolean activated;
 }
