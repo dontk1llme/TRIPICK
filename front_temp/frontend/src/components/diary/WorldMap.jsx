@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MapMap from 'react-svg-worldmap';
+import * as hooks from 'hooks';
+import * as api from 'api';
 import { useCountriesData } from './CountryContext';
 const krdata = require('world_countries_lists/data/countries/ko/countries.json');
 
 const WorldMap = () => {
-    const { countriesCodesArray, setCountriesCodesArray } = useCountriesData();
-    const [countriesNamesArray, setCountriesNamesArray] = useState([]);
+    const { countriesCodesArray } = useCountriesData();
     const [data, setData] = useState([]); // data 배열을 useState로 관리
 
     useEffect(() => {
@@ -30,22 +31,17 @@ const WorldMap = () => {
             country: getCountryLowerCode(code),
             value: ', ' + getCountryNameByCode(code), // 또는 다른 원하는 값으로 설정
         }));
+
         setData(newData); // data 배열 업데이트
-
-        getCountriesNamesList(codesArray);
     };
-
-    const getCountriesNamesList = codesArray => {
-        const list = codesArray.map(code => getCountryNameByCode(code));
-        setCountriesNamesArray(list);
-    };
-
+    
     const getStyle = ({ countryValue, countryCode, minValue, maxValue }) => ({
         fill: countriesCodesArray.includes(countryCode) ? '#5452B7' : '#8390FA',
         stroke: '5452B7',
         strokeWidth: 2,
-        // cursor: "pointer",
+        cursor: "pointer",
     });
+
 
     return (
         <S.Wrap style={{ width: 840, height: 336 }}>

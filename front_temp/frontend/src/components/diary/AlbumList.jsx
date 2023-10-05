@@ -30,7 +30,6 @@ const AlbumList = () => {
     };
 
     useEffect(() => {
-        console.log('selectedAlbum', selectedAlbum);
     }, [selectedAlbum]);
 
     const animateScroll = (element, targetScroll, duration) => {
