@@ -24,7 +24,7 @@ const LoginSuccess = () => {
                     console.log(response.data.data);
                     console.log(response.data);
 
-                    console.log(response.headers);
+                    console.log(response.headers.access-token);
 
                     // response를 state에 저장
                     setMemberId(response.data.data.memberId);
@@ -33,7 +33,7 @@ const LoginSuccess = () => {
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
 
-                    setAccessToken(response.headers.accessToken);
+                    setAccessToken(response.headers.access-token);
 
                     navigate(utils.URL.HOME.LANDING);
                 })
