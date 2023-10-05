@@ -7,7 +7,7 @@ import { BiCheck } from 'react-icons/bi';
 const CollectedStamp = ({ id }) => {
     const { stamp, mainStampId, setMainStampId } = hooks.stampState();
     const { view, setView, setMessage, response, setResponse, setType } = hooks.modalState();
-    const thisStamp = stamp.find(stamp => stamp.id === id);
+    const thisStamp = stamp.find(stamp => stamp.badge.badgeId === id);
 
     useEffect(() => {
         console.log('main', mainStampId);
@@ -30,10 +30,10 @@ const CollectedStamp = ({ id }) => {
 
     return (
         <S.Wrap>
-            <S.StampContainer image={thisStamp.imageUrl}>
+            <S.StampContainer image={thisStamp.badge.image}>
                 <S.StampDescription className="detail">
-                    <S.StampTitle>{thisStamp.name}</S.StampTitle>
-                    <S.StampDetail>{thisStamp.detail}</S.StampDetail>
+                    <S.StampTitle>{thisStamp.badge.name}</S.StampTitle>
+                    <S.StampDetail>{thisStamp.badge.detail}</S.StampDetail>
                     {mainStampId === id ? (
                         <S.IsMainButton onClick={handleRemoveMain}>
                             <BiCheck />
