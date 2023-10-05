@@ -266,23 +266,7 @@ export const recommendationState = create(set => ({
 }));
 
 export const cartState = create(set => ({
-    cartLocation: [
-        // {
-        //     id: 1,
-        //     country: '노르웨이',
-        //     city: '트롬쇠',
-        //     estimatedClimate: '12',
-        //     estimatedExchangeRate: '123.69',
-        //     currency: '크로네',
-        //     safety: '8.6',
-        //     imageUrl: require('asset/images/troms.png').default,
-        //     cart: true,
-        //     estimated_traveler: '100',
-        //     ticketPrice: '1741400',
-        //     start_date: '2023-08-31',
-        //     end_date: '2023-09-13',
-        // },
-    ],
+    cartLocation: [],
     compareLocation: [-1, -1],
     setCartLocation: data => set(state => ({ cartLocation: data })),
     setCompareLocation: data => set(state => ({ compareLocation: data })),
