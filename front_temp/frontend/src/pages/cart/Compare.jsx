@@ -86,11 +86,11 @@ const Compare = () => {
                         </S.CityImage>
                         <S.DataContainer>
                             <S.DataItemContainer>
-                                {firstCity.exchangeRate}원
+                                {firstCity.exchange}원
                                 {/* <S.SubDataContainer>/{firstCity.currency}</S.SubDataContainer> */}
                             </S.DataItemContainer>
                             <S.DataItemContainer>{firstCity.climate&&firstCity.climate.temp_avg}°C</S.DataItemContainer>
-                            <S.DataItemContainer>{firstCity.crimeRate}/10</S.DataItemContainer>
+                            <S.DataItemContainer>{firstCity.crime}/10</S.DataItemContainer>
                             <S.DataItemContainer>{firstCity.traveler}명</S.DataItemContainer>
                             {/* <S.DataItemContainer className="ticket">
                                 {' '}
