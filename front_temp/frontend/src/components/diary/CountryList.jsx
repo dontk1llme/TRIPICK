@@ -49,7 +49,7 @@ const CountryList = () => {
         // 가나다순으로 정렬
         list.sort((a, b) => a.localeCompare(b));
 
-        setSelectedCountry([...selectedCountry, list]);
+        setSelectedCountry(list);
     };
 
     // 검색어 변경 핸들러
