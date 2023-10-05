@@ -53,7 +53,7 @@ const LocationPreview = ({ place, type }) => {
             const tripDetail = {
                 uuid: place.uuid,
                 memberId: memberId,
-                name: place.name,
+                city: place.name,
                 country: place.country,
                 startDate: place.start_date,
                 endDate: place.end_date,
