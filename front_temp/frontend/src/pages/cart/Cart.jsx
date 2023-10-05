@@ -10,12 +10,8 @@ import { AiFillStar } from 'react-icons/ai';
 import * as components from 'components';
 
 const Cart = () => {
-    const {
-        memberId,
-        setCartLocation
-    } = hooks.loginUserState();
-
-    const { cartLocation, compareLocation } = hooks.cartState();
+    const { memberId } = hooks.loginUserState();
+    const { cartLocation, compareLocation, setCartLocation } = hooks.cartState();
     const { viewDetail, setViewDetail } = hooks.detailState();
     const navigate = useNavigate();
     const [compareAmount, setCompareAmount] = useState(0);
