@@ -45,7 +45,8 @@ const MyProfile = () => {
                 setEmail(response.data.data.email);
                 setCreatedAt(response.data.data.createdAt);
                 setProfileImage(response.data.data.profileImage);
-                window.location.reload();
+                // 토큰 완료되면 아래 거 추가
+                // window.location.reload();
             })
             .catch(error => console.log(error));
     }, [saveProfile, newImageFile, onEditMode, setProfileImage]);
