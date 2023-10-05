@@ -10,21 +10,19 @@ import { AiFillStar } from 'react-icons/ai';
 import * as components from 'components';
 
 const Cart = () => {
-    const {
-        memberId
-    } = hooks.loginUserState();
-
-    const { cartLocation, compareLocation } = hooks.cartState();
+    const { memberId } = hooks.loginUserState();
+    const { cartLocation, compareLocation, setCartLocation } = hooks.cartState();
     const { viewDetail, setViewDetail } = hooks.detailState();
     const navigate = useNavigate();
     const [compareAmount, setCompareAmount] = useState(0);
 
-    useEffect(() => {
-        api.apis.getPickedTripRequest(memberId)
-            .then(response => {
-                console.log(response);
-            })
-    })
+    // useEffect(() => {
+    //     api.apis.getPickedTripRequest(memberId)
+    //         .then(response => {
+    //             console.log(response.data.data);
+    //             setCartLocation([response.data.data]);
+    //         })
+    // }, [])
 
     useEffect(() => {
         const count = compareLocation.filter(value => value !== -1).length;
