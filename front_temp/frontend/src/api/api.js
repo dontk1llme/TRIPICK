@@ -10,38 +10,9 @@ export const instance = axios.create({
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         Accept: 'application/json',
-        // Authorization: `${accessToken}`,  //response에 잇는 header 에서 뽑아서 여기에 넣기.
+        Authorization: `${localStorage.getItem('token')}`,  //response에 잇는 header 에서 뽑아서 여기에 넣기.
     },
 });
-
-// instance.interceptors.request.use(
-//     async (config) => {
-//         try {
-//             const { accessToken } = await hooks.loginUserState();
-//             if (accessToken) {
-//                 config.headers.Authorization = accessToken;
-//             }
-//             return config;
-//         } catch (error) {
-//             return Promise.reject(error);
-//         }
-//     },
-//     (error) => {
-//         return Promise.reject(error);
-//     }
-// );
-
-// // 로그인
-// instance.interceptors.request.use(
-//     function (config) {
-//         const accessToken = hooks.getCookie('Authorization');
-//         config.headers['Authorization'] = accessToken;
-//         return config;
-//     },
-//     function (error) {
-//         return Promise.reject(error);
-//     },
-// );
 
 export const apis = {
     getNowRecommendations: () => instance.get('/fastapi/recommendation/now'),
