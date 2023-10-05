@@ -63,7 +63,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<PickedTripResponseDto> getPickedTripList(String memberId) {
+    public List<PickedTripResponseDto> getPickedTripList(int memberId) {
         log.info("TripServiceImpl_getPickedTripList -> 찜한 여행 일정 조회 시도");
 
         List<PickedTrip> pickedTripList = tripRepository.findByMemberIdAndActivated(memberId, true);

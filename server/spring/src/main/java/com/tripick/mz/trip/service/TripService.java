@@ -12,5 +12,5 @@ public interface TripService {
     // 여행 일정 찜 해제
     void removePickedTrip(String pickedTripId);
 
-    List<PickedTripResponseDto> getPickedTripList(String memberId);
+    List<PickedTripResponseDto> getPickedTripList(int memberId);
 }

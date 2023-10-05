@@ -22,7 +22,7 @@ public class PickedTrip {
     private String uuid;
 
     @Field("member_id")
-    private String memberId;
+    private int memberId;
     private String city;
     private String country;
 

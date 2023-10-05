@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TripRepository extends MongoRepository<PickedTrip, String> {
-    List<PickedTrip> findByMemberIdAndActivated(String memberId, boolean activated);
+public interface TripRepository extends MongoRepository<PickedTrip, Integer> {
+    List<PickedTrip> findByMemberIdAndActivated(int memberId, boolean activated);
 }
