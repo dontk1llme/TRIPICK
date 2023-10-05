@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class PickTripRequestDto {
+    private String uuid;
     private String memberId;
     private String city;
     private String country;
