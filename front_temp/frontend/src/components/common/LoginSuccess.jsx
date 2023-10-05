@@ -10,7 +10,7 @@ const LoginSuccess = () => {
     const navigate = useNavigate();
 
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
-        profileImage, setProfileImage, createdAt, setCreatedAt } = hooks.loginUserState();
+        profileImage, setProfileImage, createdAt, setCreatedAt, accessToken, setAccessToken } = hooks.loginUserState();
 
     useEffect(() => {
         const code = new URL(window.location.href).searchParams.get('code');
@@ -20,7 +20,7 @@ const LoginSuccess = () => {
                 .then(response => {
                     console.log(response);
                     //초기값 출력 -> 됨
-                    console.log(memberId, nickname, email, profileImage, createdAt);
+                    console.log(memberId, nickname, email, profileImage, createdAt, accessToken);
                     console.log(response.data.data);
                     console.log(response.data);
 
@@ -30,6 +30,8 @@ const LoginSuccess = () => {
                     setEmail(response.data.data.email);
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
+
+                    setAccessToken(response.headers.accessToken);
 
                     navigate(utils.URL.HOME.LANDING);
                 })
