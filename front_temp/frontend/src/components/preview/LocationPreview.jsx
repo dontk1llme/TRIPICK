@@ -20,30 +20,43 @@ const LocationPreview = ({ place, type }) => {
     const [currentPlace, setCurrentPlace] = useState(null);
     const navigate = useNavigate();
 
-    const handleCompareLocation = id => {
-        // id가 없는데 id를 대체할 값을 무엇으로 정해서 
-        const placeIndex = compareLocation.indexOf(id);
-        console.log(placeIndex) //=> 0 -1만 반복됨
-        console.log(place.uuid) //=>undefined
-
-        if (placeIndex === -1) {
-            const indexOfMinusOne = compareLocation.indexOf(-1);
-            if (indexOfMinusOne !== -1) {
-                compareLocation[indexOfMinusOne] = id;
-                if (indexOfMinusOne === 1 || compareLocation[1] !== -1) {
+    const handleCompareLocation = data => {
+            if(compareLocation.length == 2) {
+                setView(true);
+                setMessage('비교함이 가득 찼습니다. ');
+                setType('warning');
+            } else {
+                setCompareLocation([...compareLocation, data]);
+                if(compareLocation.length == 2) {
                     setView(true);
                     setMessage('비교함으로 이동하시겠습니까?');
                     setType('query');
                 }
-            } else {
-                setView(true);
-                setMessage('비교함이 가득 찼습니다. ');
-                setType('warning');
             }
-        } else {
-            compareLocation[placeIndex] = -1;
-        }
-        setCompareLocation([...compareLocation]);
+        
+        // // id가 없는데 id를 대체할 값을 무엇으로 정해서 
+        // const placeIndex = compareLocation.indexOf(id);
+        // console.log(placeIndex) //=> 0 -1만 반복됨
+        // console.log(place.uuid) //=>undefined
+
+        // if (placeIndex === -1) {
+        //     const indexOfMinusOne = compareLocation.indexOf(-1);
+        //     if (indexOfMinusOne !== -1) {
+        //         compareLocation[indexOfMinusOne] = id;
+        //         if (indexOfMinusOne === 1 || compareLocation[1] !== -1) {
+        //             setView(true);
+        //             setMessage('비교함으로 이동하시겠습니까?');
+        //             setType('query');
+        //         }
+        //     } else {
+        //         setView(true);
+        //         setMessage('비교함이 가득 찼습니다. ');
+        //         setType('warning');
+        //     }
+        // } else {
+        //     compareLocation[placeIndex] = -1;
+        // }
+        // setCompareLocation([...compareLocation]);
     };
 
     const handleCartLocation = place => {
@@ -183,7 +196,8 @@ const LocationPreview = ({ place, type }) => {
                     <S.CompareContainer
                         onClick={e => {
                             e.stopPropagation();
-                            handleCompareLocation(place.uuid);
+                            // handleCompareLocation(place.uuid);
+                            handleCompareLocation(place);
                         }}>
                         {compareLocation.indexOf(place.uuid) === -1 ? <AiOutlineStar /> : <AiFillStar />}
                         <S.ExplanatoryContainer className={compareLocation.indexOf(place.uuid) === -1 ? 'compare' : null}>
