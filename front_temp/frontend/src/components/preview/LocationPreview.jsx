@@ -47,7 +47,7 @@ const LocationPreview = ({ place, type }) => {
         console.log(placeIndex);
         if (!view && placeIndex === -1) {
             const tripDetail = {
-                "uuid": uuid,
+                "uuid": place.uuid,
                 "memberId": memberId,
                 "city": place.name,
                 "country": place.country,
