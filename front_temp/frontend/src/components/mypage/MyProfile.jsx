@@ -64,11 +64,8 @@ const MyProfile = () => {
     }, [onEditMode]);
 
     useEffect(() => {
-        console.log("하 진짜", mainStampId)
         if (mainStampId !== 0) {
-            console.log(stamp);
             const mainStamp = stamp.find(s => s.badgeId === mainStampId);
-            console.log(mainStamp);
             if (mainStamp && mainStamp.achieved) {
                 setMainStampUrl(mainStamp.image);
             }
