@@ -33,7 +33,7 @@ public class TripController {
     }
 
     @GetMapping("/list/picked/{memberId}")
-    public List<PickedTripResponseDto> getPickedTripList(@PathVariable String memberId){
+    public List<PickedTripResponseDto> getPickedTripList(@PathVariable int memberId){
         log.info("TripController_getPickedTripList -> 찜한 여행 일정 리스트 조회");
         return tripService.getPickedTripList(memberId);
     }
