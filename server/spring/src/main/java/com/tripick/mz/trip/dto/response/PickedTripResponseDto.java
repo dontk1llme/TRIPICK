@@ -11,17 +11,16 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class PickedTripResponseDto {
     private String uuid;
-    private String city;
+    private String name;
     private String country;
-    private String startDate;
-    private String endDate;
-    private String imageUrl;
+    private String start_date;
+    private String end_date;
+    private String image_url;
     private int traveler;
-    private float minimumTemperature;
-    private float averageTemperature;
-    private float maximumTemperature;
-    private float exchangeRate;
-    private float priceIndex;
-    private float crimeRate;
-    private boolean activated;
+    private float temp_min;
+    private float temp_avg;
+    private float temp_max;
+    private float exchange;
+    private float price;
+    private float crime;
 }
