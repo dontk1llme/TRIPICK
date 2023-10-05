@@ -38,18 +38,19 @@ const LocationDetail = () => {
     useEffect(() => {
         if (modalType === 'query' && message === '보관함에서 여행지를 삭제하시겠습니까?') {
             if (response === 'yes') {
+                
+                api.apis
+                    .removeTripRequest(detailLocation.uuid)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => console.log(error));
+
                 const updatedCartLocation = cartLocation.filter(cart => cart !== detailLocation);
                 setCartLocation([...updatedCartLocation]);
                 setType('');
                 setMessage('');
                 setResponse('');
-
-                api.apis
-                    .removeTripRequest(place.uuid)
-                    .then(response => {
-                        console.log(response);
-                    })
-                    .catch(error => console.log(error));
             } else if (response === 'no') {
                 setView(false);
                 setType('');
@@ -58,31 +59,31 @@ const LocationDetail = () => {
             }
         }
         if (modalType === 'checking' && message === '보관함에 추천 여행지를 담았습니다. ') {
-            if (response === 'yes') {
-                const tripDetail = {
-                    uuid: detailLocation.uuid,
-                    memberId: memberId,
-                    city: detailLocation.name,
-                    country: detailLocation.country,
-                    startDate: detailLocation.start_date,
-                    endDate: detailLocation.end_date,
-                    traveler: detailLocation.traveler,
-                    exchangeRate: detailLocation.exchange,
-                    imageUrl: detailLocation.image_url,
-                    minimumTemperature: detailLocation.climate.temp_min,
-                    averageTemperature: detailLocation.climate.temp_avg,
-                    maximumTemperature: detailLocation.climate.temp_max,
-                    priceIndex: detailLocation.price,
-                    crimeRate: detailLocation.crime
-                }
-        
-                api.apis
-                    .pickTripRequest(tripDetail)
-                    .then(response => {
-                        console.log(response);
-                    })
-                    .catch(error => console.log(error));
+            const tripDetail = {
+                uuid: detailLocation.uuid,
+                memberId: memberId,
+                city: detailLocation.name,
+                country: detailLocation.country,
+                startDate: detailLocation.start_date,
+                endDate: detailLocation.end_date,
+                traveler: detailLocation.traveler,
+                exchangeRate: detailLocation.exchange,
+                imageUrl: detailLocation.image_url,
+                minimumTemperature: detailLocation.climate.temp_min,
+                averageTemperature: detailLocation.climate.temp_avg,
+                maximumTemperature: detailLocation.climate.temp_max,
+                priceIndex: detailLocation.price,
+                crimeRate: detailLocation.crime
+            }
+    
+            api.apis
+                .pickTripRequest(tripDetail)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => console.log(error));
 
+            if (response === 'yes') {
                 setType('');
                 setMessage('');
                 setResponse('');
