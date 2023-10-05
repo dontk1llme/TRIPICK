@@ -3,11 +3,13 @@ import styled from 'styled-components';
 
 import * as hooks from 'hooks';
 import { BiCheck } from 'react-icons/bi';
+import * as api from 'api';
 
 const CollectedStamp = ({ id }) => {
-    const { stamp, mainStampId, setMainStampId } = hooks.stampState();
+    const { stamp } = hooks.stampState();
+    const { mainStampId, setMainStampId, memberId} = hooks.loginUserState();
     const { view, setView, setMessage, response, setResponse, setType } = hooks.modalState();
-    const thisStamp = stamp.find(stamp => stamp.badge.badgeId === id);
+    const thisStamp = stamp.find(stamp => stamp.badgeId === id);
 
     useEffect(() => {
         console.log('main', mainStampId);
@@ -19,6 +21,19 @@ const CollectedStamp = ({ id }) => {
         setMessage(`${stamp[id - 1].name}을 메인 스탬프로 설정했습니다.`);
         setView(true);
         setMainStampId(id);
+
+        const data = {
+            memberId : memberId,
+            badgeId : id,
+        }
+
+        api.apis
+            .updateMainBadge(data)
+            .then(response => {
+                console.log("변경 완");
+            })
+            .catch(error => console.log(error));
+
     };
 
     const handleRemoveMain = () => {
@@ -30,10 +45,10 @@ const CollectedStamp = ({ id }) => {
 
     return (
         <S.Wrap>
-            <S.StampContainer image={thisStamp.badge.image}>
+            <S.StampContainer image={thisStamp.image}>
                 <S.StampDescription className="detail">
-                    <S.StampTitle>{thisStamp.badge.name}</S.StampTitle>
-                    <S.StampDetail>{thisStamp.badge.detail}</S.StampDetail>
+                    <S.StampTitle>{thisStamp.name}</S.StampTitle>
+                    <S.StampDetail>{thisStamp.content}</S.StampDetail>
                     {mainStampId === id ? (
                         <S.IsMainButton onClick={handleRemoveMain}>
                             <BiCheck />

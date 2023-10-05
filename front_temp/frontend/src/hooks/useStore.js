@@ -12,6 +12,8 @@ export const loginUserState = create(
             profileImage: '초기프로필',
             createdAt: '초기생성일자',
             accessToken:'초기 엑세스 토큰',
+            mainStampId: -1,
+            setMainStampId: data => set(state => ({ mainStampId: data })),
             setMemberId: data => set(state => ({ memberId: data })),
             setNickname: data => set(state => ({ nickname: data })),
             setEmail: data => set(state => ({ email: data })),
@@ -270,8 +272,6 @@ export const cartState = create(set => ({
 }));
 
 export const stampState = create(set => ({
-    mainStampId: 1,
-    setMainStampId: data => set(state => ({ mainStampId: data })),
     stamp: [],
     setStamp: data =>
         set(state => ({ stamp: data})),

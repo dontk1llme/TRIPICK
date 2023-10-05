@@ -12,12 +12,14 @@ const MyProfile = () => {
         email,
         profileImage,
         createdAt,
+        mainStampId,
+        setMainStampId,
         setCreatedAt,
         setNickname,
         setEmail,
         setProfileImage,
     } = hooks.loginUserState();
-    const { mainStampId, stamp, setMainStampId, setStamp } = hooks.stampState();
+    const { stamp, setStamp } = hooks.stampState();
     const { view, response, setView, setMessage, setResponse, type, setType } = hooks.modalState();
     const [mainStampUrl, setMainStampUrl] = useState('');
     const [onEditMode, setOnEditMode] = useState(false);
@@ -28,13 +30,18 @@ const MyProfile = () => {
     const wrapRef = useRef(null);
 
     useEffect(() => {
+        console.log("진짜 에바야")
         api.apis
             .getBadges(memberId)
-            .then(response => console.log(response.data))
+            .then(response => {
+                setStamp(response.data.data)
+                console.log("테스트", response.data.data)
+            })
             .catch(error => console.log(error))
     }, [])
-
+    console.log("이거 언제 실행되나요", stamp);
     useEffect(() => {
+        console.log("이거 왜 제일 늦게 실행되냐?")
         api.apis
             .getMemberProfile(memberId)
             .then(response => {
@@ -43,6 +50,7 @@ const MyProfile = () => {
                 setEmail(response.data.data.email);
                 setCreatedAt(response.data.data.createdAt);
                 setProfileImage(response.data.data.profileImage);
+                setMainStampId(response.data.data.mainBadge);
                 // 토큰 완료되면 아래 거 추가
                 // window.location.reload();
             })
@@ -56,16 +64,18 @@ const MyProfile = () => {
     }, [onEditMode]);
 
     useEffect(() => {
+        console.log("하 진짜", mainStampId)
         if (mainStampId !== 0) {
-            const mainStamp = stamp.find(s => s.badge.badgeId === mainStampId);
+            console.log(stamp);
+            const mainStamp = stamp.find(s => s.badgeId === mainStampId);
+            console.log(mainStamp);
             if (mainStamp && mainStamp.achieved) {
-                setMainStampUrl(mainStamp.badge.image);
+                setMainStampUrl(mainStamp.image);
             }
         } else {
             setMainStampUrl('');
         }
-        console.log(mainStampUrl);
-    }, [mainStampId]);
+    }, [stamp, mainStampId]);
 
     useEffect(() => {
         if (!view && onEditMode) {
