@@ -27,6 +27,7 @@ const Compare = () => {
                 console.log(secondCityItem);
             }
         }
+        console.log('퍼시티');
         console.log(firstCity);
     }, []);
 

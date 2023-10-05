@@ -53,7 +53,7 @@ const LocationPreview = ({ place, type }) => {
             const tripDetail = {
                 uuid: place.uuid,
                 memberId: memberId,
-                city: place.name,
+                name: place.name,
                 country: place.country,
                 startDate: place.start_date,
                 endDate: place.end_date,
@@ -152,7 +152,7 @@ const LocationPreview = ({ place, type }) => {
             <S.PreviewImage image={place.image_url}>
                 <S.CountryName>{place.country}</S.CountryName>
                 <S.CityContainer>
-                    {place.city}
+                    {place.name}
                     <S.HeartContainer
                         onClick={e => {
                             e.stopPropagation();
