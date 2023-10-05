@@ -44,10 +44,10 @@ class Recommendation:
         start_date = datetime.strptime(start_date, date_format)
         rank_df = db.get_rank_df(start_date)
         # 가중치 순서: temp, rainy, price, exchange, crime, traveler 
-        total_w = [3,3,1,1,1,1]
-        weather_w = [5,5,1,1,1,1]
-        exchange_w = [1,1,3,3,1,1]
-        crime_w = [1,1,1,1,3,1]
+        total_w = [2,2,1,1,1,1]
+        weather_w = [3,3,1,1,1,1]
+        exchange_w = [1,1,2,2,1,1]
+        crime_w = [1,1,1,1,2,1]
         # 로그인 상태라면 찜 목록을 바탕으로 가중치 업데이트 
         if member_id is not None:
             total_w, weather_w, exchange_w, crime_w = Recommendation.update_weight(member_id)
@@ -55,6 +55,7 @@ class Recommendation:
         rec_list = ['total','weather','exchange','crime'] 
         result_dict = {}
         result_id = 1
+        result_list = []
         for i in range(0,4):
             w = w_list[i]
             result = pd.DataFrame(columns=['city', 'rank'])
@@ -65,11 +66,16 @@ class Recommendation:
             result['rank'] = result['y'].rank(ascending=True).astype(int)
             result_sorted = result.sort_values(by='rank', ascending=True)
             # print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
-            result_sorted = result_sorted.head(3)
+            # result_sorted = result_sorted.head(3)
             inner_dict = {}
             idx = 1
             for j, row in result_sorted.iterrows():
+                if idx == 4:
+                    break
                 city_name = row['city']
+                if city_name in result_list:
+                    continue
+                result_list.append(city_name)
                 city_data = db.get_one_city(city_name,start_date)
                 city_data['id'] = result_id
                 city_data['uuid'] = uuid.uuid1()
@@ -79,14 +85,15 @@ class Recommendation:
                 idx += 1
                 result_id += 1
             result_dict[f'recommendation_{rec_list[i]}'] = inner_dict
+            print(result_list)
         return result_dict
     
     def update_weight(member_id):
         # 가중치 초기값
-        total_w = [3, 3, 1, 1, 1, 1]
-        weather_w = [5, 5, 1, 1, 1, 1]
-        exchange_w = [1, 1, 3, 3, 1, 1]
-        crime_w = [1, 1, 1, 1, 3, 1]
+        total_w = [2,2,1,1,1,1]
+        weather_w = [3,3,1,1,1,1]
+        exchange_w = [1,1,2,2,1,1]
+        crime_w = [1,1,1,1,2,1]
         # 현재 로그인한 사용자의 여행지 찜 목록
         picked_trip = db.get_picked_trip(member_id)
         for picked_trip_dict in picked_trip:
