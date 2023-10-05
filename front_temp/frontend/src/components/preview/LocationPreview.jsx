@@ -13,7 +13,7 @@ const LocationPreview = ({ place, type }) => {
     const {
         memberId
     } = hooks.loginUserState();
-    
+
     const { cartLocation, setCartLocation, compareLocation, setCompareLocation } = hooks.cartState();
     const { detailLocation, setDetailLocation, setViewDetail } = hooks.detailState();
     const { view, setView, message, setMessage, response, setResponse, type: modalType, setType } = hooks.modalState();
@@ -51,17 +51,17 @@ const LocationPreview = ({ place, type }) => {
         console.log(placeIndex);
         if (!view && placeIndex === -1) {
             const tripDetail = {
-                "uuid": place.uuid,
-                "memberId": memberId,
-                "city": place.name,
-                "country": place.country,
-                "startDate": place.start_date,
-                "endDate": place.end_date,
-                "climate": place.climate,
-                "traveler": place.traveler,
-                "exchangeRate": place.exchange,
-                "priceIndex": place.price,
-                "crimeRate": place.crime
+                uuid: place.uuid,
+                memberId: memberId,
+                city: place.name,
+                country: place.country,
+                startDate: place.start_date,
+                endDate: place.end_date,
+                climate: place.climate,
+                traveler: place.traveler,
+                exchangeRate: place.exchange,
+                priceIndex: place.price,
+                crimeRate: place.crime
             }
     
             api.apis
