@@ -27,6 +27,7 @@ const Compare = () => {
                 console.log(secondCityItem);
             }
         }
+        console.log(firstCity);
     }, []);
 
     const handleDeleteFirstComparison = () => {
@@ -59,7 +60,7 @@ const Compare = () => {
                         <S.HoverContainer className="hover">
                             <IoClose onClick={() => handleDeleteFirstComparison()} />
                         </S.HoverContainer>
-                        <S.CityImage image={firstCity.imageUrl} direction="left">
+                        <S.CityImage image={firstCity.image_url} direction="left">
                             <S.WeatherInformationContainer direction="left">
                                 {/* <S.WeatherInformation>작년 평균 기온 몇도</S.WeatherInformation>
                                 <S.WeatherInformation>일조시간 몇시간</S.WeatherInformation>
@@ -67,19 +68,20 @@ const Compare = () => {
                                 <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation> */}
                             </S.WeatherInformationContainer>
                             <S.DatePeriod>
-                                {firstCity.start_date} ~ {firstCity.end_date}
+                                {/* {firstCity.startDate} ~ {firstCity.endDate} */}
+                                {firstCity.climate&&firstCity.climate.month}
                             </S.DatePeriod>
                             <S.CountryInformation>{firstCity.country}</S.CountryInformation>
-                            <S.CityInformation>{firstCity.city}</S.CityInformation>
+                            <S.CityInformation>{firstCity.name}</S.CityInformation>
                         </S.CityImage>
                         <S.DataContainer>
                             <S.DataItemContainer>
-                                {firstCity.estimatedExchangeRate}원
-                                <S.SubDataContainer>/{firstCity.currency}</S.SubDataContainer>
+                                {firstCity.exchange}원
+                                {/* <S.SubDataContainer>/{firstCity.currency}</S.SubDataContainer> */}
                             </S.DataItemContainer>
-                            <S.DataItemContainer>{firstCity.estimatedClimate}°C</S.DataItemContainer>
-                            <S.DataItemContainer>{firstCity.safety}</S.DataItemContainer>
-                            <S.DataItemContainer>{firstCity.estimated_traveler}명</S.DataItemContainer>
+                            <S.DataItemContainer>{firstCity.climate&&firstCity.climate.temp_avg}°C</S.DataItemContainer>
+                            <S.DataItemContainer>{firstCity.crime}/10</S.DataItemContainer>
+                            <S.DataItemContainer>{firstCity.traveler}명</S.DataItemContainer>
                             {/* <S.DataItemContainer className="ticket">
                                 {' '}
                                 {parseInt(firstCity.ticketPrice, 10).toLocaleString()}원
@@ -106,29 +108,30 @@ const Compare = () => {
                         </S.HoverContainer>
                         <S.DataContainer>
                             <S.DataItemContainer>
-                                {secondCity.estimatedExchangeRate}원
-                                <S.SubDataContainer>/{secondCity.currency}</S.SubDataContainer>
+                                {secondCity.exchange}원
+                                {/* <S.SubDataContainer>/{firstCity.currency}</S.SubDataContainer> */}
                             </S.DataItemContainer>
-                            <S.DataItemContainer>{secondCity.estimatedClimate}°C</S.DataItemContainer>
-                            <S.DataItemContainer>{secondCity.safety}</S.DataItemContainer>
-                            <S.DataItemContainer>{secondCity.estimated_traveler}명</S.DataItemContainer>
+                            <S.DataItemContainer>{secondCity.climate&&secondCity.climate.temp_avg}°C</S.DataItemContainer>
+                            <S.DataItemContainer>{secondCity.crime}/10</S.DataItemContainer>
+                            <S.DataItemContainer>{secondCity.traveler}명</S.DataItemContainer>
                             {/* <S.DataItemContainer className="ticket">
                                 {' '}
-                                {parseInt(secondCity.ticketPrice, 10).toLocaleString()}원
+                                {parseInt(firstCity.ticketPrice, 10).toLocaleString()}원
                             </S.DataItemContainer> */}
                         </S.DataContainer>
-                        <S.CityImage image={secondCity.imageUrl} direction="right">
-                            {/* <S.WeatherInformationContainer direction="right">
-                                <S.WeatherInformation>작년 평균 기온 몇도</S.WeatherInformation>
+                        <S.CityImage image={secondCity.image_url} direction="left">
+                            <S.WeatherInformationContainer direction="left">
+                                {/* <S.WeatherInformation>작년 평균 기온 몇도</S.WeatherInformation>
                                 <S.WeatherInformation>일조시간 몇시간</S.WeatherInformation>
                                 <S.WeatherInformation>뇌우일수 몇일</S.WeatherInformation>
-                                <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation>
-                            </S.WeatherInformationContainer> */}
+                                <S.WeatherInformation>최대 일강수량 얼마</S.WeatherInformation> */}
+                            </S.WeatherInformationContainer>
                             <S.DatePeriod>
-                                {secondCity.start_date} ~ {secondCity.end_date}
+                                {/* {firstCity.startDate} ~ {firstCity.endDate} */}
+                                {secondCity.climate&&secondCity.climate.month}
                             </S.DatePeriod>
                             <S.CountryInformation>{secondCity.country}</S.CountryInformation>
-                            <S.CityInformation>{secondCity.city}</S.CityInformation>
+                            <S.CityInformation>{secondCity.name}</S.CityInformation>
                         </S.CityImage>
                     </S.CityContainer>
                 )}
