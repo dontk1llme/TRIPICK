@@ -16,11 +16,14 @@ public class PickTripRequestDto {
     private String country;
     private String startDate;
     private String endDate;
+    private String imageUrl;
     private int traveler;
     private float exchangeRate;
     private float priceIndex;
     private float crimeRate;
-    private float climate;
+    private float minimumTemperature;
+    private float averageTemperature;
+    private float maximumTemperature;
     private boolean activated;
 }
 

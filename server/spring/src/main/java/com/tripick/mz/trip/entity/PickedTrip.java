@@ -31,7 +31,10 @@ public class PickedTrip {
     @Field("end_date")
     private String endDate;
     private int traveler;
-    private float climate;
+    private float minimumTemperature;
+    private float averageTemperature;
+    private float maximumTemperature;
+    private String imageUrl;
 
     @Field("exchange_rate")
     private float exchangeRate;
