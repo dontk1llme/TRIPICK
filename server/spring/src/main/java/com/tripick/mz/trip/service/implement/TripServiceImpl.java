@@ -29,6 +29,7 @@ public class TripServiceImpl implements TripService {
     @Override
     public void pick(PickTripRequestDto pickTripRequestDto) {
         log.info("TripServiceImpl_pick -> 여행 일정 찜 시도");
+        log.info("도시 : " + pickTripRequestDto.getCity());
 
         tripRepository.save(
                 PickedTrip.builder()
