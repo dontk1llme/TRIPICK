@@ -11,7 +11,8 @@ import * as components from 'components';
 
 const Cart = () => {
     const {
-        memberId
+        memberId,
+        setCartLocation
     } = hooks.loginUserState();
 
     const { cartLocation, compareLocation } = hooks.cartState();
@@ -23,7 +24,7 @@ const Cart = () => {
         api.apis.getPickedTripRequest(memberId)
             .then(response => {
                 console.log(response);
-                cartLocation = response.data.data;
+                setCartLocation([...cartLocation, response.data]);
             })
     })
 
