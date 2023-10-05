@@ -46,5 +46,6 @@ export const apis = {
     createGoogleLoginRequest: (code)=> instance.get(`api/auth/login/google?code=${code}`),
     pickTripRequest: data => instance.post(`/api/trip/pick`, data),
     removeTripRequest: uuid => instance.patch(`/api/trip/remove/${uuid}`),
-    getPickedTripRequest: memberId => instance.get(`/api/trip/list/picked/${memberId}`)
+    getPickedTripRequest: memberId => instance.get(`/api/trip/list/picked/${memberId}`),
+    deleteLoginUser: data => instance.post(`/api/auth/logout`, data),
 };
