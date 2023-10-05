@@ -1,38 +1,35 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-export const loginUserState = create(set => ({
-    memberId: -1,
-    nickname: '초기닉네임',
-    email: '초기이메일',
-    profileImage: '초기프로필',
-    createdAt: '초기생성일자',
+const StorageKey = 'loginUserStorage';
 
-    accessToken:'초기 엑세스 토큰',
+export const loginUserState = create(
+    persist(
+        set => ({
+            memberId: -1,
+            nickname: '초기닉네임',
+            email: '초기이메일',
+            profileImage: '초기프로필',
+            createdAt: '초기생성일자',
+            accessToken:'초기 엑세스 토큰',
+            setMemberId: data => set(state => ({ memberId: data })),
+            setNickname: data => set(state => ({ nickname: data })),
+            setEmail: data => set(state => ({ email: data })),
+            setProfileImage: data => set(state => ({ profileImage: data })),
+            setCreatedAt: data => { //date 형식
+                const indexOfT = data.indexOf('T');
+                if (indexOfT !== -1) {
+                const valueBeforeT = data.substring(0, indexOfT);
+                set(state => ({ createdAt: valueBeforeT }));
+                }
+            },  
+            setAccessToken: data => set(state => ({accessToken: data})),
+        }),
+    {
+        name: 'StorageKey',
+    }
 
-    setMemberId: data => set(state => ({ memberId: data })),
-    setNickname: data => set(state => ({ nickname: data })),
-    setEmail: data => set(state => ({ email: data })),
-    setProfileImage: data => set(state => ({ profileImage: data })),
-    // setCreatedAt: data => set(state => ({ createdAt: data })),
-    setCreatedAt: data => {
-        const indexOfT = data.indexOf('T');
-        if (indexOfT !== -1) {
-          const valueBeforeT = data.substring(0, indexOfT);
-          set(state => ({ createdAt: valueBeforeT }));
-        }
-      },
-      
-    setAccessToken: data => set(state => ({accessToken: data})),
-
-    setLoginUser: data =>
-        set(state => ({
-            memberId: data.memberId,
-            nickname: data.nickname,
-            email: data.email,
-            profileImage: data.profileImage,
-            createdAt: data.createdAt,
-        })),
-}));
+));
 
 export const detailState = create(set => ({
     detailLocation: {},
@@ -266,23 +263,7 @@ export const recommendationState = create(set => ({
 }));
 
 export const cartState = create(set => ({
-    cartLocation: [
-        // {
-        //     id: 1,
-        //     country: '노르웨이',
-        //     city: '트롬쇠',
-        //     estimatedClimate: '12',
-        //     estimatedExchangeRate: '123.69',
-        //     currency: '크로네',
-        //     safety: '8.6',
-        //     imageUrl: require('asset/images/troms.png').default,
-        //     cart: true,
-        //     estimated_traveler: '100',
-        //     ticketPrice: '1741400',
-        //     start_date: '2023-08-31',
-        //     end_date: '2023-09-13',
-        // },
-    ],
+    cartLocation: [   ],
     compareLocation: [-1, -1],
     setCartLocation: data => set(state => ({ cartLocation: data })),
     setCompareLocation: data => set(state => ({ compareLocation: data })),

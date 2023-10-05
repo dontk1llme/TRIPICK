@@ -25,7 +25,7 @@ const LocationCard = ({ locationData, navigateToCalendar, handleScrollToNext, ha
                     <br></br>
                     <br></br>
                     <S.MoreInformation>
-                        더 알아보기 <FaArrowAltCircleRight />
+                        {/* 더 알아보기 <FaArrowAltCircleRight /> */}
                     </S.MoreInformation>
                     <br></br>
                     <p>

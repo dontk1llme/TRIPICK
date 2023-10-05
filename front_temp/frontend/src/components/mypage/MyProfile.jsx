@@ -16,7 +16,6 @@ const MyProfile = () => {
         setNickname,
         setEmail,
         setProfileImage,
-        setLoginUser,
     } = hooks.loginUserState();
     const { mainStampId, stamp } = hooks.stampState();
     const { view, response, setView, setMessage, setResponse, type, setType } = hooks.modalState();
@@ -82,8 +81,6 @@ const MyProfile = () => {
             setType('warning');
             nameInputRef.current.focus();
         } else {
-            // const profile = { nickname, email, profileImage, createdAt };
-            // setLoginUser(profile);
             const data = {
                 memberId: memberId,
                 nickname: nickname,
