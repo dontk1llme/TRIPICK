@@ -2,7 +2,10 @@ import axios from 'axios';
 import * as utils from 'utils';
 import * as hooks from 'hooks';
 
-const { accessToken } = hooks.loginUserState();
+const accessToken = () => {
+    const { accessToken } = hooks.loginUserState();
+    return accessToken;
+}
 
 export const instance = axios.create({
 
@@ -21,7 +24,7 @@ axios.interceptors.request.use(
         config.headers['Authorization'] = `${accessToken}`;
         return config;
     }, error => {
-        return Promise.rejecr(error);
+        return Promise.reject(error);
     }
 )
 
