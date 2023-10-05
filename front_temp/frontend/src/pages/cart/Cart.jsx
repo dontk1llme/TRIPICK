@@ -3,16 +3,28 @@ import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
+import * as api from 'api';
 
 import * as hooks from 'hooks';
 import { AiFillStar } from 'react-icons/ai';
 import * as components from 'components';
 
 const Cart = () => {
+    const {
+        memberId
+    } = hooks.loginUserState();
+
     const { cartLocation, compareLocation } = hooks.cartState();
     const { viewDetail, setViewDetail } = hooks.detailState();
     const navigate = useNavigate();
     const [compareAmount, setCompareAmount] = useState(0);
+
+    useEffect(() => {
+        api.apis.getPickedTripRequest(memberId)
+            .then(response => {
+                console.log(response);
+            })
+    })
 
     useEffect(() => {
         const count = compareLocation.filter(value => value !== -1).length;
