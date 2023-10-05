@@ -57,7 +57,7 @@ const LocationPreview = ({ place, type }) => {
                 country: place.country,
                 startDate: place.start_date,
                 endDate: place.end_date,
-                climate: place.climate,
+                climate: place.climate.temp_avg,
                 traveler: place.traveler,
                 exchangeRate: place.exchange,
                 priceIndex: place.price,
