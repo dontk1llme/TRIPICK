@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
+import * as hooks from 'hooks';
 import * as utils from 'utils';
 import * as components from 'components';
 
 const TopTab = () => {
     const navigate = useNavigate();
+    const {memberId} = hooks.loginUserState();
 
     return (
         <S.Wrap>
@@ -14,11 +15,13 @@ const TopTab = () => {
                 <img src={require('asset/images/logo.png').default} alt="logo" />
             </S.Logo>
             
-            <S.ShortCut>
-                {/* 로그인 안 한 경우 */}
-                <components.LoginButton></components.LoginButton>
+            {memberId === -1 ? ( // 로그인 안 한 경우
+                <S.ShortCutOut>
+                    <components.LoginButton></components.LoginButton>
+                </S.ShortCutOut>
+            ):(
+            <S.ShortCutIn>
                
-               {/* 로그인 한 경우 */}
                <S.Liked onClick={() => navigate(utils.URL.MYPAGE.DIARY)}>
                     <svg width="28" height="35" viewBox="0 0 28 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path 
@@ -53,7 +56,8 @@ const TopTab = () => {
                         />
                     </svg>
                 </S.Profile>
-            </S.ShortCut>
+                <components.LoginButton></components.LoginButton>
+            </S.ShortCutIn>)}
         </S.Wrap>
     );
 };
@@ -79,13 +83,22 @@ const S = {
             max-height: 32px;
         }
     `,
-    ShortCut: styled.div`
+    ShortCutIn: styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
         // width: 99px; //두 개만 있었을 때
         // width: 150px; // 세 개
         width: 200px;
+        height: 100%;
+    `,
+    ShortCutOut: styled.div`
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        // width: 99px; //두 개만 있었을 때
+        // width: 150px; // 세 개
+        // width: 200px;
         height: 100%;
     `,
     Liked: styled.div`
