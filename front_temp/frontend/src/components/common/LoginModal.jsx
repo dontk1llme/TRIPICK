@@ -46,8 +46,8 @@ const LoginModal = ({ setModalOpen }) => {
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
 
-                    setAccessToken(response.data.headers.access-token);
-                    localStorage.setItem('token', response.data.headers.access-token);
+                    setAccessToken(response.data.headers[`access-token`]);
+                    localStorage.setItem('token', response.data.headers[`access-token`]);
                 })
                 .catch(error => {
                     console.error('Error making API request:', error);

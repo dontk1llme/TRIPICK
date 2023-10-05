@@ -20,6 +20,7 @@ const LoginButton = () => {
       setEmail('');
       setProfileImage('');
       setCreatedAt('');
+      localStorage.clear()
     }
 
     useEffect(()=>{
