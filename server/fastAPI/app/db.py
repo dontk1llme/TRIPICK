@@ -25,6 +25,12 @@ picked_trip = db.picked_trip
 # for city in all :
 #     print(city)
 
+# 정규화 함수
+def normalize_column(column):
+    min_val = column.min()
+    max_val = column.max()
+    return (column - min_val) / (max_val - min_val) 
+
 def get_city_all():
     return cities
     
@@ -34,6 +40,7 @@ def get_city_data():
 
 def get_rank_df(date):
     df = get_cities_df(date)
+    # print(tabulate(df, headers='keys', tablefmt='psql', showindex=True))
     # 오름차순 - 기온 절대값, 환율, 가격, 강우일수 
     df['temp_rank'] = df['temp'].rank(ascending=True).astype(int)
     df['exchange_rank'] = df['exchange'].rank(ascending=True).astype(int)
@@ -44,12 +51,16 @@ def get_rank_df(date):
     df['crime_rank'] = df['crime'].rank(ascending=False).astype(int)
     rank_df =  df[['city','country','temp_rank','rainy_days_rank','price_rank','exchange_rank','crime_rank','traveler_rank']]
     # print(tabulate(rank_df, headers='keys', tablefmt='psql', showindex=True))
+    # 'city'와 'country' 열은 문자열이므로 제외하고 나머지 열 정규화
+    columns_to_normalize = ['temp_rank', 'rainy_days_rank', 'price_rank', 'exchange_rank', 'crime_rank', 'traveler_rank']
+    rank_df[columns_to_normalize] = rank_df[columns_to_normalize].apply(normalize_column)
+    print(tabulate(rank_df, headers='keys', tablefmt='psql', showindex=True))
     return rank_df
 
 def get_cities_df(date):
     df = pd.DataFrame()
     for city in cities.find():
-        exchange = 99999
+        exchange_now = 99999
         temp = 99999
         rainy_days = 99999
         price = 99999
@@ -61,6 +72,8 @@ def get_cities_df(date):
         country = city.get('country')
         exchange_std = city.get('exchange_rate').get("2023-09-01")
         exchange_now = city.get('exchange_rate').get(date.strftime("%Y-%m-%d"))
+        if exchange_now is not None:
+            exchange_now = round(exchange_now, 2)
         if exchange_now > exchange_std:
             exchange_trends = '강세'
         else:
@@ -75,7 +88,7 @@ def get_cities_df(date):
         city_dict = {
             'city' : name,
             'country' : country,
-            'exchange' : exchange,
+            'exchange' : exchange_now,
             'exchange_trends' : exchange_trends,
             'crime' : crime,
             'temp' : temp,
