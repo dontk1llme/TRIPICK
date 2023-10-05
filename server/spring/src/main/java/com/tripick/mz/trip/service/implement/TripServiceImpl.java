@@ -40,7 +40,6 @@ public class TripServiceImpl implements TripService {
                         .traveler(pickTripRequestDto.getTraveler())
                         .climate(pickTripRequestDto.getClimate())
                         .crimeRate(pickTripRequestDto.getCrimeRate())
-                        .flightFee(pickTripRequestDto.getFlightFee())
                         .memberId(pickTripRequestDto.getMemberId())
                         .activated(true)
                         .build()
@@ -79,7 +78,6 @@ public class TripServiceImpl implements TripService {
                     .exchangeRate(pickedTrip.getExchangeRate())
                     .priceIndex(pickedTrip.getPriceIndex())
                     .crimeRate(pickedTrip.getCrimeRate())
-                    .flightFee(pickedTrip.getFlightFee())
                     .activated(pickedTrip.isActivated())
                     .build())
                 .collect(Collectors.toList());

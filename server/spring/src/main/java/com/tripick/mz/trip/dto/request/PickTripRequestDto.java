@@ -20,7 +20,6 @@ public class PickTripRequestDto {
     private float priceIndex;
     private float crimeRate;
     private float climate;
-    private int flightFee;
     private boolean activated;
 }
 
