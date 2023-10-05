@@ -23,6 +23,7 @@ const LoginSuccess = () => {
                     console.log(memberId, nickname, email, profileImage, createdAt, accessToken);
                     console.log(response.data.data);
                     console.log(response.data);
+                    console.log(response.headers.accessToken);
 
                     // response를 state에 저장
                     setMemberId(response.data.data.memberId);
