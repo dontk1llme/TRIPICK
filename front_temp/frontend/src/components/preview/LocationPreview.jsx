@@ -21,6 +21,9 @@ const LocationPreview = ({ place, type }) => {
     const navigate = useNavigate();
 
     const handleCompareLocation = data => {
+            console.log(data);
+            console.log(compareLocation);
+            
             if(compareLocation.length == 2) {
                 setView(true);
                 setMessage('비교함이 가득 찼습니다. ');
