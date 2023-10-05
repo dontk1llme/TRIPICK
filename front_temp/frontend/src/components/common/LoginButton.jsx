@@ -4,6 +4,7 @@ import LoginModal from "./LoginModal";
 import styled from 'styled-components';
 import * as utils from 'utils';
 import * as hooks from 'hooks';
+import * as api from 'api';
 import { apis } from "api";
 
 const LoginButton = () => {
@@ -25,7 +26,7 @@ const LoginButton = () => {
       };
 
       //back에 MemberId, accesstoken 보내고 나서 
-      await apis.apis
+      await api.apis
         .deleteLoginUser(data)
         .then(response => {
           setMemberId(-1);
