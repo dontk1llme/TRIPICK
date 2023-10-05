@@ -23,17 +23,19 @@ const LocationPreview = ({ place, type }) => {
     const handleCompareLocation = data => {
             console.log(data);
             console.log(compareLocation);
-            
+
             if(compareLocation.length == 2) {
                 setView(true);
                 setMessage('비교함이 가득 찼습니다. ');
                 setType('warning');
             } else {
-                setCompareLocation([...compareLocation, data]);
-                if(compareLocation.length == 2) {
+                if(compareLocation.length == 1) {
+                    setCompareLocation([...compareLocation, data]);
                     setView(true);
                     setMessage('비교함으로 이동하시겠습니까?');
                     setType('query');
+                } else {
+                    setCompareLocation([...compareLocation, data]);
                 }
             }
         
