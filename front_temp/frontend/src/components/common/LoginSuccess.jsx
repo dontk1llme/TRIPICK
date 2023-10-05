@@ -24,7 +24,7 @@ const LoginSuccess = () => {
                     console.log(response.data.data);
                     console.log(response.data);
 
-                    console.log(response.headers.access-token);
+                    console.log(response.headers);
 
                     // response를 state에 저장
                     setMemberId(response.data.data.memberId);
