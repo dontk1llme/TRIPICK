@@ -77,6 +77,8 @@ const CountryList = () => {
         if (countryData) {
             // 국가 코드를 대문자로 변환하여 추가
             setCountriesCodesArray([...countriesCodesArray, countryData.alpha2.toUpperCase()]);
+            console.log(countriesCodesArray);
+            console.log(getCountriesNamesList());
             // 검색어 초기화
             setSearchQuery('');
             setIsSearchResultInKrData(true); // 추가 성공 시 초기화
