@@ -10,6 +10,10 @@ import { GoHeartFill, GoHeart } from 'react-icons/go';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 const LocationPreview = ({ place, type }) => {
+    const {
+        memberId
+    } = hooks.loginUserState();
+    
     const { cartLocation, setCartLocation, compareLocation, setCompareLocation } = hooks.cartState();
     const { detailLocation, setDetailLocation, setViewDetail } = hooks.detailState();
     const { view, setView, message, setMessage, response, setResponse, type: modalType, setType } = hooks.modalState();
