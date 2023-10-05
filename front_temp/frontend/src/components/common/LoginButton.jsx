@@ -18,8 +18,7 @@ const LoginButton = () => {
         setModalOpen(true);
     };
 
-    const logout = async() => {
-
+    const logout = async () => {
       const data = {
         memberId: memberId,
         accessToken: accessToken,

@@ -17,12 +17,17 @@ const Cart = () => {
     const [compareAmount, setCompareAmount] = useState(0);
 
     useEffect(() => {
-        api.apis.getPickedTripRequest(memberId)
+        api.apis
+            .getPickedTripRequest(memberId)
             .then(response => {
                 console.log(response.data.data);
                 setCartLocation(response.data.data);
             })
-    }, [])
+    }, []);
+
+    useEffect(()=>{
+        console.log(cartLocation)
+    }, [cartLocation])
 
     useEffect(() => {
         const count = compareLocation.filter(value => value !== -1).length;
