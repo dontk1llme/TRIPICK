@@ -45,5 +45,6 @@ export const apis = {
     createLoginRequest: code => instance.get(`api/auth/login/kakao?code=${code}`),
     createGoogleLoginRequest: (code)=> instance.get(`api/auth/login/google?code=${code}`),
     pickTripRequest: data => instance.post(`/api/trip/pick`, data),
-    removeTripRequest: uuid => instance.patch(`/api/remove/${uuid}`)
+    removeTripRequest: uuid => instance.patch(`/api/trip/remove/${uuid}`),
+    getPickedTripRequest: memberId => instance.get(`/api/trip/list/picked/${memberId}`)
 };
