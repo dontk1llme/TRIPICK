@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import * as api from 'api';
 import * as hooks from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
@@ -45,6 +46,27 @@ const LocationPreview = ({ place, type }) => {
         const placeIndex = cartLocation.indexOf(place);
         console.log(placeIndex);
         if (!view && placeIndex === -1) {
+            const tripDetail = {
+                "uuid": uuid,
+                "memberId": memberId,
+                "city": place.name,
+                "country": place.country,
+                "startDate": place.start_date,
+                "endDate": place.end_date,
+                "climate": place.climate,
+                "traveler": place.traveler,
+                "exchangeRate": place.exchange,
+                "priceIndex": place.price,
+                "crimeRate": place.crime
+            }
+    
+            api.apis
+                .pickTripRequest(tripDetail)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => console.log(error));
+
             setCartLocation([...cartLocation, place]);
             setView(true);
             setMessage('보관함에 추천 여행지를 담았습니다. ');
@@ -55,6 +77,13 @@ const LocationPreview = ({ place, type }) => {
             setView(true);
             setType('query');
             setCurrentPlace(place);
+
+            api.apis
+                .removeTripRequest(place.uuid)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => console.log(error));
         }
     };
 
