@@ -19,12 +19,6 @@ const LoginSuccess = () => {
                 .createLoginRequest(code)
                 .then(response => {
                     console.log(response);
-                    //초기값 출력 -> 됨
-                    console.log(memberId, nickname, email, profileImage, createdAt, accessToken);
-                    console.log(response.data.data);
-                    console.log(response.data);
-
-                    console.log(response.headers);
 
                     // response를 state에 저장
                     setMemberId(response.data.data.memberId);
@@ -34,7 +28,7 @@ const LoginSuccess = () => {
                     setCreatedAt(response.data.data.createdAt);
 
                     setAccessToken(response.headers[`access-token`]);
-                    localStorage.setItem('token', response.data.headers[`access-token`]);
+                    localStorage.setItem('token', response.headers[`access-token`]);
 
                     navigate(utils.URL.HOME.LANDING);
                 })
@@ -45,7 +39,7 @@ const LoginSuccess = () => {
 
     useEffect(()=>{
         console.log(memberId, nickname, email, profileImage, createdAt);
-    },[memberId, nickname, email, profileImage, createdAt])
+    },[memberId, nickname, email, profileImage, createdAt, ])
 
     return <div></div>;
 };
