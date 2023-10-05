@@ -6,6 +6,7 @@ import * as hooks from 'hooks';
 
 const LoginButton = () => {
     const [modalOpen, setModalOpen] = useState(false);
+    const navigate = useNavigate();
     
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
       profileImage, setProfileImage, createdAt, setCreatedAt } = hooks.loginUserState();

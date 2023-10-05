@@ -45,6 +45,7 @@ const MyProfile = () => {
                 setEmail(response.data.data.email);
                 setCreatedAt(response.data.data.createdAt);
                 setProfileImage(response.data.data.profileImage);
+                window.location.reload();
             })
             .catch(error => console.log(error));
     }, [saveProfile, newImageFile, onEditMode, setProfileImage]);
