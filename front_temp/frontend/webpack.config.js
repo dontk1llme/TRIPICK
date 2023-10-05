@@ -64,5 +64,10 @@ module.exports = (env, options) => {
             port: 3000,
             historyApiFallback: true,
         },
+        client: {
+            overlay: true,
+            // 웹소켓용 url 지정
+            webSocketURL: "ws://0.0.0.0:80/ws",
+        }
     };
 };
