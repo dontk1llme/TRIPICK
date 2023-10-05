@@ -3,6 +3,7 @@ package com.tripick.mz.trip.service.implement;
 import com.tripick.mz.common.error.CustomException;
 import com.tripick.mz.common.error.ExceptionCode;
 import com.tripick.mz.trip.dto.request.PickTripRequestDto;
+import com.tripick.mz.trip.dto.response.ClimateDto;
 import com.tripick.mz.trip.dto.response.PickedTripResponseDto;
 import com.tripick.mz.trip.entity.PickedTrip;
 import com.tripick.mz.trip.repository.TripRepository;
@@ -80,9 +81,12 @@ public class TripServiceImpl implements TripService {
                     .end_date(pickedTrip.getEndDate())
                     .traveler(pickedTrip.getTraveler())
                     .image_url(pickedTrip.getImageUrl())
-                    .temp_min(pickedTrip.getMinimumTemperature())
-                    .temp_avg(pickedTrip.getAverageTemperature())
-                    .temp_max(pickedTrip.getMaximumTemperature())
+                    .climate(ClimateDto.builder()
+                            .temp_min(pickedTrip.getMinimumTemperature())
+                            .temp_avg(pickedTrip.getAverageTemperature())
+                            .temp_max(pickedTrip.getAverageTemperature())
+                            .build()
+                    )
                     .exchange(pickedTrip.getExchangeRate())
                     .price(pickedTrip.getPriceIndex())
                     .crime(pickedTrip.getCrimeRate())

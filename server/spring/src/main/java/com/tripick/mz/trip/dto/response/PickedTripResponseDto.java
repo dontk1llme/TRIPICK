@@ -17,9 +17,7 @@ public class PickedTripResponseDto {
     private String end_date;
     private String image_url;
     private int traveler;
-    private float temp_min;
-    private float temp_avg;
-    private float temp_max;
+    private ClimateDto climate;
     private float exchange;
     private float price;
     private float crime;
