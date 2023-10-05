@@ -18,7 +18,7 @@ class Recommendation:
     def now(self, member_id):
         rank_df = db.get_rank_df(now.date())
         # 가중치 순서: temp, rainy, price, exchange, crime, traveler 
-        w = [1,1,1,1,1,1]
+        w = [3,1,1,1,1,1]
         # 로그인 상태라면 찜 목록을 바탕으로 가중치 업데이트 
         if member_id is not None:
             total_w, weather_w, exchange_w, crime_w = Recommendation.update_weight(member_id)
@@ -30,13 +30,19 @@ class Recommendation:
             result = result._append({'city': row['city'], 'y': y}, ignore_index=True)
             result['rank'] = result['y'].rank(ascending=True).astype(int)
         result_sorted = result.sort_values(by='rank', ascending=True)
-        result_sorted = result_sorted.head(5)
         result_dict = {}
+        result_list = []
         idx = 1
         for i, row in result_sorted.iterrows():
+            if idx == 6:
+                break
             city_name = row['city']
+            country_name = db.get_country_name(city_name)
+            if country_name in result_list:
+                continue
+            result_list.append(country_name)
             result_dict[f'recommendation_{idx}'] = db.get_one_city(city_name,now.date())
-            idx+=1
+            idx += 1
         return result_dict
 
     def set_date(self, start_date: str, end_date: str, member_id):
@@ -65,7 +71,6 @@ class Recommendation:
                 result = result._append({'city': row['city'], 'y': y}, ignore_index=True)
             result['rank'] = result['y'].rank(ascending=True).astype(int)
             result_sorted = result.sort_values(by='rank', ascending=True)
-            # print(tabulate(result_sorted, headers='keys', tablefmt='psql', showindex=True))
             # result_sorted = result_sorted.head(3)
             inner_dict = {}
             idx = 1
