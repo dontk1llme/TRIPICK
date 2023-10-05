@@ -90,18 +90,6 @@ const LocationDetail = () => {
                     <S.InfromationTitle>여행객 동향</S.InfromationTitle>
                     <S.InformationContent>{detailLocation.traveler}명</S.InformationContent>
                 </S.InformationBox>
-                {/* <S.InformationBox className="type2">
-                    <S.InfromationTitle>최저가 항공권</S.InfromationTitle>
-                    <S.InformationContent>
-                        {detailLocation.flight}원
-                    </S.InformationContent>
-
-                    <S.SubInformation className="first">
-                        <a href="https://www.skyscanner.co.kr/" target="_blank" rel="noopener noreferrer">
-                            스카이스캐너 바로가기
-                        </a>
-                    </S.SubInformation>
-                </S.InformationBox> */}
             </S.InformationContainer>
         </S.Wrap>
     );
