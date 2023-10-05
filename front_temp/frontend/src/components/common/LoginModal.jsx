@@ -18,9 +18,9 @@ const LoginModal = ({ setModalOpen }) => {
 
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
         profileImage, setProfileImage, createdAt, setCreatedAt, 
-        accessToken, setAccessToken } = hooks.loginUserState();
+        accessToken, setAccessToken, mainStampId, setMainStampId } = hooks.loginUserState();
 
-    const { mainStampId, stamp, setMainStampId, setStamp } = hooks.stampState();
+    const { stamp, setStamp } = hooks.stampState();
 
     ///////////// kakao ////////////////
     const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY; //REST API KEY
@@ -51,6 +51,7 @@ const LoginModal = ({ setModalOpen }) => {
                     setMainStampId(response.data.data.mainBadge);
                     setStamp(response.data.data.memberBadgeList);
 
+                    console.log(response.headers['access-token']);
                     setAccessToken(response.headers[`access-token`]);
                     localStorage.setItem('token', response.headers[`access-token`]);
                 })

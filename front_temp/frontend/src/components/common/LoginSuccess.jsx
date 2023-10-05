@@ -9,10 +9,10 @@ import { create } from 'lodash';
 const LoginSuccess = () => {
     const navigate = useNavigate();
 
-    const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
-        profileImage, setProfileImage, createdAt, setCreatedAt, accessToken, setAccessToken } = hooks.loginUserState();
+    const { memberId, setMemberId, nickname, setNickname, email, setEmail, mainStampId,
+        profileImage, setProfileImage, createdAt, setCreatedAt, accessToken, setAccessToken, setMainStampId, } = hooks.loginUserState();
 
-        const { mainStampId, stamp, setMainStampId, setStamp} = hooks.stampState();
+        const { stamp, setStamp} = hooks.stampState();
 
     useEffect(() => {
         const code = new URL(window.location.href).searchParams.get('code');
@@ -32,6 +32,7 @@ const LoginSuccess = () => {
                     setStamp(response.data.data.memberBadgeList);
 
                     setAccessToken(response.headers[`access-token`]);
+                    console.log("흐음", response.headers);
                     localStorage.setItem('token', response.headers[`access-token`]);
 
                     navigate(utils.URL.HOME.LANDING);

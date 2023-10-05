@@ -8,7 +8,7 @@ const MyStamps = ({ page }) => {
     const { stamp } = hooks.stampState();
     const isObtained = id => {
         console.log(stamp);
-        const findStamp = stamp.find(stamp => stamp.badge.badgeId === id);
+        const findStamp = stamp.find(stamp => stamp.badgeId === id);
         console.log(findStamp);
         if(!findStamp) return;
         return findStamp.achieved;

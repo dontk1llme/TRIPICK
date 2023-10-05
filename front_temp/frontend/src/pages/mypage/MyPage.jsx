@@ -15,7 +15,7 @@ const MyPage = () => {
     };
     useEffect(() => {
         console.log(currentPage);
-    }, [currentPage]);
+    }, []);
 
     const pages = [1, 2, 3, 4];
     return (
