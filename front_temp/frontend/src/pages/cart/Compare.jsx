@@ -13,20 +13,29 @@ const Compare = () => {
     const { cartLocation, compareLocation, setCompareLocation } = hooks.cartState();
 
     useEffect(() => {
-        if (compareLocation[0] !== -1) {
-            const firstCityItem = cartLocation.find(item => item.id === compareLocation[0]);
-            if (firstCityItem) {
-                setFirstCity(firstCityItem);
-                console.log(firstCityItem);
-            }
+        if(compareLocation.length == 1) {
+            setFirstCity(compareLocation[0]);
         }
-        if (compareLocation[1] !== -1) {
-            const secondCityItem = cartLocation.find(item => item.id === compareLocation[1]);
-            if (secondCityItem) {
-                setSecondCity(secondCityItem);
-                console.log(secondCityItem);
-            }
+
+        if(compareLocation.length == 2) {
+            setFirstCity(compareLocation[0]);
+            setSecondCity(compareLocation[1]);
         }
+
+        // if (compareLocation[0] !== -1) {
+        //     const firstCityItem = cartLocation.find(item => item.id === compareLocation[0]);
+        //     if (firstCityItem) {
+        //         setFirstCity(firstCityItem);
+        //         console.log(firstCityItem);
+        //     }
+        // }
+        // if (compareLocation[1] !== -1) {
+        //     const secondCityItem = cartLocation.find(item => item.id === compareLocation[1]);
+        //     if (secondCityItem) {
+        //         setSecondCity(secondCityItem);
+        //         console.log(secondCityItem);
+        //     }
+        // }
         console.log('퍼시티');
         console.log(firstCity);
     }, []);
