@@ -57,9 +57,12 @@ const LocationPreview = ({ place, type }) => {
                 country: place.country,
                 startDate: place.start_date,
                 endDate: place.end_date,
-                climate: place.climate.temp_avg,
                 traveler: place.traveler,
                 exchangeRate: place.exchange,
+                imageUrl: place.image_url,
+                minimumTemperature: place.climate.temp_min,
+                averageTemperature: place.climate.temp_avg,
+                maximumTemperature: place.climate.temp_max,
                 priceIndex: place.price,
                 crimeRate: place.crime
             }
@@ -167,13 +170,13 @@ const LocationPreview = ({ place, type }) => {
                 </S.InformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>예상 환율</S.InformationTitle>
-                    <S.InformationContent>{place.exchangeRate}원 </S.InformationContent>
+                    <S.InformationContent>{place.exchange}원 </S.InformationContent>
                     {/* <S.InformationDescription>/{place.estimatedExchangeRate}</S.InformationDescription> */}
                     {/* 화폐 단위가 없음 */}
                 </S.InformationContainer>
                 <S.InformationContainer>
                     <S.InformationTitle>안전 지수</S.InformationTitle>
-                    <S.InformationContent>{place.crimeRate} </S.InformationContent>
+                    <S.InformationContent>{place.crime} </S.InformationContent>
                     <S.InformationDescription>/10</S.InformationDescription>
                 </S.InformationContainer>
                 {type === 'cart' && (
