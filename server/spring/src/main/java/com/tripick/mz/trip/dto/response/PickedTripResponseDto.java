@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class PickedTripResponseDto {
-    private String id;
+    private String uuid;
     private String city;
     private String country;
     private String startDate;

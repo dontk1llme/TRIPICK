@@ -19,6 +19,8 @@ public class PickedTrip {
     @Id
     private String id;
 
+    private String uuid;
+
     @Field("member_id")
     private String memberId;
     private String city;
@@ -41,7 +43,5 @@ public class PickedTrip {
     @Field("crime_rate")
     private float crimeRate;
 
-    @Field("flight_fee")
-    private int flightFee;
     private boolean activated;
 }

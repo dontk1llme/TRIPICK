@@ -31,6 +31,7 @@ public class TripServiceImpl implements TripService {
 
         tripRepository.save(
                 PickedTrip.builder()
+                        .uuid(pickTripRequestDto.getUuid())
                         .city(pickTripRequestDto.getCity())
                         .country(pickTripRequestDto.getCountry())
                         .startDate(pickTripRequestDto.getStartDate())
@@ -53,7 +54,7 @@ public class TripServiceImpl implements TripService {
         Query query = new Query();
         Update update = new Update();
 
-        query.addCriteria(Criteria.where("_id").is(pickedTripId));
+        query.addCriteria(Criteria.where("uuid").is(pickedTripId));
         update.set("activated", false);
 
         if(mongoTemplate.updateMulti(query, update, "picked_trip").getMatchedCount() == 0) {
@@ -69,7 +70,7 @@ public class TripServiceImpl implements TripService {
 
         return pickedTripList.stream()
                 .map(pickedTrip -> PickedTripResponseDto.builder()
-                    .id(pickedTrip.getId())
+                    .uuid(pickedTrip.getUuid())
                     .city(pickedTrip.getCity())
                     .country(pickedTrip.getCountry())
                     .startDate(pickedTrip.getStartDate())
