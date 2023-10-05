@@ -24,7 +24,7 @@ const Cart = () => {
         api.apis.getPickedTripRequest(memberId)
             .then(response => {
                 console.log(response.data.data);
-                setCartLocation([...cartLocation, response.data.data]);
+                setCartLocation([response.data.data]);
             })
     })
 
