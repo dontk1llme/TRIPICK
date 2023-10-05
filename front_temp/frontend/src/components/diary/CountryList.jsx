@@ -49,7 +49,7 @@ const CountryList = () => {
         // 가나다순으로 정렬
         list.sort((a, b) => a.localeCompare(b));
 
-        setSelectedCountry(list);
+        setSelectedCountry([...selectedCountry, list]);
     };
 
     // 검색어 변경 핸들러
@@ -71,7 +71,6 @@ const CountryList = () => {
     // 국가 추가 핸들러
     const handleAddCountry = () => {
         // 검색어와 일치하는 국가를 krdata에서 찾기
-        console.log(searchQuery);
         const lowercaseQuery = searchQuery.toLowerCase();
         const countryData = krdata.find(data => data.name.toLowerCase() === lowercaseQuery);
 
@@ -81,8 +80,7 @@ const CountryList = () => {
             console.log(countriesCodesArray);
             console.log(selectedCountry);
             setCountriesCodesArray([...countriesCodesArray, countryData.alpha2.toUpperCase()]);
-            
-            console.log(getCountriesNamesList());
+        
             // 검색어 초기화
             setSearchQuery('');
             setIsSearchResultInKrData(true); // 추가 성공 시 초기화
