@@ -4,28 +4,40 @@ import LoginModal from "./LoginModal";
 import styled from 'styled-components';
 import * as utils from 'utils';
 import * as hooks from 'hooks';
+import { apis } from "api";
 
 const LoginButton = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const navigate = useNavigate();
     
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
-      profileImage, setProfileImage, createdAt, setCreatedAt, setAccessToken } = hooks.loginUserState();
+      profileImage, setProfileImage, createdAt, setCreatedAt, accessToken, setAccessToken } = hooks.loginUserState();
 
     const showModal = () => {
         setModalOpen(true);
     };
 
-    const logout = () => {
+    const logout = async() => {
+
+      const data = {
+        memberId: memberId,
+        accessToken: accessToken,
+      };
+
       //back에 MemberId, accesstoken 보내고 나서 
-      setMemberId(-1);
-      setNickname('');
-      setEmail('');
-      setProfileImage('');
-      setCreatedAt('');
-      setAccessToken('');
-      localStorage.clear()
-      navigate(utils.URL.HOME.LANDING);
+      await apis.apis
+        .deleteLoginUser(data)
+        .then(response => {
+          setMemberId(-1);
+          setNickname('');
+          setEmail('');
+          setProfileImage('');
+          setCreatedAt('');
+          setAccessToken('');
+          localStorage.clear();
+          navigate(utils.URL.HOME.LANDING);
+        })
+        .catch(error => console.log(error));
     }
 
     useEffect(()=>{
