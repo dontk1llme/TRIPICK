@@ -12,6 +12,8 @@ const LoginSuccess = () => {
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
         profileImage, setProfileImage, createdAt, setCreatedAt, accessToken, setAccessToken } = hooks.loginUserState();
 
+        const { mainStampId, stamp, setMainStampId, setStamp} = hooks.stampState();
+
     useEffect(() => {
         const code = new URL(window.location.href).searchParams.get('code');
         if (code) {
@@ -26,6 +28,8 @@ const LoginSuccess = () => {
                     setEmail(response.data.data.email);
                     setProfileImage(response.data.data.profileImage);
                     setCreatedAt(response.data.data.createdAt);
+                    setMainStampId(response.data.data.mainBadge);
+                    setStamp(response.data.data.memberBadgeList);
 
                     setAccessToken(response.headers[`access-token`]);
                     localStorage.setItem('token', response.headers[`access-token`]);
@@ -38,8 +42,8 @@ const LoginSuccess = () => {
     }, []);
 
     useEffect(()=>{
-        console.log(memberId, nickname, email, profileImage, createdAt);
-    },[memberId, nickname, email, profileImage, createdAt, ])
+        console.log(memberId, nickname, email, profileImage, createdAt, stamp, mainStampId);
+    },[memberId, nickname, email, profileImage, createdAt, stamp, mainStampId])
 
     return <div></div>;
 };

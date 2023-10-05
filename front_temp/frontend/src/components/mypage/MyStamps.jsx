@@ -7,8 +7,11 @@ import * as components from 'components';
 const MyStamps = ({ page }) => {
     const { stamp } = hooks.stampState();
     const isObtained = id => {
-        const findStamp = stamp.find(stamp => stamp.id === id);
-        return findStamp.obtained;
+        console.log(stamp);
+        const findStamp = stamp.find(stamp => stamp.badge.badgeId === id);
+        console.log(findStamp);
+        if(!findStamp) return;
+        return findStamp.achieved;
     };
     return (
         <S.Wrap onClick={e => e.stopPropagation()} page={page}>
@@ -77,11 +80,6 @@ const S = {
         `
                 : `
             & .first {
-                position: absolute;
-                top: 0px;
-                left: 50px;
-            }
-            & .second {
                 position: absolute;
                 top: 140px;
                 left: 200px;
