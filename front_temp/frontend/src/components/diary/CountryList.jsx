@@ -71,11 +71,13 @@ const CountryList = () => {
     // 국가 추가 핸들러
     const handleAddCountry = () => {
         // 검색어와 일치하는 국가를 krdata에서 찾기
+        console.log(searchQuery);
         const lowercaseQuery = searchQuery.toLowerCase();
         const countryData = krdata.find(data => data.name.toLowerCase() === lowercaseQuery);
 
         if (countryData) {
             // 국가 코드를 대문자로 변환하여 추가
+            console.log(countryData);
             console.log(countriesCodesArray);
             console.log(selectedCountry);
             setCountriesCodesArray([...countriesCodesArray, countryData.alpha2.toUpperCase()]);
