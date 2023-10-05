@@ -9,7 +9,7 @@ const LoginButton = () => {
     const navigate = useNavigate();
     
     const { memberId, setMemberId, nickname, setNickname, email, setEmail, 
-      profileImage, setProfileImage, createdAt, setCreatedAt } = hooks.loginUserState();
+      profileImage, setProfileImage, createdAt, setCreatedAt, setAccessToken } = hooks.loginUserState();
 
     const showModal = () => {
         setModalOpen(true);
@@ -22,6 +22,7 @@ const LoginButton = () => {
       setEmail('');
       setProfileImage('');
       setCreatedAt('');
+      setAccessToken('');
       localStorage.clear()
       navigate(utils.URL.HOME.LANDING);
     }

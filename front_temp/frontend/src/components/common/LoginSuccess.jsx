@@ -34,6 +34,7 @@ const LoginSuccess = () => {
                     setCreatedAt(response.data.data.createdAt);
 
                     setAccessToken(response.headers[`access-token`]);
+                    localStorage.setItem('token', response.data.headers[`access-token`]);
 
                     navigate(utils.URL.HOME.LANDING);
                 })
