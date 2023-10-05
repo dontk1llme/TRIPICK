@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import * as api from 'api';
 
 import * as hooks from 'hooks';
 
@@ -10,6 +11,7 @@ const LocationDetail = () => {
     const { detailLocation, setDetailLocation, viewDetail, setViewDetail } = hooks.detailState();
     const { view, setView, message, setMessage, response, setResponse, type: modalType, setType } = hooks.modalState();
     const { cartLocation, setCartLocation } = hooks.cartState();
+    const { memberId } = hooks.loginUserState();
 
 
     const handleView = () => {
@@ -41,6 +43,13 @@ const LocationDetail = () => {
                 setType('');
                 setMessage('');
                 setResponse('');
+
+                api.apis
+                    .removeTripRequest(place.uuid)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => console.log(error));
             } else if (response === 'no') {
                 setView(false);
                 setType('');
@@ -50,6 +59,30 @@ const LocationDetail = () => {
         }
         if (modalType === 'checking' && message === '보관함에 추천 여행지를 담았습니다. ') {
             if (response === 'yes') {
+                const tripDetail = {
+                    uuid: detailLocation.uuid,
+                    memberId: memberId,
+                    city: detailLocation.name,
+                    country: detailLocation.country,
+                    startDate: detailLocation.start_date,
+                    endDate: detailLocation.end_date,
+                    traveler: detailLocation.traveler,
+                    exchangeRate: detailLocation.exchange,
+                    imageUrl: detailLocation.image_url,
+                    minimumTemperature: detailLocation.climate.temp_min,
+                    averageTemperature: detailLocation.climate.temp_avg,
+                    maximumTemperature: detailLocation.climate.temp_max,
+                    priceIndex: detailLocation.price,
+                    crimeRate: detailLocation.crime
+                }
+        
+                api.apis
+                    .pickTripRequest(tripDetail)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => console.log(error));
+
                 setType('');
                 setMessage('');
                 setResponse('');
