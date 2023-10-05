@@ -42,12 +42,12 @@ const Compare = () => {
 
     const handleDeleteFirstComparison = () => {
         setFirstCity('');
-        setCompareLocation([-1, compareLocation[1]]);
+        setCompareLocation(compareLocation[1]);
     };
 
     const handleDeleteSecondComparison = () => {
         setSecondCity('');
-        setCompareLocation([compareLocation[0], -1]);
+        setCompareLocation(compareLocation[0]);
     };
     return (
         <S.Wrap>
@@ -118,11 +118,11 @@ const Compare = () => {
                         </S.HoverContainer>
                         <S.DataContainer>
                             <S.DataItemContainer>
-                                {secondCity.exchangeRate}원
+                                {secondCity.exchange}원
                                 {/* <S.SubDataContainer>/{firstCity.currency}</S.SubDataContainer> */}
                             </S.DataItemContainer>
                             <S.DataItemContainer>{secondCity.climate&&secondCity.climate.temp_avg}°C</S.DataItemContainer>
-                            <S.DataItemContainer>{secondCity.crimeRate}/10</S.DataItemContainer>
+                            <S.DataItemContainer>{secondCity.crime}/10</S.DataItemContainer>
                             <S.DataItemContainer>{secondCity.traveler}명</S.DataItemContainer>
                             {/* <S.DataItemContainer className="ticket">
                                 {' '}
@@ -141,7 +141,7 @@ const Compare = () => {
                                 {/* {secondCity.climate&&secondCity.climate.month} */}
                             </S.DatePeriod>
                             <S.CountryInformation>{secondCity.country}</S.CountryInformation>
-                            <S.CityInformation>{secondCity.city}</S.CityInformation>
+                            <S.CityInformation>{secondCity.name}</S.CityInformation>
                         </S.CityImage>
                     </S.CityContainer>
                 )}
