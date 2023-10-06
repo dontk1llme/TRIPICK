@@ -204,8 +204,8 @@ const LocationPreview = ({ place, type }) => {
                             // handleCompareLocation(place.uuid);
                             handleCompareLocation(place);
                         }}>
-                        {compareLocation.indexOf(place.uuid) === -1 ? <AiOutlineStar /> : <AiFillStar />}
-                        <S.ExplanatoryContainer className={compareLocation.indexOf(place.uuid) === -1 ? 'compare' : null}>
+                        {compareLocation.indexOf(place) === -1 ? <AiOutlineStar /> : <AiFillStar />}
+                        <S.ExplanatoryContainer className={compareLocation.indexOf(place) === -1 ? 'compare' : null}>
                             비교함 담기
                         </S.ExplanatoryContainer>
                     </S.CompareContainer>
