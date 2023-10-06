@@ -20,5 +20,10 @@
             }
         ],
         ["babel-plugin-styled-components"]
-    ]
+    ],
+    "env": {
+        "production": {
+          "plugins": ["transform-remove-console"]
+        }
+    }
 }
