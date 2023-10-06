@@ -10,6 +10,7 @@ const CityRecommendation = () => {
     const { totalRecommendation, currencyRecommendation, weatherRecommendation, safetyRecommendation, 
         setTotalRecommendation, setCurrencyRecommendation, setWeatherRecommendation, setSafetyRecommendation } =
         hooks.recommendationState();
+    const { memberId } = hooks.loginUserState();
 
     // 날짜 받기
     const { selectedDate } = hooks.dateState();
@@ -22,7 +23,7 @@ const CityRecommendation = () => {
     //추천 데이터 받기
     useEffect(() => {
         api.apis
-            .getDateRecommendations(startDate, endDate)
+            .getDateRecommendations(startDate, endDate, memberId)
             .then(response => {
                 console.log(response.data);
                 setTotalRecommendation(Object.values(response.data.recommendation_total));
