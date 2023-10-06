@@ -135,7 +135,7 @@ const CountryList = () => {
                     <div>검색 결과가 없습니다. 국가명을 확인해 주세요.</div>
                 ) : (
                     <div>
-                        <S.Button onClick={handleAddCountry}> 리스트에 {searchQuery}  추가<IoAdd /> </S.Button>
+                        <S.Button onClick={handleAddCountry}> {searchQuery}  추가<IoAdd /> </S.Button>
                     </div>
                 ))}
         </S.Wrap>
@@ -174,12 +174,13 @@ const S = {
     `,
     CountryList: styled.div`
         font-size: ${({ theme }) => theme.fontSize.content2};
-        color: ${({ selected, theme }) => (selected === 'selected' ? theme.color.black : theme.color.black)};
+        // color: ${({ selected, theme }) => (selected === 'selected' ? theme.color.black : theme.color.black)};
+        // color: white;
         cursor: pointer;
         margin-bottom: 10px;
-        background-color: ${({ selected, theme }) => (selected === 'selected' ? theme.color.main1 : theme.color.main2)};
+        background-color: ${({ selected, theme }) => (selected === 'selected' ? theme.color.main2 : theme.color.main1)};
         &:hover {
-            background-color:     #6495ED;
+            opacity: 0.8;
         }
         border: 1px solid gray; 
         width: 100%;
@@ -195,12 +196,13 @@ const S = {
     `,
     Button: styled.button`
         font-size: ${({ theme }) => theme.fontSize.content2};
+        color: ${({ theme }) => theme.color.main2}
         cursor: pointer;
         padding: 10px 15px;  
         border: none;  
         border-radius: 5px; 
         &:hover {
-            color: ${({ theme }) => theme.color.main2};
+            color: ${({ theme }) => theme.color.main1};
         }
     `
 };
