@@ -12,8 +12,6 @@ const MbtiTest = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(answers);
-        console.log(currentNumber);
         if (questions) {
             setCurrentQuestion(questions.find(question => question.no === currentNumber));
         }

@@ -11,19 +11,13 @@ const CalendarComponent = () => {
     const sixMonthsLater = new Date();
     sixMonthsLater.setMonth(today.getMonth() + 6);
 
+    const limitDate = new Date('2024-03-31');
+
     const { selectedDate, setSelectedDate } = hooks.dateState();
 
     useEffect(() => {
         setSelectedDate([today, today]);
-        if (selectedDate.length > 0) {
-            console.log(selectedDate);
-        }
     }, []);
-
-    useEffect(() => {
-        console.log(selectedDate);
-    }, [selectedDate]);
-    // const [selectedDate, setSelectedDate] = useState([today, today]); // 초기 선택 날짜 설정
 
     const formatDate = date => {
         return moment(date).format('YYYY년 MM월 DD일');
@@ -31,7 +25,7 @@ const CalendarComponent = () => {
 
     // 첫 시작 시 이상한 border css를 고치려고 해 보았지만...
     const tileContent = ({ date, view }) => {
-        const isInRange = view === 'month' && date >= today && date <= sixMonthsLater;
+        const isInRange = view === 'month' && date >= today && date <= limitDate;
         const tileClasses = []; // 기본 클래스 추가
 
         if (isInRange) {
@@ -50,7 +44,7 @@ const CalendarComponent = () => {
                 formatDay={(locale, date) => moment(date).format('DD')}
                 tileContent={tileContent} // tileContent 함수를 전달
                 minDate={today} // 오늘 이후만 선택 가능하도록 설정
-                maxDate={sixMonthsLater} // 6개월 이내까지만 표시
+                maxDate={limitDate} // 6개월 이내까지만 표시
             />
         </S.Wrap>
     );
