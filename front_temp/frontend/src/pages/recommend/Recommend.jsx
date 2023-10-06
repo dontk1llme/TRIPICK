@@ -10,6 +10,7 @@ const Recommend = () => {
     const { selectedDate } = hooks.dateState();
     const { viewDetail, setViewDetail } = hooks.detailState();
     const [dateSelectMode, setDateSelectMode] = useState(true);
+    const [loading, setLoading] = useState(false); // 추가: 로딩 상태
 
     const formatDate = date => {
         return moment(date).format('YYYY년 MM월 DD일');
@@ -18,6 +19,14 @@ const Recommend = () => {
     useEffect(() => {
         setViewDetail(false);
     }, []);
+
+    const handleRecommendClick = () => {
+        setLoading(true); // 로딩 시작
+        setDateSelectMode(false); // dateSelectMode를 false로 설정
+        setTimeout(() => {
+            setLoading(false); // 3초 후 로딩 종료
+        }, 3000); // 3초 대기
+    };
 
     return (
         <S.Outer>
@@ -32,11 +41,14 @@ const Recommend = () => {
                     </S.SelectedDateContainer>
                     {dateSelectMode && <components.Calendar />}
                     {dateSelectMode && (
-                        <S.RecommendButton onClick={() => setDateSelectMode(false)}>
+                        <S.RecommendButton onClick={handleRecommendClick}>
                             이 날짜로 여행지 추천받기
                         </S.RecommendButton>
                     )}
-                    {!dateSelectMode && <components.CityRecommendation />}
+                    {/* 로딩 중일 때 */}
+                    {loading && <components.LoadingCom />}
+                    {/* 로딩이 끝나면 */}
+                    {!loading && !dateSelectMode && <components.CityRecommendation />}
                 </S.Wrap>
             ) : (
                 <components.LocationDetail />
@@ -44,6 +56,9 @@ const Recommend = () => {
         </S.Outer>
     );
 };
+
+// 나머지 코드는 동일
+
 
 const S = {
     Outer: styled.div`

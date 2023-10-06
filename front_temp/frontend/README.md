@@ -68,3 +68,151 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+```
+frontend
+├─ .babelrc
+├─ .gitignore
+├─ .prettierrc
+├─ Dockerfile
+├─ jsconfig.json
+├─ package-lock.json
+├─ package.json
+├─ public
+│  ├─ favicon.ico
+│  ├─ index.html
+│  ├─ manifest.json
+│  ├─ robots.txt
+│  └─ video
+│     └─ aurora.mp4
+├─ README.md
+├─ src
+│  ├─ api
+│  │  ├─ api.js
+│  │  └─ index.js
+│  ├─ App.js
+│  ├─ asset
+│  │  └─ images
+│  │     ├─ coala.png
+│  │     ├─ colorado.png
+│  │     ├─ ENFJ.png
+│  │     ├─ ENFP.png
+│  │     ├─ ENTJ.png
+│  │     ├─ ENTP.png
+│  │     ├─ errorpanda.png
+│  │     ├─ ESFJ.png
+│  │     ├─ ESFP.png
+│  │     ├─ ESTJ.png
+│  │     ├─ ESTP.png
+│  │     ├─ fcon1.png
+│  │     ├─ fcon2.png
+│  │     ├─ fcon3.png
+│  │     ├─ green-sea-turtle-8199770_1280.jpg
+│  │     ├─ INFJ.png
+│  │     ├─ INFP.png
+│  │     ├─ INTJ.png
+│  │     ├─ INTP.png
+│  │     ├─ ISFJ.png
+│  │     ├─ ISFP.png
+│  │     ├─ ISTJ.png
+│  │     ├─ ISTP.png
+│  │     ├─ loading.gif
+│  │     ├─ loading1.gif
+│  │     ├─ logo.png
+│  │     ├─ main-stamp.png
+│  │     ├─ mbti-main.png
+│  │     ├─ MBTI.png
+│  │     ├─ mountain-8207212_1280.jpg
+│  │     ├─ opening1.gif
+│  │     ├─ pabicon.png
+│  │     ├─ paris.png
+│  │     ├─ passport-background1.png
+│  │     ├─ passport-background2.png
+│  │     ├─ passport-background3.png
+│  │     ├─ pink-8053329_1280.jpg
+│  │     ├─ profile.png
+│  │     ├─ rainbow-8221835_1280.jpg
+│  │     ├─ rose-8200460_1280.jpg
+│  │     ├─ SignGoogle.png
+│  │     ├─ SignKaKao.png
+│  │     ├─ squirrel-8219439_1280.jpg
+│  │     ├─ stamp2.png
+│  │     ├─ stamp3.png
+│  │     ├─ swan-8174925_1280.jpg
+│  │     └─ troms.png
+│  ├─ components
+│  │  ├─ common
+│  │  │  ├─ ErrorCom.jsx
+│  │  │  ├─ LoadingCom.jsx
+│  │  │  ├─ LoginButton.jsx
+│  │  │  ├─ LoginModal.jsx
+│  │  │  ├─ LoginSuccess.jsx
+│  │  │  ├─ Modal.jsx
+│  │  │  └─ TopTab.jsx
+│  │  ├─ diary
+│  │  │  ├─ AlbumList.jsx
+│  │  │  ├─ countries.json
+│  │  │  ├─ CountryContext.jsx
+│  │  │  ├─ CountryList.jsx
+│  │  │  ├─ DetailAlbum.jsx
+│  │  │  ├─ WorldMap.jsx
+│  │  │  └─ WorldMap0922.jsx
+│  │  ├─ index.js
+│  │  ├─ landing
+│  │  │  ├─ LandingCard.jsx
+│  │  │  ├─ LocationCard.jsx
+│  │  │  └─ Opening.jsx
+│  │  ├─ layout
+│  │  │  └─ Layout.jsx
+│  │  ├─ mypage
+│  │  │  ├─ CollectedStamp.jsx
+│  │  │  ├─ EmptyStamp.jsx
+│  │  │  ├─ MyProfile.jsx
+│  │  │  └─ MyStamps.jsx
+│  │  ├─ preview
+│  │  │  ├─ LocationDetail.jsx
+│  │  │  └─ LocationPreview.jsx
+│  │  └─ recommend
+│  │     ├─ Calendar.css
+│  │     ├─ Calendar.jsx
+│  │     └─ CityRecommendation.jsx
+│  ├─ hooks
+│  │  ├─ index.js
+│  │  └─ useStore.js
+│  ├─ index.js
+│  ├─ pages
+│  │  ├─ cart
+│  │  │  ├─ Cart.jsx
+│  │  │  └─ Compare.jsx
+│  │  ├─ common
+│  │  │  ├─ Error.jsx
+│  │  │  └─ Loading.jsx
+│  │  ├─ detail
+│  │  │  └─ Detail.jsx
+│  │  ├─ diary
+│  │  │  └─ Diary.jsx
+│  │  ├─ index.js
+│  │  ├─ landing
+│  │  │  └─ Landing.jsx
+│  │  ├─ mbti
+│  │  │  ├─ Mbti.jsx
+│  │  │  ├─ MbtiResult.jsx
+│  │  │  └─ MbtiTest.jsx
+│  │  ├─ mypage
+│  │  │  └─ MyPage.jsx
+│  │  └─ recommend
+│  │     └─ Recommend.jsx
+│  ├─ reportWebVitals.js
+│  ├─ setupProxy.js
+│  ├─ style
+│  │  ├─ Globalstyles.js
+│  │  ├─ index.js
+│  │  └─ Theme.js
+│  └─ utils
+│     ├─ index.js
+│     ├─ utilsApi.js
+│     └─ utilsConstant.js
+├─ webpack.config.js
+└─ yarn.lock
+
+```
