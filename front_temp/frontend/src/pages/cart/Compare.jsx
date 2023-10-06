@@ -42,12 +42,22 @@ const Compare = () => {
 
     const handleDeleteFirstComparison = () => {
         setFirstCity('');
-        setCompareLocation(compareLocation[1]);
+    
+        const updatedCompareLocation = [...compareLocation];
+        updatedCompareLocation[0] = -1;
+        setCompareLocation(updatedCompareLocation);
+
+        setCompareLocation(updatedCompareLocation);
     };
 
     const handleDeleteSecondComparison = () => {
         setSecondCity('');
-        setCompareLocation(compareLocation[0]);
+
+        const updatedCompareLocation = [...compareLocation];
+        updatedCompareLocation[1] = -1;
+        setCompareLocation(updatedCompareLocation);
+
+        setCompareLocation(updatedCompareLocation);
     };
     return (
         <S.Wrap>
