@@ -132,6 +132,7 @@
 
     **Framework |** fastapi==0.103.1
 
+<br></br>
 ### 프론트엔드
 
 **Language |** Javascript
@@ -142,6 +143,7 @@
     
 **Library |** zustand 4.4.1, css-loader 6.8.1, styled-components 6.0.4
 
+<br></br>
 ### 인프라
 
 **Infra |** docker 24.0.6, docker-compose 2.21.0, nginx 1.18.0 (Ubuntu)
