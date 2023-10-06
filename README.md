@@ -36,13 +36,13 @@
 
 ---
 ## 🎉 프로젝트 기획
-![005](https://github.com/yj0111/Bigdata_study/assets/118320449/4bff990e-51e0-49e1-b2dd-7b34ea4d6110)
-![004](https://github.com/yj0111/Bigdata_study/assets/118320449/0ccc4387-2f9c-4100-924c-a487e8ad5cd4)
-![006](https://github.com/yj0111/Bigdata_study/assets/118320449/645abeb5-742d-4803-b75e-3ecf95058d6c)
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/004.png" alt="기획"/>
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/005.png" alt="기획"/>
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/006.png" alt="기획"/>
 
 ---
 ## 🔑 주요 기능
-![007](https://github.com/yj0111/Bigdata_study/assets/118320449/0c87b547-83ba-4781-95ee-b12826cb4ffe)
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/007.png" alt="기획"/>
 
 ## 빅데이터
 <details>
@@ -81,7 +81,15 @@
     <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%A2%85%ED%95%A9%EC%B6%94%EC%B2%9C.JPG" alt="종합추천"/>
     <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EB%82%AE%EC%9D%80%ED%99%98%EC%9C%A8.JPG" alt="낮은환율"/>
     <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%A2%8B%EC%9D%80+%EB%82%A0%EC%94%A8.JPG" alt="좋은날씨"/>
-    <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%95%88%EC%A0%84%EC%A0%9C%EC%9D%BC.JPG" alt="안전제일"/>
+    <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%95%88%EC%A0%84%EC%A0%9C%EC%9D%BC.JPG" alt="안전제일"/>    
+</div>
+</details>
+
+
+<details>
+<summary>여행지 비교 페이지</summary>
+<div markdown="1">       
+    <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%97%AC%ED%96%89%EC%A7%80%EB%B9%84%EA%B5%90.JPG" alt="날짜선택"/>
 </div>
 </details>
 
@@ -107,7 +115,7 @@
 ---
 ## 🏗️ 아키텍쳐
 
-<img alt="Group 8" src="https://github.com/yj0111/Bigdata_study/assets/118320449/b674f52d-3e04-4adf-a82a-16507fe83e93" />
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/008.png" alt="아키텍쳐"/>
 
 ---
 ## 🛠 기술 스택
@@ -274,7 +282,7 @@
 <details>
 <summary>API 문서</summary>
 <div markdown="1">       
-    <img src="https://github.com/yj0111/Bigdata_study/assets/118320449/11a0909c-6234-46cf-8eba-7d3dfd0dafa8" alt="전체 문서 페이지"/>
+    <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/api.JPG" alt="전체 문서 페이지"/>
 </div>
 </details>
 
@@ -282,32 +290,99 @@
 ### FIGMA
 <details>
 <summary>FIGMA</summary>
-<div markdown="1">       
-    <img src="" alt="피그마 페이지"/>
-</div>
+
+https://www.figma.com/file/n5esjnbJmX1crDIYgQNJS9/Travel?type=design&node-id=103-445&mode=design&t=PsNE2mWlgEcwdAqN-0
+
+
 </details> 
 ## 💻 구동 방법
-- 로컬 구동 기준으로 작성되었습니다.
 
-작성좀요 
+1. Clone Project
+
+```
+git clone https://lab.ssafy.com/s09-bigdata-recom-sub2/S09P22A305.git
+
+```
+
+2. change path to /front_temp/frontend
+
+```
+npm i
+
+```
+3. create .env file
+
+```
+# .env.dev
+REACT_APP_GA_ENV_TYPE=DEV
+REACT_APP_NODE_ENV=DEV
+REACT_APP_BASE_URL=http://localhost:3000 
+REACT_APP_KAKAO_REST_API_KEY={YOUR_KAKAO_REST_API_KEY}
+REACT_APP_GOOGLE_REST_API_KEY={YOUR_GOOGLE_REST_API_KEY}
+
+# .env.prd
+REACT_APP_GA_ENV_TYPE=PRD
+REACT_APP_NODE_ENV=PRD
+REACT_APP_KAKAO_REST_API_KEY={YOUR_KAKAO_REST_API_KEY}
+REACT_APP_GOOGLE_REST_API_KEY={YOUR_GOOGLE_REST_API_KEY}
+```
+4.frontend start
+
+```
+npm start
+```
+5. change path to /server/spring/src/main/resources
+
+```
+create env.yml
+
+MARIADB_DATABASE_URL: {YOUR_MARIADB_DATABASE_URL}
+DATABASE_USERNAME: {YOUR_MARIADB_DATABASE_USERNAME}
+DATABASE_PASSWORD: {YOUR_MARIADB_DATABASE_PASSWORD}
+MONGODB_DATABASE_URL: {YOUR_MONGODB_DATABASE_URL}
+MONGODB_DATABASE_NAME: {YOUR_MONGODB_DATABASE_NAME}
+MONGODB_PORT: {YOUR_MONGODB_DATABASE_PORT}
+S3_BUCKET: {YOUR_S3_BUCKET}
+S3_ACCESS_KEY: {YOUR_S3_ACCESS_KEY}
+S3_SECRET_KEY: {YOUR_S3_SECRET_KEY}
+JWT_SECRET_KEY: {YOUR_JWT_SECRET_KEY}
+KAKAO_CLIENT_ID: {YOUR_KAKAO_CLIENT_ID}
+KAKAO_CLIENT_SECRET: {YOUR_KAKAO_CLIENT_SECRET}
+KAKAO_REDIRECT_URI: {YOUR_KAKAO_REDIRECT_URI}
+GOOGLE_CLIENT_ID: {YOUR_GOOGLE_CLIENT_ID}
+GOOGLE_CLIENT_SECRET: {YOUR_GOOGLE_CLIENT_SECRET}
+GOOGLE_REDIRECT_URI: {YOUR_GOOGLE_REDIRECT_URI}\
+
+```
+6. Run TripickApplicaiton
+
+7. change path to /server/fastAPI
+
+```
+pip install -r requirements.txt
+
+change path to /server/fastAPI/app
+
+uvicorn main:app --reload
+```
 
 ---
 ## 💾 결과물
     
-
 ### UCC
+https://youtu.be/Z7xU5HUj5xw
 
 ---
 ## ❤ 팀원 소개
-![003](https://github.com/yj0111/Bigdata_study/assets/118320449/fe9c8894-de96-4f07-828e-ffa864ce62e0)
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/003.png" alt="기획"/>
 
 ### Frontend
-|![](https://github.com/yj0111/Bigdata_study/assets/118320449/908fa1c8-21bb-416f-a0fb-11b9edc2f45e)|![](https://github.com/yj0111/Bigdata_study/assets/118320449/b4279870-9d36-4cca-a51d-ff1935f990cd)|
+|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%98%84%EC%88%98.png)|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%98%88%EC%8A%AC.png)|![]()|![]()|
 |:---------:|:--------:|
 | [권현수](https://github.com/Runsoo)| [이예슬](https://github.com/dontk1llme)|
 
 ### Backend
 
-|![](https://github.com/yj0111/Bigdata_study/assets/118320449/b726f225-58dc-41ee-a310-51b166ea0ef0)|![](https://github.com/yj0111/Bigdata_study/assets/118320449/3f76c50c-e31f-40ba-80f3-7c5da81527b0)| ![](https://github.com/yj0111/Bigdata_study/assets/118320449/0170e496-a230-49c9-842e-39c5a6b0ea9e)| ![](https://github.com/yj0111/Bigdata_study/assets/118320449/9fcc353f-cc2f-4e67-ac00-0810c5194591)|
+|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%84%B1%EC%A4%80.png)|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%98%A4%EC%9C%A0%EC%A0%95.png)| ![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%95%B4%EC%A4%80.JPG)| ![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%97%88.png)|
 |:---------:|:--------:|:---------:|:--------:|
 | [박성준](https://github.com/tjdwnsmm)| [오유정](https://github.com/yj0111) | [이해준](https://github.com/haegod)| [허성백](https://github.com/sungbaekheo) |
