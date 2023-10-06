@@ -20,14 +20,9 @@ const Cart = () => {
         api.apis
             .getPickedTripRequest(memberId)
             .then(response => {
-                console.log(response.data.data);
                 setCartLocation(response.data.data);
             })
     }, []);
-
-    useEffect(()=>{
-        console.log(cartLocation)
-    }, [cartLocation])
 
     useEffect(() => {
         const count = compareLocation.filter(value => value !== -1).length;

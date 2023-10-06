@@ -69,20 +69,13 @@ const CountryList = () => {
 
         if (countryData) {
             // 국가 코드를 대문자로 변환하여 추가
-            console.log(countryData);
-            console.log(countriesCodesArray);
-            console.log(selectedCountry);
-            // setCountriesCodesArray([...countriesCodesArray, countryData.alpha2.toUpperCase()]);
             setSelectedCountry([...selectedCountry, countryData.name])
         
             // 검색어 초기화
             setSearchQuery('');
             setIsSearchResultInKrData(true); // 추가 성공 시 초기화
-            console.log('krdata에 잇음');
-            console.log(countriesCodesArray);
         } else {
             setIsSearchResultInKrData(false); // 검색 결과가 없을 때 설정
-            console.log('krdata에 없음');
         }
     };
 
@@ -100,7 +93,6 @@ const CountryList = () => {
                 .getNationRecord(memberId, currentCountry)
                 .then(response => {
                     setAlbumList(response.data);
-                    console.log(response.data);
                 })
                 .catch(error => console.log(error));
         }
