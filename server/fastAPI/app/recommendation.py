@@ -15,13 +15,13 @@ class Recommendation:
     def __init__(self):
         self.data = [...]
 
-    def now(self, member_id):
+    def now(self, memberId):
         rank_df = db.get_rank_df(now.date())
         # 가중치 순서: temp, rainy, price, exchange, crime, traveler 
         w = [3,1,1,1,1,1]
         # 로그인 상태라면 찜 목록을 바탕으로 가중치 업데이트 
-        if member_id is not None:
-            total_w, weather_w, exchange_w, crime_w = Recommendation.update_weight(member_id)
+        if memberId is not None:
+            total_w, weather_w, exchange_w, crime_w = Recommendation.update_weight(memberId)
             w = total_w
         result = pd.DataFrame(columns=['city', 'rank'])
         for index, row in rank_df.iterrows():
@@ -45,7 +45,7 @@ class Recommendation:
             idx += 1
         return result_dict
 
-    def set_date(self, start_date: str, end_date: str, member_id):
+    def set_date(self, start_date: str, end_date: str, memberId):
         date_format = "%Y-%m-%d"
         start_date = datetime.strptime(start_date, date_format)
         rank_df = db.get_rank_df(start_date)
@@ -55,8 +55,8 @@ class Recommendation:
         exchange_w = [1,1,1,3,1,1]
         crime_w = [1,1,1,1,2,1]
         # 로그인 상태라면 찜 목록을 바탕으로 가중치 업데이트 
-        if member_id is not None:
-            total_w, weather_w, exchange_w, crime_w = Recommendation.update_weight(member_id)
+        if memberId is not None:
+            total_w, weather_w, exchange_w, crime_w = Recommendation.update_weight(memberId)
         w_list = [total_w,weather_w,exchange_w,crime_w]
         rec_list = ['total','weather','exchange','crime'] 
         result_dict = {}
@@ -92,14 +92,14 @@ class Recommendation:
             result_dict[f'recommendation_{rec_list[i]}'] = inner_dict
         return result_dict
     
-    def update_weight(member_id):
+    def update_weight(memberId):
         # 가중치 초기값
         total_w = [2,2,1,1,1,1]
         weather_w = [3,3,1,1,1,1]
         exchange_w = [1,1,2,2,1,1]
         crime_w = [1,1,1,1,2,1]
         # 현재 로그인한 사용자의 여행지 찜 목록
-        picked_trip = db.get_picked_trip(member_id)
+        picked_trip = db.get_picked_trip(memberId)
         for picked_trip_dict in picked_trip:
             city = picked_trip_dict['city']
             date = picked_trip_dict['start_date']
