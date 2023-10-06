@@ -5,10 +5,11 @@ import * as api from 'api';
 import * as hooks from 'hooks';
 
 const Landing = () => {
+    const { memberId } = hooks.loginUserState();
     const { landingLocation, setLandingLocation } = hooks.landingState();
     useEffect(() => {
         api.apis
-            .getNowRecommendations()
+            .getNowRecommendations(memberId)
             .then(response => {
                 setLandingLocation(Object.values(response.data));
             })
