@@ -138,8 +138,8 @@ def get_one_city(name, date):
     # 오름차순 - 기온차, 강우일수, 환율, 물가, 범죄율
     return city_dict
 
-def get_picked_trip(member_id):
-    picked_trip_dict = picked_trip.find({"member_id": member_id})
+def get_picked_trip(memberId):
+    picked_trip_dict = picked_trip.find({"member_id": memberId})
     return picked_trip_dict
 
 def get_country_name(city_name):
