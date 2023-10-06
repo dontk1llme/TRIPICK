@@ -103,4 +103,4 @@ jwt:
     prefix: "Bearer "
   filter:
     skip:
-      paths: auth/login/google, auth/login/kakao, auth/logout
+      paths: /auth/login/google, /auth/login/kakao, /auth/logout
