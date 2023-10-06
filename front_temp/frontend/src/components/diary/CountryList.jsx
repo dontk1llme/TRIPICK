@@ -152,7 +152,7 @@ const S = {
         height: 336px;
         margin: 0 12px 12px 0;
         padding: 20px;
-        background-color: aliceblue;
+        background-color: white;
         border-radius: 32px;
         box-shadow: ${({ theme }) => theme.shadow.card};
         .jvectormap-container {
@@ -173,22 +173,22 @@ const S = {
         text-align: center;  // 텍스트 중앙 정렬
     `,
     CountryList: styled.div`
-    font-size: ${({ theme }) => theme.fontSize.content2};
-    color: ${({ selected, theme }) => (selected === 'selected' ? theme.color.black : theme.color.black)};
-    cursor: pointer;
-    margin-bottom: 10px;
-    background-color: ${({ selected }) => (selected === 'selected' ? '    #6495ED' : 'skyblue')};
-    &:hover {
-        background-color:     #6495ED;
-    }
-    border: 1px solid black; 
-    width: 100%;
-    height: 35px;
-    font-size: 20px;
-    text-align: center;
-    vertical-align: middle;
-    padding-top: 7px;
-    border-radius: 9px;
+        font-size: ${({ theme }) => theme.fontSize.content2};
+        color: ${({ selected, theme }) => (selected === 'selected' ? theme.color.black : theme.color.black)};
+        cursor: pointer;
+        margin-bottom: 10px;
+        background-color: ${({ selected, theme }) => (selected === 'selected' ? theme.color.main1 : theme.color.main2)};
+        &:hover {
+            background-color:     #6495ED;
+        }
+        border: 1px solid gray; 
+        width: 100%;
+        height: 35px;
+        font-size: 20px;
+        text-align: center;
+        vertical-align: middle;
+        padding-top: 7px;
+        border-radius: 9px;
     `,
     checkbox: styled.div`
       padding-right  : 10px;
