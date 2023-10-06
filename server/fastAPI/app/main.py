@@ -41,12 +41,12 @@ def read_root():
 
 # 오늘 날짜에 추천하는 여행지 5개
 @app.get("/recommendation/now")
-def get_recommendation_now(member_id: Optional[int] = Query(None)):
-    recommedation_now = recommendation.now(member_id)
+def get_recommendation_now(memberId: Optional[int] = Query(None)):
+    recommedation_now = recommendation.now(memberId)
     return recommedation_now
 
 # 사용자 설정 날짜에 추천하는 여행지 12개 (통합, 환율, 날씨, 안전 각 3개씩)
 @app.get("/recommendation/set-date")
-def get_recommendation_set_date(startDate: str = Query(...), endDate: str = Query(...), member_id: Optional[int] = Query(None)):
-    recommended_destination = recommendation.set_date(startDate, endDate, member_id)
+def get_recommendation_set_date(startDate: str = Query(...), endDate: str = Query(...), memberId: Optional[int] = Query(None)):
+    recommended_destination = recommendation.set_date(startDate, endDate, memberId)
     return recommended_destination
