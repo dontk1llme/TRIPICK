@@ -21,24 +21,21 @@ const LocationPreview = ({ place, type }) => {
     const navigate = useNavigate();
 
     const handleCompareLocation = data => {
-            if(cartLocation.indexOf(place) !== -1) {
-                setView(true);
-                setMessage('이미 비교함에 담은 일정입니다. ');
-                setType('warning');
-                
-                return;
-            }
-
-            if(compareLocation[0] != -1 && compareLocation[1] != -1) {
+        if(compareLocation.indexOf(data) !== -1) {
+            setView(true);
+            setMessage('이미 비교함에 담은 일정입니다. ');
+            setType('warning');
+        } else {
+            if(compareLocation[0] !== -1 && compareLocation[1] !== -1) {
                 setView(true);
                 setMessage('비교함이 가득 찼습니다. ');
                 setType('warning');
             } else {
-                if(compareLocation[0] != 1) {
+                if(compareLocation[0] !== -1) {
                     const updatedCompareLocation = [...compareLocation];
                     updatedCompareLocation[1] = data;
                     setCompareLocation(updatedCompareLocation);
-
+    
                     setView(true);
                     setMessage('비교함으로 이동하시겠습니까?');
                     setType('query');
@@ -48,30 +45,7 @@ const LocationPreview = ({ place, type }) => {
                     setCompareLocation(updatedCompareLocation);
                 }
             }
-        
-        // // id가 없는데 id를 대체할 값을 무엇으로 정해서 
-        // const placeIndex = compareLocation.indexOf(id);
-        // console.log(placeIndex) //=> 0 -1만 반복됨
-        // console.log(place.uuid) //=>undefined
-
-        // if (placeIndex === -1) {
-        //     const indexOfMinusOne = compareLocation.indexOf(-1);
-        //     if (indexOfMinusOne !== -1) {
-        //         compareLocation[indexOfMinusOne] = id;
-        //         if (indexOfMinusOne === 1 || compareLocation[1] !== -1) {
-        //             setView(true);
-        //             setMessage('비교함으로 이동하시겠습니까?');
-        //             setType('query');
-        //         }
-        //     } else {
-        //         setView(true);
-        //         setMessage('비교함이 가득 찼습니다. ');
-        //         setType('warning');
-        //     }
-        // } else {
-        //     compareLocation[placeIndex] = -1;
-        // }
-        // setCompareLocation([...compareLocation]);
+        }
     };
 
     const handleCartLocation = place => {
@@ -97,9 +71,7 @@ const LocationPreview = ({ place, type }) => {
     
             api.apis
                 .pickTripRequest(tripDetail)
-                .then(response => {
-                    console.log(response);
-                })
+                .then()
                 .catch(error => console.log(error));
 
             setCartLocation([...cartLocation, place]);
@@ -107,7 +79,6 @@ const LocationPreview = ({ place, type }) => {
             setMessage('보관함에 추천 여행지를 담았습니다. ');
             setType('checking');
         } else if (!view && placeIndex !== -1) {
-            console.log('보관함에서 삭제');
             setMessage('보관함에서 여행지를 삭제하시겠습니까?');
             setView(true);
             setType('query');
@@ -115,9 +86,7 @@ const LocationPreview = ({ place, type }) => {
 
             api.apis
                 .removeTripRequest(place.uuid)
-                .then(response => {
-                    console.log(response);
-                })
+                .then()
                 .catch(error => console.log(error));
         }
     };
@@ -125,8 +94,6 @@ const LocationPreview = ({ place, type }) => {
     useEffect(() => {
         if (modalType === 'query' && currentPlace && message === '보관함에서 여행지를 삭제하시겠습니까?') {
             if (response === 'yes') {
-                console.log('yes');
-                console.log(currentPlace);
                 const updatedCartLocation = cartLocation.filter(cart => cart !== currentPlace);
                 setCartLocation([...updatedCartLocation]);
                 setType('');
@@ -142,13 +109,6 @@ const LocationPreview = ({ place, type }) => {
             }
         }
         
-        if (modalType === 'warning' && message === '이미 비교함에 담은 일정입니다. ') {
-            setView(false);
-            setType('');
-            setMessage('');
-            setResponse('');
-        }
-    
         if (modalType === 'checking' && message === '보관함에 추천 여행지를 담았습니다. ') {
             if (response === 'yes') {
                 setType('');
@@ -161,6 +121,11 @@ const LocationPreview = ({ place, type }) => {
     useEffect(() => {
         if (response === 'yes' && message === '비교함으로 이동하시겠습니까?') {
             navigate(utils.URL.CART.COMPARE);
+            setResponse('');
+            setMessage('');
+            setType('');
+        } else if (response === 'yes' && message === '이미 비교함에 담은 일정입니다. ') {
+            setView(false);
             setResponse('');
             setMessage('');
             setType('');

@@ -21,14 +21,12 @@ const LocationDetail = () => {
 
     const handleCartLocation = () => {
         const placeIndex = cartLocation.indexOf(detailLocation);
-        console.log(placeIndex);
         if (!view && placeIndex === -1) {
             setCartLocation([...cartLocation, detailLocation]);
             setView(true);
             setMessage('보관함에 추천 여행지를 담았습니다. ');
             setType('checking');
         } else if (!view && placeIndex !== -1) {
-            console.log('보관함에서 삭제');
             setMessage('보관함에서 여행지를 삭제하시겠습니까?');
             setView(true);
             setType('query');
@@ -41,9 +39,7 @@ const LocationDetail = () => {
                 
                 api.apis
                     .removeTripRequest(detailLocation.uuid)
-                    .then(response => {
-                        console.log(response);
-                    })
+                    .then()
                     .catch(error => console.log(error));
 
                 const updatedCartLocation = cartLocation.filter(cart => cart !== detailLocation);
@@ -78,9 +74,7 @@ const LocationDetail = () => {
     
             api.apis
                 .pickTripRequest(tripDetail)
-                .then(response => {
-                    console.log(response);
-                })
+                .then()
                 .catch(error => console.log(error));
 
             if (response === 'yes') {

@@ -30,29 +30,22 @@ const MyProfile = () => {
     const wrapRef = useRef(null);
 
     useEffect(() => {
-        console.log("진짜 에바야")
         api.apis
             .getBadges(memberId)
             .then(response => {
                 setStamp(response.data.data)
-                console.log("테스트", response.data.data)
             })
             .catch(error => console.log(error))
     }, [])
-    console.log("이거 언제 실행되나요", stamp);
     useEffect(() => {
-        console.log("이거 왜 제일 늦게 실행되냐?")
         api.apis
             .getMemberProfile(memberId)
             .then(response => {
-                console.log('프로필', response.data);
                 setNickname(response.data.data.nickname);
                 setEmail(response.data.data.email);
                 setCreatedAt(response.data.data.createdAt);
                 setProfileImage(response.data.data.profileImage);
                 setMainStampId(response.data.data.mainBadge);
-                // 토큰 완료되면 아래 거 추가
-                // window.location.reload();
             })
             .catch(error => console.log(error));
     }, [saveProfile, newImageFile, onEditMode, setProfileImage]);
@@ -93,9 +86,7 @@ const MyProfile = () => {
             };
             api.apis
                 .editMemberNickname(data)
-                .then(response => {
-                    console.log(response);
-                })
+                .then()
                 .catch(error => console.log(error));
 
             const formData = new FormData();
@@ -104,7 +95,7 @@ const MyProfile = () => {
 
             api.apis
                 .editMemberProfileImage(formData)
-                .then(response => console.log(response))
+                .then()
                 .catch(error => console.log(error));
 
             setOnEditMode(false);
@@ -145,7 +136,6 @@ const MyProfile = () => {
     useEffect(() => {
         const handleOutsideClick = event => {
             if (wrapRef.current && !wrapRef.current.contains(event.target) && onEditMode && type !== 'warning') {
-                console.log(nickname.length);
                 event.preventDefault();
                 event.stopPropagation();
                 setView(true);
