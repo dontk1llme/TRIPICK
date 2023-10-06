@@ -21,7 +21,7 @@ const LocationPreview = ({ place, type }) => {
     const navigate = useNavigate();
 
     const handleCompareLocation = data => {
-            if(cartLocation.indexOf(place) !== -1) {
+            if(compareLocation.indexOf(place) !== -1) {
                 setView(true);
                 setMessage('이미 비교함에 담은 일정입니다. ');
                 setType('warning');
