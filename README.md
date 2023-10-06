@@ -48,11 +48,11 @@
 <details>
 <summary>빅데이터</summary>
 <div markdown="1">
-    <img src="https://github.com/yj0111/Bigdata_study/assets/118320449/4f52cc35-3016-4c5a-a1eb-ec395c785aaa" alt="기록페이지"/>
-    <img src="https://github.com/yj0111/Bigdata_study/assets/118320449/0935c6cc-0e93-4d8e-a0ff-576e6faee687" alt="기록페이지"/>
-    <img src="https://github.com/yj0111/Bigdata_study/assets/118320449/3ba4b9b5-056d-4ba3-a986-3e034cf4d9e4" alt="기록페이지"/>
-    <img src="https://github.com/yj0111/Bigdata_study/assets/118320449/8885808e-16e6-47de-9228-ca5dd82c42be" alt="기록페이지"/>
-    <img src="https://github.com/yj0111/Bigdata_study/assets/118320449/7adc0084-cf45-4c61-b36b-a22d08fef3b2" alt="기록페이지"/>
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/009.png" alt="기획"/>
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/010.png" alt="기획"/>
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/011.png" alt="기획"/>
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/012.png" alt="기획"/>
+<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/013.png" alt="기획"/>
 </div>
 </details>
 
