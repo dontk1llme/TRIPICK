@@ -102,8 +102,6 @@ const AlbumList = () => {
         await api.apis
             .createRecord(data)
             .then(response => {
-                console.log(response);
-                console.log(response.data);
                 api.apis
                     .getNationRecord(memberId, currentCountry)
                     .then(response => {
@@ -140,14 +138,12 @@ const AlbumList = () => {
         api.apis
             .editAlbum(data)
             .then(response => {
-                console.log(response);
                 setEditingAlbumId(null);
                 setEditingAlbumName('');
                 api.apis
                     .getNationRecord(memberId, currentCountry)
                     .then(response => {
                         setAlbumList(response.data);
-                        console.log(response.data);
                     })
                     .catch(error => console.log(error));
             })

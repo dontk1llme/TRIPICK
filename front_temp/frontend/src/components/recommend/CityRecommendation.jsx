@@ -25,7 +25,6 @@ const CityRecommendation = () => {
         api.apis
             .getDateRecommendations(startDate, endDate, memberId)
             .then(response => {
-                console.log(response.data);
                 setTotalRecommendation(Object.values(response.data.recommendation_total));
                 setCurrencyRecommendation(Object.values(response.data.recommendation_exchange));
                 setWeatherRecommendation(Object.values(response.data.recommendation_weather));

@@ -40,10 +40,6 @@ const LoginButton = () => {
         .catch(error => console.log(error));
     }
 
-    useEffect(()=>{
-      console.log(memberId, nickname, email, profileImage, createdAt);
-  },[])
-
     return (
       <>
          <div>

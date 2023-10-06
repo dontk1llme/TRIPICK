@@ -13,9 +13,6 @@ const MyPage = () => {
             setCurrentPage(currentPage - 1);
         }
     };
-    useEffect(() => {
-        console.log(currentPage);
-    }, []);
 
     const pages = [1, 2, 3, 4];
     return (

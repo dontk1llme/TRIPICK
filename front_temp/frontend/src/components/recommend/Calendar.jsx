@@ -15,15 +15,7 @@ const CalendarComponent = () => {
 
     useEffect(() => {
         setSelectedDate([today, today]);
-        if (selectedDate.length > 0) {
-            console.log(selectedDate);
-        }
     }, []);
-
-    useEffect(() => {
-        console.log(selectedDate);
-    }, [selectedDate]);
-    // const [selectedDate, setSelectedDate] = useState([today, today]); // 초기 선택 날짜 설정
 
     const formatDate = date => {
         return moment(date).format('YYYY년 MM월 DD일');

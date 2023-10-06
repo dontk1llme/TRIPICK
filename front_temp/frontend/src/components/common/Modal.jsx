@@ -9,9 +9,6 @@ const Modal = () => {
     const handleYes = () => {
         setResponse('yes');
         setView(false);
-        if (!view) {
-            console.log(view);
-        }
     };
     const handleNo = () => {
         setResponse('no');

@@ -36,7 +36,6 @@ const LoginModal = ({ setModalOpen }) => {
     ///////////// google ////////////////
     const handleGoogleClick = useGoogleLogin({
         onSuccess: codeResponse => {
-            console.log('handleGoogleClick executed'); // Add this line
             api.apis
                 .createGoogleLoginRequest(codeResponse.code)
                 .then(response => {

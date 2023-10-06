@@ -65,18 +65,9 @@ const DetailAlbum = () => {
     }, [contextMenu]);
 
     useEffect(() => {
-        console.log('selected Image', selectedImage);
-    }, [selectedImage]);
-
-    useEffect(() => {
-        console.log(selectedAlbum);
         const findAlbum = albumList.find(album => album.tripRecordId === selectedAlbum);
         setSelectedAlbumDetail(findAlbum);
     }, [selectedAlbum, albumList]);
-
-    useEffect(() => {
-        console.log(selectedAlbumDetail);
-    }, [selectedAlbumDetail]);
 
     const handleFileUpload = event => {
         const files = event.target.files;
@@ -107,14 +98,6 @@ const DetailAlbum = () => {
             setSelectedImage(imageId);
         }
     };
-
-    useEffect(() => {
-        console.log(selectedImage);
-    }, [selectedImage]);
-
-    useEffect(() => {
-        console.log(selectedFile);
-    }, [selectedFile]);
 
     const handleNextImage = () => {
         const index = selectedAlbumDetail.images.findIndex(image => image.tripRecordImageId === selectedImage);

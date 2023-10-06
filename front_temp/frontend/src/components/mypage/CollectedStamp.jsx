@@ -11,10 +11,6 @@ const CollectedStamp = ({ id }) => {
     const { view, setView, setMessage, response, setResponse, setType } = hooks.modalState();
     const thisStamp = stamp.find(stamp => stamp.badgeId === id);
 
-    useEffect(() => {
-        console.log('main', mainStampId);
-        console.log('id', id);
-    }, [mainStampId]);
 
     const handleSetMain = id => {
         setType('checking');
@@ -29,9 +25,7 @@ const CollectedStamp = ({ id }) => {
 
         api.apis
             .updateMainBadge(data)
-            .then(response => {
-                console.log("변경 완");
-            })
+            .then()
             .catch(error => console.log(error));
 
     };
