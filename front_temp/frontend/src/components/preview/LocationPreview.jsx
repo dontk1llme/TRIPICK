@@ -21,11 +21,11 @@ const LocationPreview = ({ place, type }) => {
     const navigate = useNavigate();
 
     const handleCompareLocation = data => {
-            if(cartLocation.indexOf(place) != -1) {
+            if(cartLocation.indexOf(place) !== -1) {
                 setView(true);
                 setMessage('이미 비교함에 담은 일정입니다. ');
                 setType('warning');
-
+                
                 return;
             }
 
@@ -76,7 +76,7 @@ const LocationPreview = ({ place, type }) => {
 
     const handleCartLocation = place => {
         const placeIndex = cartLocation.indexOf(place);
-        console.log(placeIndex);
+
         if (!view && placeIndex === -1) {
             const tripDetail = {
                 uuid: place.uuid,
@@ -141,6 +141,14 @@ const LocationPreview = ({ place, type }) => {
                 setCurrentPlace(null);
             }
         }
+        
+        if (modalType === 'warning' && message === '이미 비교함에 담은 일정입니다. ') {
+            setView(false);
+            setType('');
+            setMessage('');
+            setResponse('');
+        }
+    
         if (modalType === 'checking' && message === '보관함에 추천 여행지를 담았습니다. ') {
             if (response === 'yes') {
                 setType('');
@@ -165,15 +173,11 @@ const LocationPreview = ({ place, type }) => {
     }, [response]);
 
     const handleDetails = place => {
-        console.log('플레이스');
-        console.log(place);
         setDetailLocation(place);
         if (detailLocation) {
             setViewDetail(true);
         }
     };
-
-
 
     return (
         <S.Wrap onClick={() => handleDetails(place)}>
