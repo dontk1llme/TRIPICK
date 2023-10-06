@@ -8,6 +8,7 @@
 	- [📑주제](#-주제)
 	- [🎉프로젝트 기획](#-프로젝트-기획)
 	- [🔑 주요 기능](#-주요-기능)
+    - [📜 빅데이터](#-빅데이터)
 	- [🖥 서비스 화면](#-서비스-화면)
 	- [🏗️ 아키텍쳐](#-아키텍쳐)
 	- [🛠 기술 스택](#-기술-스택)
@@ -15,11 +16,10 @@
 	- [📝 설계 문서](#-설계-문서)
 	    - [ERD](#erd)
 	    - [API](#api)
+        - [FIGMA](#FIGMA)
 	- [💻 구동 방법](#-구동-방법)
 	- [💾 결과물](#-결과물)
 	    - [UCC](#UCC)
-	    - [데모](#데모)
-	    - [PPT](#PPT)
 	- [❤ 팀원 소개](#-팀원-소개)
 		- [프론트](#프론트)
 		- [백](#백)
@@ -44,7 +44,7 @@
 ## 🔑 주요 기능
 <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/007.png" alt="기획"/>
 
-## 빅데이터
+## 📜 빅데이터
 <details>
 <summary>빅데이터</summary>
 <div markdown="1">
@@ -377,9 +377,10 @@ https://youtu.be/Z7xU5HUj5xw
 <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/003.png" alt="기획"/>
 
 ### Frontend
-|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%98%84%EC%88%98.png)|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%98%88%EC%8A%AC.png)|![]()|![]()|
+|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%98%84%EC%88%98.png)|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%98%88%EC%8A%AC.png)|
 |:---------:|:--------:|
 | [권현수](https://github.com/Runsoo)| [이예슬](https://github.com/dontk1llme)|
+
 
 ### Backend
 
