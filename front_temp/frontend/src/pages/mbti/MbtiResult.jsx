@@ -45,14 +45,11 @@ const MbtiResult = () => {
     }, [response]);
 
     useEffect(() => {
-        console.log(result);
         if (result !== '') {
             const foundImage = images.find(image => image.mbti === result);
             if (foundImage) {
                 setImageUrl(foundImage.imageUrl);
             } else {
-                console.log('0번째', images[0].mbti);
-                console.warn(`No image found for result: ${result}`);
                 setImageUrl(''); // or set to a default image if you have one
             }
         }

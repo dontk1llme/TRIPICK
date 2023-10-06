@@ -10,15 +10,11 @@ const Landing = () => {
         api.apis
             .getNowRecommendations()
             .then(response => {
-                console.log(response);
                 setLandingLocation(Object.values(response.data));
             })
             .catch(error => console.log(error));
     }, []);
 
-    useEffect(() => {
-        console.log(landingLocation);
-    }, [landingLocation]);
     return (
         <S.Wrap>
             <components.LandingCard />
