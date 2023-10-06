@@ -46,8 +46,6 @@ const Compare = () => {
         const updatedCompareLocation = [...compareLocation];
         updatedCompareLocation[0] = -1;
         setCompareLocation(updatedCompareLocation);
-
-        setCompareLocation(updatedCompareLocation);
     };
 
     const handleDeleteSecondComparison = () => {
@@ -55,8 +53,6 @@ const Compare = () => {
 
         const updatedCompareLocation = [...compareLocation];
         updatedCompareLocation[1] = -1;
-        setCompareLocation(updatedCompareLocation);
-
         setCompareLocation(updatedCompareLocation);
     };
     return (

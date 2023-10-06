@@ -21,21 +21,31 @@ const LocationPreview = ({ place, type }) => {
     const navigate = useNavigate();
 
     const handleCompareLocation = data => {
-            console.log(data);
-            console.log(compareLocation);
+            if(cartLocation.indexOf(place) != -1) {
+                setView(true);
+                setMessage('이미 비교함에 담은 일정입니다. ');
+                setType('warning');
 
-            if(compareLocation.length == 2) {
+                return;
+            }
+
+            if(compareLocation[0] != -1 && compareLocation[1] != -1) {
                 setView(true);
                 setMessage('비교함이 가득 찼습니다. ');
                 setType('warning');
             } else {
-                if(compareLocation.length == 1) {
-                    setCompareLocation([...compareLocation, data]);
+                if(compareLocation[0] != 1) {
+                    const updatedCompareLocation = [...compareLocation];
+                    updatedCompareLocation[1] = data;
+                    setCompareLocation(updatedCompareLocation);
+
                     setView(true);
                     setMessage('비교함으로 이동하시겠습니까?');
                     setType('query');
                 } else {
-                    setCompareLocation([...compareLocation, data]);
+                    const updatedCompareLocation = [...compareLocation];
+                    updatedCompareLocation[0] = data;
+                    setCompareLocation(updatedCompareLocation);
                 }
             }
         

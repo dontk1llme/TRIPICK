@@ -266,7 +266,7 @@ export const recommendationState = create(set => ({
 
 export const cartState = create(set => ({
     cartLocation: [],
-    compareLocation: [],
+    compareLocation: [-1, -1],
     setCartLocation: data => set(state => ({ cartLocation: data })),
     setCompareLocation: data => set(state => ({ compareLocation: data })),
 }));
