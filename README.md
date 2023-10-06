@@ -113,27 +113,42 @@
 ## 🛠 기술 스택
 ### 백엔드
 - 웹
-** Language | ** java 11
-** Framework | ** Spring Boot 2.7
-** Build Tool | ** gradle 8.2.1
-** Database | ** mariaDB 10.11.0
+
+    **Language |** java 11
+
+    **Framework |** Spring Boot 2.7
+
+    **Build Tool |** gradle 8.2.1
+
+    **Database |** mariaDB 10.11.0
 
 - 추천
-** Language | ** python==3.11.4
-** Database | ** mongodb== 7.0.1, pymongo==4.5.0
-** Data Processing | ** scikit-learn==1.3.0, bayesian-optimization==1.4.3
-** Framework | ** fastapi==0.103.1
+
+    **Language |** python==3.11.4
+
+    **Database |** mongodb== 7.0.1, pymongo==4.5.0
+
+    **Data Processing |** scikit-learn==1.3.0, bayesian-optimization==1.4.3
+
+    **Framework |** fastapi==0.103.1
 
 ### 프론트엔드
-** Language | **  Javascript
-** Framework | ** react 18.2.0
-** Engine | ** Node.js 18.16.1
-** Library | ** zustand 4.4.1, css-loader 6.8.1, styled-components 6.0.4
+
+**Language |** Javascript
+
+**Framework |** react 18.2.0
+    
+**Engine |** Node.js 18.16.1
+    
+**Library |** zustand 4.4.1, css-loader 6.8.1, styled-components 6.0.4
 
 ### 인프라
-** Infra | ** docker 24.0.6, docker-compose 2.21.0, nginx 1.18.0 (Ubuntu)
-** CI/CD | ** jenkins 2.414.1
-** SSL certification | ** certbot 0.40.0
+
+**Infra |** docker 24.0.6, docker-compose 2.21.0, nginx 1.18.0 (Ubuntu)
+
+**CI/CD |** jenkins 2.414.1
+
+**SSL certification |** certbot 0.40.0
 
 </details>
 
