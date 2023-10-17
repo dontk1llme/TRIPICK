@@ -8,7 +8,7 @@
 	- [📑주제](#-주제)
 	- [🎉프로젝트 기획](#-프로젝트-기획)
 	- [🔑 주요 기능](#-주요-기능)
-    - [📜 빅데이터](#-빅데이터)
+    - [📜 사용 기술](#-사용 기술)
 	- [🖥 서비스 화면](#-서비스-화면)
 	- [🏗️ 아키텍쳐](#-아키텍쳐)
 	- [🛠 기술 스택](#-기술-스택)
@@ -36,25 +36,41 @@
 
 ---
 ## 🎉 프로젝트 기획
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/004.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/005.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/006.png" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/63587b43-0b71-4abb-b71b-ea409d6b0f31" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/07298345-9cc7-41ec-ad32-500f498ce297" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/168d4efe-1638-4a42-bc66-0d26cb5597de" alt="기획"/>
 
 ---
 ## 🔑 주요 기능
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/007.png" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/ef44ccdb-c76e-4230-90cb-cf8f6c900dac" alt="기획"/>
 
-## 📜 빅데이터
+## 📜 사용 기술
 <details>
 <summary>빅데이터</summary>
 <div markdown="1">
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/009.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/010.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/011.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/012.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/013.png" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/bdeb0b33-6057-4c60-a630-2011c8000d25" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/0d2aedba-dd85-4538-92fa-59ce651d491d" alt="기획"/>
 </div>
 </details>
+
+<details>
+<summary>백엔드</summary>
+<div markdown="2">
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/788dfe04-a6e7-4a03-b082-3518f2bf4191" alt="기획"/>
+</div>
+</details>
+
+<details>
+<summary>프론트엔드</summary>
+<div markdown="3">
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/078220e0-e2fe-4d7b-9aaf-e56700667b5b" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/1046b936-8a06-4d88-b67a-b342ca14405d" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/d60604c1-54ce-42d6-b49a-054b1335c010" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/d907bf33-1a6d-4bec-8341-57b5e8f24608" alt="기획"/>
+<img src="https://github.com/yj0111/TRIPICK/assets/118320449/4701f913-8561-4aba-bb03-cb780bd4d69b" alt="기획"/>
+</div>
+</details>
+
 
 ---
 ## 🖥 서비스 화면
@@ -273,7 +289,8 @@
 <details>
 <summary>ERD</summary>
 <div markdown="1">       
-    <img src="https://hackmd.io/_uploads/SJKl2Mj32.png" alt="ERD 페이지"/>
+    <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/erd1.JPG" alt="ERD 페이지"/>
+    <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/erd2.png" alt="ERD 페이지"/>
 </div>
 </details>
 
@@ -377,13 +394,11 @@ https://youtu.be/Z7xU5HUj5xw
 <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/003.png" alt="기획"/>
 
 ### Frontend
-|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%98%84%EC%88%98.png)|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%98%88%EC%8A%AC.png)|
+|<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%98%84%EC%88%98.png" width="100">|<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%98%88%EC%8A%AC.png" width="100">|
 |:---------:|:--------:|
 | [권현수](https://github.com/Runsoo)| [이예슬](https://github.com/dontk1llme)|
 
-
 ### Backend
-
-|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%84%B1%EC%A4%80.png)|![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%98%A4%EC%9C%A0%EC%A0%95.png)| ![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%95%B4%EC%A4%80.JPG)| ![](https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%97%88.png)|
+|<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%84%B1%EC%A4%80.png" width="100">|<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%EC%98%A4%EC%9C%A0%EC%A0%95.png" width="100">| <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%95%B4%EC%A4%80.JPG" width="100">| <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/%ED%97%88.png" width="100">|
 |:---------:|:--------:|:---------:|:--------:|
 | [박성준](https://github.com/tjdwnsmm)| [오유정](https://github.com/yj0111) | [이해준](https://github.com/haegod)| [허성백](https://github.com/sungbaekheo) |
